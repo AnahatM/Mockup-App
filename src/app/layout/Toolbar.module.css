@@ -32,3 +32,47 @@
 .theme {
   width: 5.5rem;
 }
+
+/*
+ * A button dressed as a search field. It cannot be a real input: the palette
+ * owns the query, and two inputs sharing one query is a synchronisation bug
+ * waiting to happen.
+ */
+.search {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  max-width: 240px;
+  padding: var(--space-1) var(--space-2);
+  font: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: var(--surface-sunken);
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.search:hover {
+  color: var(--text-secondary);
+  background: var(--surface-hover);
+}
+
+.searchLabel {
+  flex: 1 1 auto;
+  font-size: var(--text-xs);
+  text-align: start;
+}
+
+.kbd {
+  padding: 0 var(--space-1);
+  font-family: inherit;
+  font-size: var(--text-xs);
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+}
+
+@media (width <= 900px) {
+  .search {
+    display: none;
+  }
+}

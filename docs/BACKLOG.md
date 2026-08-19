@@ -37,8 +37,8 @@ Status: `TODO` · `WIP` · `DONE`
 | 14 | Custom tooltips replacing browser `title=` | TODO |
 | 15 | Custom confirmation modals replacing `confirm()` — preset delete, reset | TODO |
 | 16 | Colour palettes as cards with colour names, not bare swatches | TODO |
-| 17 | Resizable sidebar and inspector | TODO |
-| 18 | Searchable settings across every panel | TODO |
+| 17 | Resizable sidebar and inspector | DONE |
+| 18 | Searchable settings across every panel | DONE |
 
 ## Site structure
 

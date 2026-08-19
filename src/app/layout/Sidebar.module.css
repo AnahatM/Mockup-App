@@ -2,7 +2,6 @@
   display: flex;
   flex: none;
   flex-direction: column;
-  width: var(--sidebar-width);
   overflow-y: auto;
   background: var(--surface-panel);
   border-right: var(--hairline) solid var(--border-subtle);

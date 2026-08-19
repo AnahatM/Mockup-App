@@ -4,3 +4,32 @@
   gap: var(--space-3);
   min-width: 0;
 }
+
+/*
+ * Marks the control a search result pointed at. Two pulses then settles into a
+ * quiet tint — long enough to catch the eye, short enough not to nag.
+ */
+.highlight {
+  border-radius: var(--radius-sm);
+  outline: var(--hairline) solid var(--accent);
+  outline-offset: var(--space-1);
+  animation: settle var(--duration-slow) var(--ease-out) 2;
+}
+
+@keyframes settle {
+  0%,
+  100% {
+    background: transparent;
+  }
+
+  50% {
+    background: var(--accent-soft);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlight {
+    animation: none;
+    background: var(--accent-soft);
+  }
+}

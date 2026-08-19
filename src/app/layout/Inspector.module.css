@@ -2,7 +2,6 @@
   display: flex;
   flex: none;
   flex-direction: column;
-  width: var(--inspector-width);
   min-height: 0;
   background: var(--surface-panel);
   border-left: var(--hairline) solid var(--border-subtle);

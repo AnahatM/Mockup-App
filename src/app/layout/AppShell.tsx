@@ -1,5 +1,7 @@
-import { ControlBindingProvider } from '@/ui/controls'
+import { ControlBindingProvider, HighlightContext } from '@/ui/controls'
+import { CommandPalette } from '@/features/search'
 import { appControlBinding } from '@/state/binding'
+import { useHighlightFade } from '../useHighlightFade'
 import { useShortcuts } from '../useShortcuts'
 import { Toolbar } from './Toolbar'
 import { Sidebar } from './Sidebar'
@@ -13,17 +15,21 @@ import styles from './AppShell.module.css'
  */
 export function AppShell() {
   useShortcuts()
+  const highlight = useHighlightFade()
 
   return (
     <ControlBindingProvider binding={appControlBinding}>
-      <div className={styles.shell}>
-        <Toolbar />
-        <div className={styles.body}>
-          <Sidebar />
-          <Viewport />
-          <Inspector />
+      <HighlightContext.Provider value={highlight}>
+        <div className={styles.shell}>
+          <Toolbar />
+          <div className={styles.body}>
+            <Sidebar />
+            <Viewport />
+            <Inspector />
+          </div>
         </div>
-      </div>
+        <CommandPalette />
+      </HighlightContext.Provider>
     </ControlBindingProvider>
   )
 }

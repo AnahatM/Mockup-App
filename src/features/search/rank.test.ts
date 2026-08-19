@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { groupItems, orderedItems, rankItems, scoreItem } from './rank'
-import type { SearchItem } from './types'
+import type { SearchGroup, SearchItem } from './types'
 
 const item = (over: Partial<SearchItem> & { title: string }): SearchItem => ({
   id: over.title,
@@ -97,5 +97,48 @@ describe('grouping', () => {
       'A device',
       'A doc',
     ])
+  })
+})
+
+describe('the empty query', () => {
+  const many = (group: SearchGroup, count: number): SearchItem[] =>
+    Array.from({ length: count }, (_, i) => ({
+      id: `${group}-${i}`,
+      title: `${group} ${i}`,
+      group,
+      icon: 'phone' as const,
+    }))
+
+  const index = [
+    ...many('Settings', 200),
+    ...many('Devices', 14),
+    ...many('Presets', 12),
+    ...many('Documentation', 17),
+    ...many('Pages', 10),
+  ]
+
+  it('advertises every group instead of filling up with the first one', () => {
+    const groups = new Set(rankItems(index, '').map((item) => item.group))
+    expect(groups).toEqual(
+      new Set(['Settings', 'Devices', 'Presets', 'Documentation', 'Pages']),
+    )
+  })
+
+  it('gives each group an equal share', () => {
+    const counts = new Map<string, number>()
+    for (const item of rankItems(index, '', 40)) {
+      counts.set(item.group, (counts.get(item.group) ?? 0) + 1)
+    }
+    expect([...counts.values()]).toEqual([8, 8, 8, 8, 8])
+  })
+
+  it('does not invent items for a group that has fewer than its share', () => {
+    const sparse = [...many('Settings', 50), ...many('Pages', 2)]
+    const pages = rankItems(sparse, '', 40).filter((i) => i.group === 'Pages')
+    expect(pages).toHaveLength(2)
+  })
+
+  it('still ranks normally once something is typed', () => {
+    expect(rankItems(index, 'Devices 3')[0]?.title).toBe('Devices 3')
   })
 })

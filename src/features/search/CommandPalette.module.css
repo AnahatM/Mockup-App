@@ -1,0 +1,133 @@
+.scrim {
+  position: fixed;
+  z-index: var(--z-modal);
+  display: flex;
+  justify-content: center;
+  padding-block-start: 12vh;
+  background: var(--scrim);
+  inset: 0;
+}
+
+.palette {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, calc(100vw - var(--space-8)));
+  max-height: 70vh;
+  overflow: hidden;
+  background: var(--surface-raised);
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
+}
+
+.searchRow {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-block-end: var(--hairline) solid var(--border-subtle);
+}
+
+.searchIcon {
+  flex: none;
+  color: var(--text-muted);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  font-size: var(--text-md);
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.kbd {
+  flex: none;
+  padding: 2px var(--space-2);
+  font-family: inherit;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-xs);
+}
+
+.results {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: var(--space-2);
+  overflow-y: auto;
+}
+
+.group + .group {
+  margin-block-start: var(--space-2);
+}
+
+.groupLabel {
+  padding: var(--space-1) var(--space-2);
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.result {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+  width: 100%;
+  padding: var(--space-2);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.resultActive {
+  background: var(--surface-hover);
+}
+
+.resultIcon {
+  flex: none;
+  align-self: center;
+  color: var(--text-muted);
+}
+
+.resultTitle {
+  flex: none;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+/*
+ * The trailing location line. It truncates rather than wraps, so a long panel
+ * path can never push a result row to two lines and break the rhythm of the list.
+ */
+.resultSubtitle {
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  text-align: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  padding: var(--space-6);
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+}

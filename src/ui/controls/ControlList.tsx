@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { cx } from '@/lib/cx'
 import { Icon } from '../Icon'
 import { ControlRow } from './ControlRow'
+import { useHighlight } from './HighlightContext'
 import styles from './rows/rows.module.css'
 import listStyles from './ControlList.module.css'
 import type { Control } from './types'
@@ -19,14 +20,28 @@ export function ControlList<S>({ controls, className }: ControlListProps<S>) {
   return (
     <div className={cx(listStyles.list, className)}>
       {controls.map((control, index) => (
-        <ControlRow
+        <HighlightableRow
           key={`${control.kind}:${control.label}:${index}`}
           control={control}
-          renderGroup={(group) => <ControlGroup control={group} />}
         />
       ))}
     </div>
   )
+}
+
+/**
+ * One row, wrapped only when it is the control search sent the user to. The
+ * wrapper is conditional so the common case adds no element to the DOM.
+ */
+function HighlightableRow<S>({ control }: { control: Control<S> }) {
+  const highlighted = useHighlight() === control.label
+  const row = (
+    <ControlRow
+      control={control}
+      renderGroup={(group) => <ControlGroup control={group} />}
+    />
+  )
+  return highlighted ? <div className={listStyles.highlight}>{row}</div> : row
 }
 
 function ControlGroup<S>({

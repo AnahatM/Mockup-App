@@ -57,6 +57,8 @@ export function rankItems(
   query: string,
   limit = 40,
 ): SearchItem[] {
+  if (!query.trim()) return spread(items, limit)
+
   const scored = items
     .map((item) => ({ item, score: scoreItem(item, query) }))
     .filter((entry) => entry.score > 0)
@@ -71,6 +73,43 @@ export function rankItems(
 
   return scored.slice(0, limit).map((entry) => entry.item)
 }
+
+/**
+ * The opening view, before anything is typed.
+ *
+ * Every item scores the same on an empty query, so a plain ranked slice would
+ * fill the entire list with whichever group sorts first — several hundred
+ * settings, and no sign that devices, presets or documentation are searchable
+ * at all. Dealing round-robin advertises the whole index, and still fills the
+ * list to the limit when a group has fewer items than its share.
+ */
+function spread(items: readonly SearchItem[], limit: number): SearchItem[] {
+  const buckets = SEARCH_GROUPS.map((group) =>
+    items
+      .filter((item) => item.group === group)
+      .sort((a, b) => a.title.localeCompare(b.title)),
+  )
+
+  const taken: SearchItem[] = []
+  for (let round = 0; taken.length < limit; round += 1) {
+    const before = taken.length
+    for (const bucket of buckets) {
+      if (taken.length >= limit) break
+      const item = bucket[round]
+      if (item) taken.push(item)
+    }
+    // A whole pass that added nothing means every bucket is exhausted.
+    if (taken.length === before) break
+  }
+
+  return sortByGroupThenTitle(taken)
+}
+
+const sortByGroupThenTitle = (items: SearchItem[]): SearchItem[] =>
+  items.sort((a, b) => {
+    const byGroup = SEARCH_GROUPS.indexOf(a.group) - SEARCH_GROUPS.indexOf(b.group)
+    return byGroup !== 0 ? byGroup : a.title.localeCompare(b.title)
+  })
 
 /** Groups results for display, preserving the group order. */
 export function groupItems(

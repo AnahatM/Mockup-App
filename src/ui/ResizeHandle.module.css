@@ -1,0 +1,46 @@
+.handle {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 0;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+/*
+ * The hit area is wider than the visible line and overhangs the panel edge, so
+ * the handle is easy to grab without pushing the panels apart visually.
+ */
+.handle::before {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--space-2) * -1);
+  width: calc(var(--space-2) * 2);
+  content: '';
+}
+
+.grip {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -1px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.handle:hover .grip,
+.handle:focus-visible .grip,
+.handle:active .grip {
+  opacity: 1;
+}
+
+.handle:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grip {
+    transition: none;
+  }
+}

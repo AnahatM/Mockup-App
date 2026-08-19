@@ -29,6 +29,15 @@ export interface UiState {
    * finished first switch the indicator off while the others were still running.
    */
   busyCount: number
+  /** The command palette. Ephemeral, never saved into a preset. */
+  paletteOpen: boolean
+  /**
+   * Label of a setting to flash after a search result took the user to it.
+   *
+   * Jumping to the right panel is not enough — a panel can hold thirty controls,
+   * and finding the one you searched for by eye defeats the point of searching.
+   */
+  highlight: string | null
 }
 
 export interface UiSlice {
@@ -40,6 +49,9 @@ export interface UiSlice {
   setInspectorWidth: (width: number) => void
   beginBusy: () => void
   endBusy: () => void
+  setPaletteOpen: (open: boolean) => void
+  focusSetting: (tab: InspectorTab, label: string) => void
+  clearHighlight: () => void
 }
 
 export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
@@ -50,6 +62,8 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
     sidebarWidth: 208,
     inspectorWidth: 304,
     busyCount: 0,
+    paletteOpen: false,
+    highlight: null,
   },
   setInspectorTab: (tab) =>
     set((draft) => {
@@ -83,6 +97,25 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
   endBusy: () =>
     set((draft) => {
       draft.ui.busyCount = Math.max(0, draft.ui.busyCount - 1)
+    }),
+
+  setPaletteOpen: (open) =>
+    set((draft) => {
+      draft.ui.paletteOpen = open
+    }),
+
+  /** Opens the panel a setting lives in, reveals it, and marks it for a flash. */
+  focusSetting: (tab, label) =>
+    set((draft) => {
+      draft.ui.inspectorTab = tab
+      draft.ui.inspectorOpen = true
+      draft.ui.paletteOpen = false
+      draft.ui.highlight = label
+    }),
+
+  clearHighlight: () =>
+    set((draft) => {
+      draft.ui.highlight = null
     }),
 })
 

@@ -1,5 +1,6 @@
 export { ControlList } from './ControlList'
 export { ControlBindingProvider } from './ControlBindingProvider'
 export { useControlBinding, type ControlBinding } from './ControlBindingContext'
+export { HighlightContext, useHighlight } from './HighlightContext'
 export * from './factories'
 export type * from './types'
