@@ -2,6 +2,8 @@ import type { Texture } from 'three'
 import { CameraBump } from './CameraBump'
 import { DeviceBody } from './DeviceBody'
 import { DeviceScreen } from './DeviceScreen'
+import { DeviceStand } from './DeviceStand'
+import { WatchBand } from './WatchBand'
 import { LaptopDevice } from './LaptopDevice'
 import { ScreenCutout } from './ScreenCutout'
 import { SideButtons } from './SideButtons'
@@ -65,6 +67,12 @@ export function ProceduralDevice({
       )}
 
       {config.showButtons && <SideButtons spec={spec} frameColor={config.frameColor} />}
+
+      {spec.stand && (
+        <DeviceStand spec={spec} stand={spec.stand} frameColor={config.frameColor} />
+      )}
+
+      {spec.band && <WatchBand spec={spec} band={spec.band} />}
 
       {config.showCameraBump && spec.cameraBump && (
         <CameraBump

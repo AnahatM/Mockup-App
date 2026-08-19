@@ -14,7 +14,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | #   | Requirement                                               | Delivered by                                                                                                      | Phase  | Status |
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ | ------ |
 | A1  | React + Vite + TypeScript app                             | scaffold retained and upgraded                                                                                    | P0     | DONE   |
-| A2  | Clean code patterns throughout                            | feature-sliced structure, pure `lib/`, barrel-only cross-feature imports                                          | all    | WIP    |
+| A2  | Clean code patterns throughout                            | feature-sliced structure, pure `lib/`, barrel-only cross-feature imports                                          | all    | DONE   |
 | A3  | Customizable themes                                       | `features/theme` + `[data-theme]` semantic token overrides                                                        | P0/P1  | DONE   |
 | A4  | Consistent CSS tokens                                     | 3 tiers: `primitives.css` -> `semantic.css` -> component modules                                                  | P0     | DONE   |
 | A5  | **No hardcoded CSS colors**                               | stylelint bans hex/rgb/hsl/named colors outside `src/styles/tokens/**`; build fails otherwise                     | P0     | DONE   |
@@ -22,7 +22,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | A7  | Modular components for reuse, customizability, fewer bugs | `ui/` design-system primitives, schema-driven panels, pure geometry builders                                      | P1/P3  | DONE   |
 | A8  | **Strict TypeScript**                                     | `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns` | P0     | DONE   |
 | A9  | Clean up boilerplate, start from a clean state            | delete template `App.tsx`, `App.css`, `assets/`, `icons.svg`                                                      | P0     | DONE   |
-| A10 | Document everything as we go                              | `docs/` plus ADRs plus per-feature READMEs, updated in the same commit as the code                                | all    | WIP    |
+| A10 | Document everything as we go                              | `docs/` plus ADRs plus per-feature READMEs, updated in the same commit as the code                                | all    | DONE   |
 | A11 | Plan first, then implement                                | `docs/PLAN.md`, approved before any code was written                                                              | pre-P0 | DONE   |
 | A12 | Download all libraries needed                             | full 3D, state, and validation stack installed locally                                                            | P0     | DONE   |
 | A13 | Use latest package versions where sensible                | all deps pinned to current latest; Node 22.14 already clears every floor                                          | P0     | DONE   |
@@ -31,12 +31,12 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                                 | Delivered by                                                                                          | Phase  | Status |
 | --- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ | ------ |
-| B1  | Mockup generator app                                        | the whole app                                                                                         | all    | TODO   |
+| B1  | Mockup generator app                                        | the whole app                                                                                         | all    | DONE   |
 | B2  | **Free and open source**                                    | MIT `LICENSE`, `CONTRIBUTING.md`, OSS-facing README                                                   | P0     | DONE   |
 | B3  | Generate mockups of websites and apps across device formats | device catalog plus screen pipeline                                                                   | P3-P5  | DONE   |
 | B4  | An all-in-one place for mockups                             | 3D devices, 2D window chrome, and export presets in one tool                                          | all    | DONE   |
 | B5  | **Runs fully locally**, no server and no network calls      | procedural geometry, procedural lighting (no CDN HDRI), local file handling, localStorage persistence | all    | DONE   |
-| B6  | Any type of mockup a user may want                          | broad catalog, custom device dimensions, GLB import seam                                              | P3/P11 | TODO   |
+| B6  | Any type of mockup a user may want                          | broad catalog, custom device dimensions, GLB import seam                                              | P3/P11 | DONE   |
 
 ## C. 3D scene
 
@@ -60,11 +60,11 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | --- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------ | ------ |
 | D1  | 3D models of iPhones                                       | `catalog/iphone-pro.ts`, `catalog/iphone-notch.ts`                                               | P3/P11 | DONE   |
 | D2  | Android phones                                             | `catalog/android-flagship.ts`                                                                    | P3     | DONE   |
-| D3  | **Samsung flip phones**                                    | `catalog/flip-open.ts`, `flip-closed.ts`, `fold-open.ts` with a hinge builder                    | P11    | TODO   |
+| D3  | **Samsung flip phones**                                    | `catalog/flip-open.ts`, `flip-closed.ts`, `fold-open.ts` with a hinge builder                    | P11    | DONE   |
 | D4  | MacBooks                                                   | `catalog/macbook-pro.ts`, `catalog/macbook-air.ts`                                               | P3/P11 | DONE   |
-| D5  | Laptops (generic)                                          | `catalog/laptop-generic.ts`                                                                      | P11    | TODO   |
-| D6  | Watches                                                    | `catalog/watch-square.ts`, `catalog/watch-round.ts`                                              | P11    | TODO   |
-| D7  | Tablets and desktops (the "etc." in the brief)             | `tablet-pro`, `tablet-mini`, `imac-style`, `monitor-27`                                          | P11    | TODO   |
+| D5  | Laptops (generic)                                          | `catalog/laptop-generic.ts`                                                                      | P11    | DONE   |
+| D6  | Watches                                                    | `catalog/watch-square.ts`, `catalog/watch-round.ts`                                              | P11    | DONE   |
+| D7  | Tablets and desktops (the "etc." in the brief)             | `tablet-pro`, `tablet-mini`, `imac-style`, `monitor-27`                                          | P11    | DONE   |
 | D8  | **Textures on products**, aluminum and titanium side rails | `materials/` procedural brushed-metal roughness, normal, and anisotropy maps generated on canvas | P3     | DONE   |
 | D9  | **Show the Dynamic Island / notch**                        | `builders/` cutout geometry, per-device and toggleable                                           | P3/P5  | DONE   |
 | D10 | **Show camera bumps** with plateau, lenses, and rings      | `builders/cameraBump.ts`                                                                         | P3     | DONE   |
@@ -120,7 +120,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | #   | Requirement                                       | Delivered by                                                                                  | Phase | Status |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----- | ------ |
 | I1  | **Minimalist** app style                          | quiet chrome, hairline borders, near-shadowless surfaces                                      | P0/P1 | DONE   |
-| I2  | **Chalk theme**, light/dark switchable            | warm-paper and soft-charcoal ramps, with no pure black or pure white anywhere                 | P0/P1 | WIP    |
+| I2  | **Chalk theme**, light/dark switchable            | warm-paper and soft-charcoal ramps, with no pure black or pure white anywhere                 | P0/P1 | DONE   |
 | I3  | **Focus off the app, on the product and visuals** | the viewport dominates, panels recede and collapse, and the UI theme never affects the render | P1    | DONE   |
 
 ---

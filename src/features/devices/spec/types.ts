@@ -99,6 +99,31 @@ export interface HingeSpec {
   trackpad?: { width: number; height: number; y: number }
 }
 
+/** Desktops and monitors: a neck rising from a foot on the desk. */
+export interface StandSpec {
+  neckWidth: number
+  neckDepth: number
+  neckHeight: number
+  baseWidth: number
+  baseDepth: number
+  baseHeight: number
+  /** Backward lean of the display, in degrees. */
+  tilt?: number
+}
+
+/** Watches: a strap swept along a curve away from the case. */
+export interface BandSpec {
+  width: number
+  thickness: number
+  /** Length of each half, measured along the curve. */
+  length: number
+  /** How far the strap curves back behind the wrist. */
+  curve: number
+  /** Narrowing toward the free end, 0-1. */
+  taper?: number
+  material?: FinishKind
+}
+
 export interface Colorway {
   id: string
   label: string
@@ -138,6 +163,8 @@ export interface DeviceSpec {
   supportedOverlays: readonly OverlayKind[]
   cameraBump?: CameraBumpSpec
   hinge?: HingeSpec
+  stand?: StandSpec
+  band?: BandSpec
   /** Screen aspect, used to letterbox uploaded media sensibly. */
   screenAspect?: number
 }

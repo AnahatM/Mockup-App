@@ -11,24 +11,61 @@ export interface DeviceFraming {
 }
 
 /**
+ * How far the assembly extends below the body's centre, in millimetres.
+ *
+ * A device is modelled centred on its body, but a stand hangs below it and a
+ * watch strap sweeps past it. Without accounting for that, a monitor floats and
+ * a watch band sinks through the pedestal.
+ */
+export function groundOffsetMm(spec: DeviceSpec): number {
+  if (spec.hinge) return 0
+
+  const stand = spec.stand ? spec.stand.neckHeight + spec.stand.baseHeight : 0
+  // The strap curves backward as it goes, so its vertical reach is less than
+  // its length along the curve.
+  const band = spec.band ? spec.band.length * 0.82 : 0
+
+  return spec.body.height / 2 + stand + band
+}
+
+/** Total extent of the assembly in each axis, in millimetres. */
+function extentMm(spec: DeviceSpec): { x: number; y: number; z: number } {
+  const { width, height, depth } = spec.body
+
+  if (spec.hinge) {
+    // Open clamshell: the lid stands up and the base runs back along the desk.
+    return { x: width, y: height * 0.82, z: spec.hinge.base.height }
+  }
+
+  const stand = spec.stand ? spec.stand.neckHeight + spec.stand.baseHeight : 0
+  const bandY = spec.band ? spec.band.length * 0.82 * 2 : 0
+  const bandZ = spec.band ? spec.band.curve : 0
+  const standZ = spec.stand ? spec.stand.baseDepth : 0
+
+  return {
+    x: Math.max(width, spec.stand?.baseWidth ?? 0),
+    y: height + stand + bandY,
+    z: Math.max(depth, bandZ, standZ),
+  }
+}
+
+/**
  * Suggests camera framing for a device.
  *
- * A phone is ~150mm tall and a laptop ~310mm wide, so a single fixed camera
- * either crops the laptop or leaves the phone as a speck. Distance is derived
+ * A phone is ~150mm tall and a monitor ~600mm wide, so a single fixed camera
+ * either crops the monitor or leaves the phone as a speck. Distance is derived
  * from the device's own bounding size and the field of view, which means a new
  * device in the catalogue is framed correctly without anyone tuning numbers.
  */
 export function frameDevice(spec: DeviceSpec, fovDegrees: number): DeviceFraming {
-  const { width, height, depth } = spec.body
+  const extent = extentMm(spec)
+  const extentX = extent.x * MM_TO_UNITS
+  const extentY = extent.y * MM_TO_UNITS
+  const extentZ = extent.z * MM_TO_UNITS
 
-  // Overall extent, and the height of the visual centre above the pedestal.
-  const isClamshell = spec.hinge !== undefined
-  const extentX = width * MM_TO_UNITS
-  const extentY = (isClamshell ? height * 0.82 : height) * MM_TO_UNITS
-  const extentZ = (isClamshell ? height : depth) * MM_TO_UNITS
-  const centreY = isClamshell ? extentY * 0.52 : extentY / 2
+  // The assembly rests on the pedestal, so its centre is half its height up.
+  const centreY = spec.hinge ? extentY * 0.52 : extentY / 2
 
-  // Fit the larger of width and height, with headroom, at the given fov.
   const fov = (fovDegrees * Math.PI) / 180
   const radius = Math.max(extentX, extentY, extentZ) / 2
   const distance = (radius * 1.5) / Math.tan(fov / 2) + extentZ * 0.5
@@ -43,11 +80,25 @@ export function frameDevice(spec: DeviceSpec, fovDegrees: number): DeviceFraming
 /**
  * A pedestal radius that suits the device's footprint, in scene units.
  *
- * A disc sized for a phone leaves a laptop hanging off both edges, so this
+ * A disc sized for a phone leaves a monitor hanging off both edges, so this
  * scales with the device for the same reason the camera does.
  */
 export function pedestalRadiusFor(spec: DeviceSpec): number {
-  const footprintDepth = spec.hinge ? spec.hinge.base.height : spec.body.depth
-  const footprint = Math.max(spec.body.width, footprintDepth)
+  const extent = extentMm(spec)
+  const footprintDepth = spec.hinge ? spec.hinge.base.height : extent.z
+  const footprint = Math.max(extent.x, footprintDepth)
   return Number((footprint * 0.85 * MM_TO_UNITS).toFixed(3))
+}
+
+/**
+ * Contact-shadow extent for the device, in scene units.
+ *
+ * The shadow is drawn on a finite plane, so one sized for a phone shows its own
+ * straight edge behind a monitor. Scaling it with the device keeps the fade
+ * off-frame.
+ */
+export function shadowScaleFor(spec: DeviceSpec): number {
+  const extent = extentMm(spec)
+  const footprint = Math.max(extent.x, spec.hinge ? spec.hinge.base.height : extent.z)
+  return Number(Math.max(3, footprint * 2.4 * MM_TO_UNITS).toFixed(2))
 }

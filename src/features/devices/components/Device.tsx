@@ -2,6 +2,7 @@ import { useFramedTexture } from '@/features/flat'
 import { mediaAspect, useScreenTexture } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'
+import { groundOffsetMm } from '../spec/framing'
 import { resolveDevice } from '../spec/registry'
 import { ProceduralDevice } from './ProceduralDevice'
 
@@ -24,9 +25,10 @@ export function Device() {
   const texture = framed.texture ?? media
   const screenAspect = framed.texture ? framed.aspect : mediaAspect(source)
 
-  // A clamshell already places its own base on the pedestal; a slab device is
-  // modelled centred on its body, so it needs lifting by half its height.
-  const restingHeight = spec.hinge ? 0 : (spec.body.height / 2) * MM_TO_UNITS
+  // A clamshell places its own base on the pedestal. Everything else is modelled
+  // centred on its body, so it is lifted by however far the assembly reaches
+  // below that centre — half the body, plus any stand or watch strap.
+  const restingHeight = groundOffsetMm(spec) * MM_TO_UNITS
 
   return (
     <group

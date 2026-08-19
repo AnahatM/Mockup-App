@@ -1,5 +1,6 @@
 import { ControlBindingProvider } from '@/ui/controls'
 import { appControlBinding } from '@/state/binding'
+import { useShortcuts } from '../useShortcuts'
 import { Toolbar } from './Toolbar'
 import { Sidebar } from './Sidebar'
 import { Viewport } from './Viewport'
@@ -11,6 +12,8 @@ import styles from './AppShell.module.css'
  * inspector. Composition only — every piece of logic lives in its own module.
  */
 export function AppShell() {
+  useShortcuts()
+
   return (
     <ControlBindingProvider binding={appControlBinding}>
       <div className={styles.shell}>

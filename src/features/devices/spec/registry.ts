@@ -1,15 +1,44 @@
 import { androidFlagship } from '../catalog/android-flagship'
+import { flipClosed } from '../catalog/flip-closed'
+import { flipOpen } from '../catalog/flip-open'
+import { foldOpen } from '../catalog/fold-open'
+import { imacStyle } from '../catalog/imac-style'
+import { iphoneNotch } from '../catalog/iphone-notch'
 import { iphonePro } from '../catalog/iphone-pro'
+import { laptopGeneric } from '../catalog/laptop-generic'
+import { macbookAir } from '../catalog/macbook-air'
 import { macbookPro } from '../catalog/macbook-pro'
+import { monitor27 } from '../catalog/monitor-27'
+import { tabletMini } from '../catalog/tablet-mini'
+import { tabletPro } from '../catalog/tablet-pro'
+import { watchRound } from '../catalog/watch-round'
+import { watchSquare } from '../catalog/watch-square'
 import type { Colorway, DeviceSpec } from './types'
 
 /**
  * The device catalogue.
  *
  * Adding a device is: write a spec file, add it here. Nothing else in the app
- * needs to change — the rail, the picker and the renderer all read from this.
+ * needs to change — the rail, the picker, the camera framing and the pedestal
+ * all read from this. Order determines the order in the device rail.
  */
-export const DEVICES: readonly DeviceSpec[] = [iphonePro, androidFlagship, macbookPro]
+export const DEVICES: readonly DeviceSpec[] = [
+  iphonePro,
+  iphoneNotch,
+  androidFlagship,
+  flipOpen,
+  flipClosed,
+  foldOpen,
+  tabletPro,
+  tabletMini,
+  macbookPro,
+  macbookAir,
+  laptopGeneric,
+  imacStyle,
+  monitor27,
+  watchSquare,
+  watchRound,
+]
 
 const BY_ID = new Map(DEVICES.map((device) => [device.id, device]))
 
@@ -30,7 +59,7 @@ export function findColorway(spec: DeviceSpec, id: string): Colorway | undefined
   return spec.colorways.find((colorway) => colorway.id === id)
 }
 
-/** Groups the catalogue for the device rail. */
+/** Groups the catalogue for the device rail, preserving catalogue order. */
 export function devicesByCategory(): ReadonlyMap<string, readonly DeviceSpec[]> {
   const groups = new Map<string, DeviceSpec[]>()
   for (const device of DEVICES) {

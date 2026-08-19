@@ -3,7 +3,13 @@ export { DeviceRail } from './components/DeviceRail'
 export { ColorwayPicker } from './components/ColorwayPicker'
 export { deviceConfigSchema, type DeviceConfig } from './schema'
 export { configForDevice, defaultDeviceConfig } from './spec/defaults'
-export { frameDevice, pedestalRadiusFor, type DeviceFraming } from './spec/framing'
+export {
+  frameDevice,
+  groundOffsetMm,
+  pedestalRadiusFor,
+  shadowScaleFor,
+  type DeviceFraming,
+} from './spec/framing'
 export {
   DEVICES,
   devicesByCategory,

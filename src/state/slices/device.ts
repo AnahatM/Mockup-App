@@ -4,6 +4,7 @@ import {
   findColorway,
   frameDevice,
   pedestalRadiusFor,
+  shadowScaleFor,
   resolveDevice,
   type DeviceConfig,
 } from '@/features/devices'
@@ -33,6 +34,7 @@ export const createDeviceSlice: SliceCreator<DeviceSlice> = (set) => ({
       draft.camera.position = framing.position
       draft.camera.preset = 'auto'
       draft.scene.pedestal.radius = pedestalRadiusFor(spec)
+      draft.scene.shadow.scale = shadowScaleFor(spec)
     }),
 
   selectColorway: (colorwayId) =>

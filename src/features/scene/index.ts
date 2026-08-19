@@ -1,4 +1,5 @@
 export { SceneCanvas } from './SceneCanvas'
+export { hasWebGL } from './hasWebGL'
 export {
   sceneSchema,
   defaultScene,
