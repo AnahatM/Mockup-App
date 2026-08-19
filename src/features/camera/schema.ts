@@ -8,7 +8,22 @@ import { vec3Schema } from '@/lib/schema/primitives'
  * device specs writable in real millimetres while leaving camera and light
  * distances in comfortable single digits.
  */
+/**
+ * How the viewport navigates.
+ *
+ * `orbit` always circles a target, which is right for inspecting a product but
+ * cannot get *behind* the camera's own pivot. `fly` releases it: WASD moves,
+ * dragging looks, and the camera goes wherever you point it.
+ */
+export const CAMERA_MODES = ['orbit', 'fly'] as const
+export type CameraMode = (typeof CAMERA_MODES)[number]
+
 export const cameraSchema = z.object({
+  mode: z.enum(CAMERA_MODES).default('orbit'),
+  /** Metres per second in fly mode. */
+  flySpeed: z.number().min(0.1).max(20).default(2.4),
+  /** Look sensitivity in fly mode. */
+  flyLook: z.number().min(0.05).max(4).default(0.9),
   preset: z.string().default('hero'),
   position: vec3Schema.default([1.9, 1.45, 4.1]),
   target: vec3Schema.default([0, 0.7, 0]),

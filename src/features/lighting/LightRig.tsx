@@ -26,19 +26,29 @@ export function LightRig() {
   return (
     <>
       <ambientLight intensity={lighting.ambient} />
-      <Environment
-        key={bakeKey}
-        frames={1}
-        resolution={lighting.resolution}
-        environmentIntensity={lighting.environmentIntensity}
-      >
-        {/* The room first: it sets the base luminance every other reflection
-            sits on top of. */}
-        <EnvironmentDome room={lighting.room} />
-        {active.map((light) => (
-          <StudioLight key={light.id} light={light} />
-        ))}
-      </Environment>
+      {lighting.hdri ? (
+        /* A real environment map replaces the procedural room entirely — the
+           point of loading one is its own light, not a blend with ours. */
+        <Environment
+          files={lighting.hdri.url}
+          environmentIntensity={lighting.environmentIntensity}
+          environmentRotation={[0, lighting.hdriRotation, 0]}
+        />
+      ) : (
+        <Environment
+          key={bakeKey}
+          frames={1}
+          resolution={lighting.resolution}
+          environmentIntensity={lighting.environmentIntensity}
+        >
+          {/* The room first: it sets the base luminance every other reflection
+              sits on top of. */}
+          <EnvironmentDome room={lighting.room} />
+          {active.map((light) => (
+            <StudioLight key={light.id} light={light} />
+          ))}
+        </Environment>
+      )}
     </>
   )
 }

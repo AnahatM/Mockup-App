@@ -1,5 +1,6 @@
-import { color, slider, toggle } from '@/ui/controls'
+import { color, custom, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
+import { HdriPicker } from '@/features/lighting'
 import type { AppState } from '@/state/types'
 
 /**
@@ -9,11 +10,31 @@ import type { AppState } from '@/state/types'
  * is what makes a dark device read as painted vantablack and stops a camera lens
  * looking like glass. See features/lighting/EnvironmentDome.
  */
-const roomOff = (state: AppState) => !state.lighting.room.enabled
+const usingHdri = (state: AppState) => state.lighting.hdri !== null
+const roomOff = (state: AppState) => !state.lighting.room.enabled || usingHdri(state)
 
 export const roomControls: readonly Control<AppState>[] = [
+  custom({
+    label: 'Environment map',
+    bare: true,
+    render: () => <HdriPicker />,
+  }),
+  slider({
+    label: 'Map rotation',
+    hint: 'Turns the environment to move its light.',
+    min: -180,
+    max: 180,
+    step: 1,
+    unit: '°',
+    visible: usingHdri,
+    select: (s) => (s.lighting.hdriRotation * 180) / Math.PI,
+    update: (d, v) => {
+      d.lighting.hdriRotation = (v * Math.PI) / 180
+    },
+  }),
   toggle({
     label: 'Room',
+    visible: (s) => !usingHdri(s),
     hint: 'Soft light from every direction, as a light tent gives.',
     select: (s) => s.lighting.room.enabled,
     update: (d, v) => {
@@ -23,6 +44,7 @@ export const roomControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Room light',
+    visible: (s) => !usingHdri(s),
     min: 0,
     max: 3,
     step: 0.01,
@@ -35,6 +57,7 @@ export const roomControls: readonly Control<AppState>[] = [
   }),
   color({
     label: 'Ceiling',
+    visible: (s) => !usingHdri(s),
     disabled: roomOff,
     select: (s) => s.lighting.room.top,
     update: (d, v) => {
@@ -44,6 +67,7 @@ export const roomControls: readonly Control<AppState>[] = [
   }),
   color({
     label: 'Horizon',
+    visible: (s) => !usingHdri(s),
     disabled: roomOff,
     select: (s) => s.lighting.room.horizon,
     update: (d, v) => {
@@ -53,6 +77,7 @@ export const roomControls: readonly Control<AppState>[] = [
   }),
   color({
     label: 'Floor',
+    visible: (s) => !usingHdri(s),
     disabled: roomOff,
     select: (s) => s.lighting.room.bottom,
     update: (d, v) => {
@@ -62,6 +87,7 @@ export const roomControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Reflection detail',
+    visible: (s) => !usingHdri(s),
     hint: 'Cubemap resolution. Low values make polished surfaces sparkle.',
     min: 128,
     max: 1024,

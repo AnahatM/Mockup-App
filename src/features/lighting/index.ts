@@ -1,6 +1,7 @@
 export { LightRig } from './LightRig'
 export { LightHelpers } from './LightHelpers'
 export { EnvironmentDome } from './EnvironmentDome'
+export { HdriPicker } from './HdriPicker'
 export {
   LIGHTING_PRESETS,
   applyLightingPreset,
@@ -16,4 +17,5 @@ export {
   type LightForm,
   type LightingConfig,
   type RoomConfig,
+  type HdriSource,
 } from './schema'

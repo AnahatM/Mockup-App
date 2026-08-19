@@ -47,8 +47,25 @@ export const roomSchema = z.object({
 
 export type RoomConfig = z.infer<typeof roomSchema>
 
+/**
+ * A user-supplied environment map.
+ *
+ * `url` is a session-scoped object URL, so this is not part of a saved preset —
+ * only the name is kept, so a reloaded preset can say what it was built with.
+ */
+export const hdriSchema = z.object({
+  url: z.string(),
+  name: z.string().max(200),
+})
+
+export type HdriSource = z.infer<typeof hdriSchema>
+
 export const lightingSchema = z.object({
   room: roomSchema.prefault({}),
+  /** When set, replaces the procedural room with a real environment map. */
+  hdri: hdriSchema.nullable().default(null),
+  /** Rotates the environment map, to place its light where you want it. */
+  hdriRotation: z.number().min(-Math.PI).max(Math.PI).default(0),
   /** Name of the applied preset, or 'custom' once the user edits a light. */
   preset: z.string().default('studio'),
   /** Overall strength of the generated environment map. */

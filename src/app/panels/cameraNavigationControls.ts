@@ -1,11 +1,50 @@
-import { slider, toggle } from '@/ui/controls'
+import { segmented, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
+import { CAMERA_MODES, type CameraMode } from '@/features/camera'
 import type { AppState } from '@/state/types'
 
 /** Viewport navigation: what the mouse does and how fast. */
+const isOrbit = (state: AppState) => state.camera.mode === 'orbit'
+const isFly = (state: AppState) => state.camera.mode === 'fly'
+
 export const navigationControls: readonly Control<AppState>[] = [
+  segmented<AppState, CameraMode>({
+    label: 'Mode',
+    hint: 'Orbit circles the product. Fly goes anywhere: WASD, R/F, drag to look.',
+    options: CAMERA_MODES.map((value) => ({
+      value,
+      label: value === 'orbit' ? 'Orbit' : 'Fly',
+    })),
+    select: (s) => s.camera.mode,
+    update: (d, v) => {
+      d.camera.mode = v
+    },
+  }),
+  slider({
+    label: 'Fly speed',
+    min: 0.1,
+    max: 20,
+    step: 0.1,
+    visible: isFly,
+    select: (s) => s.camera.flySpeed,
+    update: (d, v) => {
+      d.camera.flySpeed = v
+    },
+  }),
+  slider({
+    label: 'Look speed',
+    min: 0.05,
+    max: 4,
+    step: 0.05,
+    visible: isFly,
+    select: (s) => s.camera.flyLook,
+    update: (d, v) => {
+      d.camera.flyLook = v
+    },
+  }),
   toggle({
     label: 'Orbit',
+    visible: isOrbit,
     select: (s) => s.camera.enableRotate,
     update: (d, v) => {
       d.camera.enableRotate = v
@@ -13,6 +52,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   toggle({
     label: 'Pan',
+    visible: isOrbit,
     select: (s) => s.camera.enablePan,
     update: (d, v) => {
       d.camera.enablePan = v
@@ -20,6 +60,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   toggle({
     label: 'Zoom',
+    visible: isOrbit,
     select: (s) => s.camera.enableZoom,
     update: (d, v) => {
       d.camera.enableZoom = v
@@ -27,6 +68,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Orbit speed',
+    visible: isOrbit,
     min: 0.1,
     max: 3,
     step: 0.05,
@@ -37,6 +79,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Pan speed',
+    visible: isOrbit,
     min: 0.1,
     max: 3,
     step: 0.05,
@@ -47,6 +90,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Zoom speed',
+    visible: isOrbit,
     min: 0.1,
     max: 3,
     step: 0.05,
@@ -57,6 +101,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   toggle({
     label: 'Screen-space pan',
+    visible: isOrbit,
     hint: 'Pan across the view plane, as in a 3D editor.',
     select: (s) => s.camera.screenSpacePanning,
     update: (d, v) => {
@@ -65,6 +110,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   toggle({
     label: 'Orbit below floor',
+    visible: isOrbit,
     select: (s) => s.camera.orbitBelowFloor,
     update: (d, v) => {
       d.camera.orbitBelowFloor = v
@@ -72,6 +118,7 @@ export const navigationControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Damping',
+    visible: isOrbit,
     hint: 'Higher is snappier.',
     min: 0.01,
     max: 1,

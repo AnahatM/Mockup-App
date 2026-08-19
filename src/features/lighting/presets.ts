@@ -147,7 +147,10 @@ export function findLightingPreset(id: string): LightingPreset | undefined {
  */
 export function applyLightingPreset(
   preset: LightingPreset,
-  current?: Pick<LightingConfig, 'resolution' | 'showHelpers'>,
+  current?: Pick<
+    LightingConfig,
+    'resolution' | 'showHelpers' | 'hdri' | 'hdriRotation'
+  >,
 ): LightingConfig {
   return {
     preset: preset.id,
@@ -156,6 +159,9 @@ export function applyLightingPreset(
     resolution: current?.resolution ?? 512,
     showHelpers: current?.showHelpers ?? false,
     room: roomSchema.parse(preset.room ?? {}),
+    // An environment map is a loaded file, not part of a look.
+    hdri: current?.hdri ?? null,
+    hdriRotation: current?.hdriRotation ?? 0,
     lights: preset.lights.map((light) => ({
       enabled: true,
       visibleInBackground: false,

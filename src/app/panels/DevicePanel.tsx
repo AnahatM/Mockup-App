@@ -1,7 +1,7 @@
 import { Panel } from '@/ui'
 import { ControlList, angle, color, custom, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
-import { ColorwayPicker, resolveDevice } from '@/features/devices'
+import { ColorwayPicker, PaintPicker, resolveDevice } from '@/features/devices'
 import type { AppState } from '@/state/types'
 
 /** Model, finish, orientation, and which physical details are shown. */
@@ -18,6 +18,7 @@ const hasButtons = (state: AppState) =>
 
 const finishControls: readonly Control<AppState>[] = [
   custom({ label: 'Colourway', bare: true, render: () => <ColorwayPicker /> }),
+  custom({ label: 'Paint', bare: true, render: () => <PaintPicker /> }),
   color({
     label: 'Body',
     select: (s) => s.device.bodyColor,

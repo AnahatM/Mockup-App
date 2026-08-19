@@ -19,7 +19,8 @@ export function CameraPanel() {
       </Panel>
       <Panel title="Navigation" defaultOpen={false}>
         <p className={styles.help}>
-          Drag to orbit · right or middle drag to pan · scroll to zoom
+          Orbit: drag to turn · right or middle drag to pan · scroll to zoom. Fly: WASD
+          to move · R and F for height · drag to look.
         </p>
         <ControlList controls={navigationControls} />
       </Panel>

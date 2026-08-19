@@ -1,6 +1,8 @@
 export { Device } from './components/Device'
 export { DeviceRail } from './components/DeviceRail'
 export { ColorwayPicker } from './components/ColorwayPicker'
+export { PaintPicker } from './components/PaintPicker'
+export { PAINT_COLORS, railColorFor, type PaintColor } from './paint'
 export { deviceConfigSchema, type DeviceConfig } from './schema'
 export { configForDevice, defaultDeviceConfig } from './spec/defaults'
 export {

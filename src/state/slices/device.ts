@@ -4,6 +4,7 @@ import {
   findColorway,
   frameDevice,
   pedestalRadiusFor,
+  railColorFor,
   shadowScaleFor,
   resolveDevice,
   type DeviceConfig,
@@ -14,6 +15,8 @@ export interface DeviceSlice {
   device: DeviceConfig
   selectDevice: (specId: string) => void
   selectColorway: (colorwayId: string) => void
+  /** Paints the body any colour, deriving a matching rail. */
+  paintDevice: (hex: string) => void
   resetDevice: () => void
 }
 
@@ -44,6 +47,13 @@ export const createDeviceSlice: SliceCreator<DeviceSlice> = (set) => ({
       draft.device.colorway = colorwayId
       draft.device.bodyColor = colorway.body
       draft.device.frameColor = colorway.frame ?? colorway.body
+    }),
+
+  paintDevice: (hex) =>
+    set((draft) => {
+      draft.device.bodyColor = hex
+      draft.device.frameColor = railColorFor(hex)
+      draft.device.colorway = 'custom'
     }),
 
   resetDevice: () =>

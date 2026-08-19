@@ -4,6 +4,7 @@ import { useThree } from '@react-three/fiber'
 import { MOUSE, PerspectiveCamera, TOUCH } from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { useAppStore } from '@/state/store'
+import { FlyCamera } from './FlyCamera'
 
 /** Editor-style bindings: orbit with left, pan with middle or right, wheel zooms. */
 const MOUSE_BUTTONS = {
@@ -46,6 +47,10 @@ export function CameraRig() {
     canvas.addEventListener('contextmenu', suppress)
     return () => canvas.removeEventListener('contextmenu', suppress)
   }, [canvas])
+
+  // Fly mode replaces the orbit rig entirely; two sets of controls fighting over the
+  // same camera produces jitter rather than a blend.
+  if (camera.mode === 'fly') return <FlyCamera />
 
   return (
     <OrbitControls

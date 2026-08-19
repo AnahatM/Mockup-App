@@ -11,6 +11,8 @@ export interface LightingSlice {
   addLight: () => void
   removeLight: (id: string) => void
   duplicateLight: (id: string) => void
+  setHdri: (url: string, name: string) => void
+  clearHdri: () => void
   resetLighting: () => void
 }
 
@@ -51,6 +53,19 @@ export const createLightingSlice: SliceCreator<LightingSlice> = (set) => ({
       draft.lighting.lights.push(cloneLight(found))
       draft.lighting.preset = 'custom'
     }),
+  /** Revokes the previous object URL so switching maps does not leak them. */
+  setHdri: (url, name) =>
+    set((draft) => {
+      if (draft.lighting.hdri) URL.revokeObjectURL(draft.lighting.hdri.url)
+      draft.lighting.hdri = { url, name }
+    }),
+
+  clearHdri: () =>
+    set((draft) => {
+      if (draft.lighting.hdri) URL.revokeObjectURL(draft.lighting.hdri.url)
+      draft.lighting.hdri = null
+    }),
+
   resetLighting: () =>
     set((draft) => {
       draft.lighting = defaultLighting()
