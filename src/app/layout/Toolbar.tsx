@@ -1,5 +1,6 @@
 import { Button, Icon, IconButton } from '@/ui'
 import { useAppStore } from '@/state/store'
+import { HistoryControls } from './HistoryControls'
 import { PlaybackControls } from './PlaybackControls'
 import { ViewportControls } from './ViewportControls'
 import styles from './Toolbar.module.css'
@@ -41,6 +42,7 @@ export function Toolbar() {
 
       <ViewportControls />
       <PlaybackControls />
+      <HistoryControls />
 
       <div className={styles.spacer} />
 

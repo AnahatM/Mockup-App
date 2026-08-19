@@ -42,12 +42,12 @@
   --chalk-200: #c9ced0;
 
   /* ---- Accent: dusty indigo. Muted on purpose — it marks state, it does not shout. ---- */
-  --accent-200: #c3ccdf;
-  --accent-300: #a3b0cc;
-  --accent-400: #8494bb;
-  --accent-500: #6a7ca8;
-  --accent-600: #56688f;
-  --accent-700: #445474;
+  --accent-200: #bfcbee;
+  --accent-300: #92a8e2;
+  --accent-400: #6684d6;
+  --accent-500: #365dc9;
+  --accent-600: #2d4ea9;
+  --accent-700: #243f89;
 
   /* ---- Status: desaturated so they sit inside the chalk palette ---- */
   --sage-400: #86a486;

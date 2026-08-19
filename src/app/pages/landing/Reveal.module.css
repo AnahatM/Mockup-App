@@ -1,0 +1,20 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Never let a scroll effect hide content from print or a page capture. */
+@media print {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

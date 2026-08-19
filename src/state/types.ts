@@ -4,6 +4,7 @@ import type { CameraSlice } from './slices/camera'
 import type { DeviceSlice } from './slices/device'
 import type { ExportSlice } from './slices/exportConfig'
 import type { FlatSlice } from './slices/flat'
+import type { HistorySlice } from './slices/history'
 import type { LightingSlice } from './slices/lighting'
 import type { MediaSlice } from './slices/media'
 import type { OverlaysSlice } from './slices/overlays'
@@ -28,7 +29,8 @@ export type AppState = UiSlice &
   AnimationSlice &
   ExportSlice &
   FlatSlice &
-  PresetsSlice
+  PresetsSlice &
+  HistorySlice
 
 /** Slice signature, pre-bound to the immer middleware. */
 export type SliceCreator<T> = StateCreator<AppState, [['zustand/immer', never]], [], T>

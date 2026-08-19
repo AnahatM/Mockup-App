@@ -11,24 +11,24 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 
 | # | Task | Status |
 |---|---|---|
-| S1 | Landing page: flashier, more presentable, room for screenshots/illustrations | TODO |
-| S2 | Landing page: textured background, halftone dot shading, depth effect | TODO |
-| S3 | Landing page: interaction effects (hover, parallax, reveal) | TODO |
-| S4 | "Made by Anahat Mudgal" at top of landing, linking to anahatmudgal.com | TODO |
-| S5 | Main navbar stays visible on the studio route — do not swap it for a studio bar | TODO |
-| S6 | Studio controls bar sits *under* the main navbar | TODO |
-| S7 | More controls in the studio toolbar | TODO |
-| S8 | Viewport controls in the toolbar: zoom in/out, reset, fit, pan, rotate | TODO |
-| S9 | Icons on every tool, page link and button (GitHub icon on "View source", nav icons) | TODO |
-| S10 | Footer: cleaner, gradient shading | TODO |
-| S11 | Screenshot slots on docs and about pages | TODO |
+| S1 | Landing page: flashier, more presentable, room for screenshots/illustrations | DONE |
+| S2 | Landing page: textured background, halftone dot shading, depth effect | DONE |
+| S3 | Landing page: interaction effects (hover, parallax, reveal) | DONE |
+| S4 | "Made by Anahat Mudgal" at top of landing, linking to anahatmudgal.com | DONE |
+| S5 | Main navbar stays visible on the studio route — do not swap it for a studio bar | DONE |
+| S6 | Studio controls bar sits *under* the main navbar | DONE |
+| S7 | More controls in the studio toolbar | DONE |
+| S8 | Viewport controls in the toolbar: zoom in/out, reset, fit, pan, rotate | DONE |
+| S9 | Icons on every tool, page link and button (GitHub icon on "View source", nav icons) | DONE |
+| S10 | Footer: cleaner, gradient shading | DONE |
+| S11 | Screenshot slots on docs and about pages | DONE |
 | S12 | Capture real screenshots of the app for those slots | TODO |
-| S13 | Studio first paint: spinner/loading state instead of a blank viewport | TODO |
-| S14 | Dark theme grey is washed out — raise saturation | TODO |
-| S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | TODO |
-| S16 | Palette reads too yellow/brown — move the whole scheme cool, blue/green | TODO |
-| S17 | Studio toolbar controls left-aligned, not spread across the bar | TODO |
-| S18 | Tooltips must flip/clamp so they stay on screen near any viewport edge | TODO |
+| S13 | Studio first paint: spinner/loading state instead of a blank viewport | DONE |
+| S14 | Dark theme grey is washed out — raise saturation | DONE |
+| S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | DONE |
+| S16 | Palette reads too yellow/brown — move the whole scheme cool, blue/green | DONE |
+| S17 | Studio toolbar controls left-aligned, not spread across the bar | DONE |
+| S18 | Tooltips must flip/clamp so they stay on screen near any viewport edge | DONE |
 
 ## Mockup features
 
@@ -40,7 +40,8 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F4 | Image cropping before the screenshot reaches the device (#26) | TODO |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | TODO |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
-| F7 | Recent uploads — keep the last few screenshots so the user can switch between them | TODO |
+| F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | TODO |
+| F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
 
 ## UX and robustness
 
@@ -68,9 +69,9 @@ things paid products do that we should match or beat.
 | C4 | Layout preset gallery with live thumbnails, not just a names list | TODO |
 | C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | TODO |
 | C6 | Separate Zoom and Tilt controls with a live preview | TODO |
-| C7 | Undo / redo | TODO |
-| C8 | "Start over" — reset the whole scene, behind a confirmation | TODO |
-| C9 | Copy the export straight to the clipboard | TODO |
+| C7 | Undo / redo | DONE |
+| C8 | "Start over" — reset the whole scene, behind a confirmation | DONE |
+| C9 | Copy the export straight to the clipboard | DONE |
 | C10 | Export scale selector shown inline on the export button (1x/2x/4x) | TODO |
 | C11 | "Hide mockup" — render the screenshot on the backdrop with no device | TODO |
 | C12 | Gradient backdrop presets that adapt to the uploaded media | TODO |
@@ -80,7 +81,7 @@ things paid products do that we should match or beat.
 
 | # | Task | Status |
 |---|---|---|
-| P1 | README in the `anahat-readme` house style (backlog #28) | TODO |
+| P1 | README in the `anahat-readme` house style (backlog #28) | DONE |
 | P2 | Organise `docs/` into folders | DONE |
 | P3 | Maintain this checklist as tasks arrive | ONGOING |
 | P4 | Commit in stages as work lands | ONGOING |

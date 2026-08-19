@@ -1,5 +1,6 @@
 export { CaptureBridge } from './CaptureBridge'
 export { getCaptureHandle, type CaptureHandle } from './handle'
+export { renderStill } from './renderStill'
 export { useCapture } from './useCapture'
 export { isRecordingSupported } from './webm'
 export {

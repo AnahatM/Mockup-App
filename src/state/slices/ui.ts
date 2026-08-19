@@ -38,6 +38,14 @@ export interface UiState {
    * and finding the one you searched for by eye defeats the point of searching.
    */
   highlight: string | null
+  /**
+   * Show the light gizmos — the icons marking where each light sits and which
+   * way it faces.
+   *
+   * View state, not scene config: it is an editing aid, so it must never be
+   * captured into a preset or appear in an export.
+   */
+  showLightGizmos: boolean
 }
 
 export interface UiSlice {
@@ -52,6 +60,7 @@ export interface UiSlice {
   setPaletteOpen: (open: boolean) => void
   focusSetting: (tab: InspectorTab, label: string) => void
   clearHighlight: () => void
+  toggleLightGizmos: () => void
 }
 
 export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
@@ -64,6 +73,7 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
     busyCount: 0,
     paletteOpen: false,
     highlight: null,
+    showLightGizmos: false,
   },
   setInspectorTab: (tab) =>
     set((draft) => {
@@ -116,6 +126,11 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
   clearHighlight: () =>
     set((draft) => {
       draft.ui.highlight = null
+    }),
+
+  toggleLightGizmos: () =>
+    set((draft) => {
+      draft.ui.showLightGizmos = !draft.ui.showLightGizmos
     }),
 })
 

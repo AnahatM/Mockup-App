@@ -1,0 +1,72 @@
+.closing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-10) var(--space-6);
+  margin-top: var(--space-12);
+  overflow: hidden;
+  text-align: center;
+  background: var(--surface-sunken);
+  border-radius: var(--radius-xl);
+}
+
+.closing::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--text-muted) 18%, transparent) 1px,
+    transparent 1.2px
+  );
+  background-size: 16px 16px;
+
+  /* Weighted to the bottom-right corner and falling away toward the top-left,
+     matching the page backdrop's halftone. */
+  mask-image: radial-gradient(
+    ellipse 80% 90% at 100% 100%,
+    var(--text-primary) 0%,
+    transparent 70%
+  );
+}
+
+.title {
+  position: relative;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.body {
+  position: relative;
+  max-width: 58ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  height: 2.5rem;
+  padding: 0 var(--space-5);
+  font-size: var(--text-lg);
+  color: var(--text-primary);
+  text-decoration: none;
+  background: var(--control-bg);
+  border: var(--hairline) solid var(--control-border);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  background: var(--control-bg-hover);
+  transform: translateY(-2px);
+}

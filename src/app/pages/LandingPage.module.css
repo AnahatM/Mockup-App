@@ -1,140 +1,16 @@
 .page {
+  position: relative;
+  isolation: isolate;
+
+  /* `clip`, not `hidden`: it contains the full-bleed backdrop without turning
+     the page into a scroll container. */
+  overflow-x: clip;
   max-width: 68rem;
-  padding: var(--space-12) var(--space-6) var(--space-10);
+  padding: var(--space-8) var(--space-6) var(--space-10);
   margin: 0 auto;
 }
 
-.hero {
+.authorRow {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  align-items: center;
-  text-align: center;
-}
-
-.eyebrow {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-}
-
-.title {
-  max-width: 18ch;
-  font-size: clamp(2rem, 5.5vw, 3.4rem);
-  font-weight: var(--weight-medium);
-  line-height: 1.08;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
-}
-
-.lede {
-  max-width: 54ch;
-  font-size: var(--text-lg);
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
   justify-content: center;
-  margin-top: var(--space-2);
-}
-
-.primary,
-.secondary {
-  display: inline-flex;
-  gap: var(--space-2);
-  align-items: center;
-  height: 2.5rem;
-  padding: 0 var(--space-5);
-  font-size: var(--text-lg);
-  text-decoration: none;
-  border-radius: var(--radius-md);
-  transition: background-color var(--duration-fast) var(--ease-out);
-}
-
-.primary {
-  color: var(--accent-contrast);
-  background: var(--accent);
-}
-
-.primary:hover {
-  background: var(--accent-hover);
-}
-
-.secondary {
-  color: var(--text-primary);
-  background: var(--control-bg);
-  border: var(--hairline) solid var(--control-border);
-}
-
-.secondary:hover {
-  background: var(--control-bg-hover);
-}
-
-.stat {
-  margin-top: var(--space-2);
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: var(--space-4);
-  margin-top: var(--space-12);
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-5);
-  background: var(--surface-panel);
-  border: var(--hairline) solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-}
-
-.cardIcon {
-  color: var(--accent);
-}
-
-.cardTitle {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-medium);
-  color: var(--text-primary);
-}
-
-.cardBody {
-  font-size: var(--text-md);
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
-}
-
-.closing {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  align-items: center;
-  padding: var(--space-10) var(--space-6);
-  margin-top: var(--space-12);
-  text-align: center;
-  background: var(--surface-sunken);
-  border-radius: var(--radius-xl);
-}
-
-.closingTitle {
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-medium);
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.closingBody {
-  max-width: 58ch;
-  font-size: var(--text-md);
-  line-height: var(--leading-normal);
-  color: var(--text-secondary);
 }

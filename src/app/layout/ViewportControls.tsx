@@ -26,6 +26,8 @@ export function ViewportControls() {
   const dollyCamera = useAppStore((state) => state.dollyCamera)
   const frameDevice = useAppStore((state) => state.frameCurrentDevice)
   const resetCamera = useAppStore((state) => state.resetCamera)
+  const showGizmos = useAppStore((state) => state.ui.showLightGizmos)
+  const toggleGizmos = useAppStore((state) => state.toggleLightGizmos)
 
   return (
     <div className={styles.cluster} role="group" aria-label="Viewport">
@@ -58,6 +60,13 @@ export function ViewportControls() {
       />
       <IconButton icon="fit" label="Fit device in view" size="sm" onClick={frameDevice} />
       <IconButton icon="reset" label="Reset camera" size="sm" onClick={resetCamera} />
+      <IconButton
+        icon="light"
+        label={showGizmos ? 'Hide light markers' : 'Show light markers'}
+        size="sm"
+        active={showGizmos}
+        onClick={toggleGizmos}
+      />
     </div>
   )
 }

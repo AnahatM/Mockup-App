@@ -9,7 +9,7 @@ export {
   type SceneState,
 } from './manifest'
 export { parseManifest } from './migrate'
-export { applyScene, captureScene } from './sceneState'
+export { applyScene, captureScene, sameScene } from './sceneState'
 export { loadPresets, savePresets } from './storage'
 export {
   exportManifest,

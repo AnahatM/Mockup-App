@@ -1,10 +1,14 @@
 import { useCallback, useState } from 'react'
-import { downloadBlob, safeFilename, withExtension } from '@/lib/download'
+import {
+  copyImageToClipboard,
+  downloadBlob,
+  safeFilename,
+  withExtension,
+} from '@/lib/download'
 import { useAppStore } from '@/state/store'
 import { useBusy } from '@/state/useBusy'
 import { getCaptureHandle } from './handle'
-import { capturePng } from './png'
-import { resolveSize } from './sizePresets'
+import { renderStill } from './renderStill'
 import { recordWebm } from './webm'
 
 export interface CaptureState {
@@ -25,42 +29,31 @@ export function useCapture() {
   })
 
   const exportPng = useCallback(async () => {
-    const handle = getCaptureHandle()
-    if (!handle) {
-      setState({ busy: false, progress: 0, error: 'The scene is not ready yet.' })
-      return
-    }
-
     setState({ busy: true, progress: 0, error: null })
     try {
-      const viewport = {
-        width: handle.renderer.domElement.width,
-        height: handle.renderer.domElement.height,
-      }
-      const base = resolveSize(
-        config.sizePreset,
-        { width: config.customWidth, height: config.customHeight },
-        viewport,
-      )
-
-      const blob = await busy(() =>
-        capturePng({
-          ...handle,
-          width: Math.round(base.width * config.scale),
-          height: Math.round(base.height * config.scale),
-          transparent: config.transparent,
-        }),
-      )
-
-      if (!blob) throw new Error('The renderer produced no image.')
+      const blob = await busy(() => renderStill(config))
       downloadBlob(blob, withExtension(safeFilename(config.filename), 'png'))
       setState({ busy: false, progress: 1, error: null })
     } catch (error) {
+      setState({ busy: false, progress: 0, error: messageFor(error, 'Export failed.') })
+    }
+  }, [busy, config])
+
+  /** Copies the same image the download would produce. */
+  const copyPng = useCallback(async () => {
+    setState({ busy: true, progress: 0, error: null })
+    try {
+      const blob = await busy(() => renderStill(config))
+      const copied = await copyImageToClipboard(blob)
       setState({
         busy: false,
-        progress: 0,
-        error: error instanceof Error ? error.message : 'Export failed.',
+        progress: 1,
+        // Not an error the user caused, so it reads as guidance rather than a
+        // failure — and the download button beside it still works.
+        error: copied ? null : 'Your browser would not allow a clipboard copy.',
       })
+    } catch (error) {
+      setState({ busy: false, progress: 0, error: messageFor(error, 'Copy failed.') })
     }
   }, [busy, config])
 
@@ -102,5 +95,8 @@ export function useCapture() {
     }
   }, [busy, config])
 
-  return { ...state, exportPng, recordVideo }
+  return { ...state, exportPng, copyPng, recordVideo }
 }
+
+const messageFor = (error: unknown, fallback: string): string =>
+  error instanceof Error ? error.message : fallback

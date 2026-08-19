@@ -5,6 +5,7 @@ import { createCameraSlice } from './slices/camera'
 import { createDeviceSlice } from './slices/device'
 import { createExportSlice } from './slices/exportConfig'
 import { createFlatSlice } from './slices/flat'
+import { createHistorySlice } from './slices/history'
 import { createLightingSlice } from './slices/lighting'
 import { createMediaSlice } from './slices/media'
 import { createOverlaysSlice } from './slices/overlays'
@@ -33,5 +34,6 @@ export const useAppStore = create<AppState>()(
     ...createExportSlice(...args),
     ...createFlatSlice(...args),
     ...createPresetsSlice(...args),
+    ...createHistorySlice(...args),
   })),
 )

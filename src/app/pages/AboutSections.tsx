@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { cx } from '@/lib/cx'
 import { DEVICES } from '@/features/devices'
+import { ScreenshotSlot } from '@/ui'
 import { LINKS, ROUTES } from '../routes'
 import styles from './Prose.module.css'
 
@@ -41,6 +42,10 @@ export function HowItIsBuilt() {
         than pixels baked into a texture. Recolouring a phone to match your brand is a
         property change, not an impossibility.
       </p>
+      <ScreenshotSlot
+        caption="A procedural phone in the studio — every dimension is data"
+        icon="phone"
+      />
       <p className={styles.body}>
         The same idea runs through the rest: lighting rigs are arrays of parametric area
         lights rather than photographs, control panels are generated from typed schemas

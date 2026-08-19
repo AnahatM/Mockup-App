@@ -40,3 +40,25 @@ export function safeFilename(name: string, fallback = 'mockup'): string {
 export function withExtension(name: string, extension: string): string {
   return name.toLowerCase().endsWith(`.${extension}`) ? name : `${name}.${extension}`
 }
+
+/**
+ * Puts an image on the clipboard.
+ *
+ * Separate from `downloadBlob` because the failure modes are entirely different:
+ * the Clipboard API needs a secure context, needs permission, and only accepts a
+ * short list of MIME types — PNG being the one that is universally supported.
+ * Callers get a boolean so they can fall back to a download rather than leaving
+ * the user thinking a copy happened when it did not.
+ */
+export async function copyImageToClipboard(blob: Blob): Promise<boolean> {
+  if (typeof ClipboardItem === 'undefined' || !navigator.clipboard?.write) return false
+
+  try {
+    await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })])
+    return true
+  } catch {
+    // Denied permission, an insecure context, or an unsupported type. All three
+    // mean the same thing to the caller: it did not happen.
+    return false
+  }
+}

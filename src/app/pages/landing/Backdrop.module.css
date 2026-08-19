@@ -1,0 +1,101 @@
+/*
+ * Absolutely positioned (not fixed) so it is contained by `.page` and never
+ * bleeds into the site navbar/footer above and below it.
+ *
+ * Full-bleed horizontally, though: `.page` is a centred 68rem column, so an
+ * `inset: 0` backdrop stopped at the text margin and drew two hard vertical
+ * seams down the screen. Spanning the viewport moves the clip off-screen where
+ * it cannot be seen, and the mask fades the remaining top and bottom edges into
+ * the navbar and footer instead of ending abruptly.
+ */
+.backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--text-primary) 6%,
+    var(--text-primary) 82%,
+    transparent 100%
+  );
+}
+
+/*
+ * Halftone dot grid — two offset radial-gradient layers at different sizes read
+ * as a printed halftone rather than a flat grid.
+ *
+ * Anchored to the bottom-right and falling away toward the top-left, so it
+ * behaves like a shading pass in a print: it weights one corner rather than
+ * tiling the whole page, and it never sits behind the headline where it would
+ * compete with the text.
+ */
+.dots {
+  position: absolute;
+  inset: -10%;
+  background-image:
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--text-muted) 55%, transparent) 1.2px,
+      transparent 1.4px
+    ),
+    radial-gradient(
+      circle,
+      color-mix(in srgb, var(--text-muted) 30%, transparent) 1px,
+      transparent 1.2px
+    );
+  background-position:
+    0 0,
+    9px 9px;
+  background-size:
+    18px 18px,
+    18px 18px;
+  opacity: 0.38;
+  mask-image: radial-gradient(
+    ellipse 85% 75% at 100% 100%,
+    var(--text-primary) 0%,
+    color-mix(in srgb, var(--text-primary) 45%, transparent) 38%,
+    transparent 72%
+  );
+}
+
+.blobPrimary,
+.blobSecondary,
+.blobTertiary {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+}
+
+.blobPrimary {
+  top: -10rem;
+  right: -6rem;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, var(--accent-soft) 0%, var(--accent-soft) 40%, transparent 75%);
+  opacity: 0.9;
+}
+
+.blobSecondary {
+  top: 22rem;
+  left: -12rem;
+  width: 28rem;
+  height: 28rem;
+  background: radial-gradient(circle, var(--accent) 0%, var(--accent) 35%, transparent 75%);
+  opacity: 0.5;
+}
+
+.blobTertiary {
+  top: 58rem;
+  right: -8rem;
+  width: 26rem;
+  height: 26rem;
+  background: radial-gradient(circle, var(--accent-soft) 0%, var(--accent-soft) 35%, transparent 75%);
+  opacity: 0.4;
+}
