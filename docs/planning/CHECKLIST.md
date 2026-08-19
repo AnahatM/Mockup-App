@@ -26,6 +26,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | S13 | Studio first paint: spinner/loading state instead of a blank viewport | TODO |
 | S14 | Dark theme grey is washed out — raise saturation | TODO |
 | S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | TODO |
+| S16 | Palette reads too yellow/brown — move the whole scheme cool, blue/green | TODO |
+| S17 | Studio toolbar controls left-aligned, not spread across the bar | TODO |
+| S18 | Tooltips must flip/clamp so they stay on screen near any viewport edge | TODO |
 
 ## Mockup features
 
@@ -37,6 +40,20 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F4 | Image cropping before the screenshot reaches the device (#26) | TODO |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | TODO |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
+| F7 | Recent uploads — keep the last few screenshots so the user can switch between them | TODO |
+
+## UX and robustness
+
+| # | Task | Status |
+|---|---|---|
+| U1 | React error boundary with a well-designed error screen, not the router's default | TODO |
+| U2 | A proper 404 page | TODO |
+| U3 | Empty states everywhere something can be empty | TODO |
+| U4 | Keyboard shortcut reference / help overlay | TODO |
+| U5 | Focus-visible styling audit across every interactive control | TODO |
+| U6 | `prefers-reduced-motion` honoured by every animation | TODO |
+| U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | TODO |
+| U8 | Offline/local reassurance surfaced in the UI, not only in the docs | TODO |
 
 ## Competitive features
 

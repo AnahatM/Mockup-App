@@ -14,6 +14,14 @@ export interface TabsProps<T extends string> {
   onChange: (value: T) => void
   tabs: ReadonlyArray<Tab<T>>
   label: string
+  /**
+   * Wrap onto multiple rows instead of scrolling horizontally.
+   *
+   * A scrolling strip hides the overflow behind an invisible scrollbar, so a
+   * tab clipped mid-word just reads as broken. In a narrow column where several
+   * tabs cannot fit, wrapping keeps every one of them reachable and visible.
+   */
+  wrap?: boolean | undefined
   className?: string | undefined
 }
 
@@ -22,10 +30,15 @@ export function Tabs<T extends string>({
   onChange,
   tabs,
   label,
+  wrap = false,
   className,
 }: TabsProps<T>) {
   return (
-    <div className={cx(styles.tabs, className)} role="tablist" aria-label={label}>
+    <div
+      className={cx(styles.tabs, wrap && styles.wrap, className)}
+      role="tablist"
+      aria-label={label}
+    >
       {tabs.map((tab) => {
         const selected = tab.value === value
         return (

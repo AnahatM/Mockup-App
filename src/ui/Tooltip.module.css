@@ -3,8 +3,14 @@
   display: inline-flex;
 }
 
+/*
+ * Fixed rather than absolute so the tooltip escapes any scrolling or clipped
+ * ancestor, and so the measured viewport coordinates apply directly.
+ */
 .tip {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: var(--z-popover);
   max-width: 18rem;
   padding: var(--space-1) var(--space-2);
@@ -17,36 +23,24 @@
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-popover);
   pointer-events: none;
+
+  /* Hidden for the single frame between mounting and being measured. */
+  visibility: hidden;
+}
+
+.placed {
+  visibility: visible;
   animation: fade var(--duration-fast) var(--ease-out);
 }
 
 @keyframes fade {
   from {
     opacity: 0;
-    transform: translateY(2px);
   }
 }
 
-.top {
-  bottom: calc(100% + var(--space-1));
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.bottom {
-  top: calc(100% + var(--space-1));
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.left {
-  top: 50%;
-  right: calc(100% + var(--space-1));
-  transform: translateY(-50%);
-}
-
-.right {
-  top: 50%;
-  left: calc(100% + var(--space-1));
-  transform: translateY(-50%);
+@media (prefers-reduced-motion: reduce) {
+  .placed {
+    animation: none;
+  }
 }

@@ -1,11 +1,30 @@
 .toolbar {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
   align-items: center;
-  justify-content: space-between;
   padding: 0 var(--space-2);
   background: var(--surface-panel);
   border-bottom: var(--hairline) solid var(--border-subtle);
+}
+
+.cluster {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Hairline between two clusters that share a control group. */
+.divider {
+  flex: none;
+  width: var(--hairline);
+  height: 1rem;
+  margin-inline: var(--space-1);
+  background: var(--border-subtle);
 }
 
 .group {

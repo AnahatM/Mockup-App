@@ -1,3 +1,4 @@
+import { RecentUploads } from '@/features/media'
 import { Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { contentControls, hasVideo, playbackControls } from './screenContentControls'
@@ -10,6 +11,7 @@ export function ScreenPanel() {
     <>
       <Panel title="Content">
         <ControlList controls={contentControls} />
+        <RecentUploads />
       </Panel>
       <PlaybackPanel />
       <WindowPanel />

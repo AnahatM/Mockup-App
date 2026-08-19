@@ -4,6 +4,8 @@ import { useAppStore } from '@/state/store'
 import { useBusy } from '@/state/useBusy'
 import { loadMediaFile } from './decode'
 import { DropzoneContent } from './DropzoneContent'
+import { recentIdFor } from './recents'
+import { createThumbnail } from './thumbnail'
 import styles from './Dropzone.module.css'
 
 const ACCEPT = 'image/*,video/mp4,video/webm,video/ogg,video/quicktime'
@@ -22,6 +24,7 @@ export function Dropzone() {
   const setError = useAppStore((state) => state.setMediaError)
   const setLoading = useAppStore((state) => state.setMediaLoading)
   const clearMedia = useAppStore((state) => state.clearMedia)
+  const addRecentUpload = useAppStore((state) => state.addRecentUpload)
 
   const busy = useBusy()
   const [dragging, setDragging] = useState(false)
@@ -33,10 +36,31 @@ export function Dropzone() {
       setLoading(true)
       // Decoding a large screen recording is slow enough to look like a hang.
       const result = await busy(() => loadMediaFile(file))
-      if (result.ok) setSource(result.value)
-      else setError(result.error)
+      if (!result.ok) {
+        setError(result.error)
+        return
+      }
+      setSource(result.value)
+      // loadMediaFile only ever resolves `ok` with an image/video source, but
+      // MediaSource's type also allows 'none' — narrow defensively rather than
+      // asserting.
+      const loaded = result.value
+      if (loaded.kind === 'none') return
+      // The thumbnail is a nicety for the recents row, not the upload itself —
+      // it never blocks or fails the load above.
+      const thumbnail = await createThumbnail(loaded)
+      addRecentUpload({
+        id: recentIdFor(file),
+        kind: loaded.kind,
+        name: loaded.name,
+        url: loaded.url,
+        thumbnail,
+        width: loaded.width,
+        height: loaded.height,
+        palette: [...loaded.palette],
+      })
     },
-    [busy, setLoading, setSource, setError],
+    [busy, setLoading, setSource, setError, addRecentUpload],
   )
 
   return (

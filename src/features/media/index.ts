@@ -1,8 +1,18 @@
 export { Dropzone } from './Dropzone'
 export { PalettePicker } from './PalettePicker'
+export { RecentUploads } from './RecentUploads'
 export { BRAND_TARGETS, findBrandTarget, type BrandTarget } from './brandTargets'
 export { loadMediaFile } from './decode'
 export { useScreenTexture } from './useScreenTexture'
+export { createThumbnail } from './thumbnail'
+export {
+  RECENTS_CAP,
+  moveToFront,
+  recentIdFor,
+  upsertRecent,
+  type RecentUpload,
+  type UpsertResult,
+} from './recents'
 export {
   defaultScreen,
   mediaAspect,

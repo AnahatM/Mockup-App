@@ -8,38 +8,38 @@
  * This file and its siblings in `src/styles/tokens/` are the ONLY files in the project
  * permitted to contain literal colours (enforced by .stylelintrc.json).
  *
- * Palette philosophy — "chalk": matte, warm-neutral, low-glare. There is no pure white
- * and no pure black anywhere, because both read as harsh next to a rendered 3D product
- * and pull attention toward the UI instead of the work.
+ * Palette philosophy — "chalk": matte, cool-neutral (a desaturated blue-green slate cast),
+ * low-glare. There is no pure white and no pure black anywhere, because both read as harsh
+ * next to a rendered 3D product and pull attention toward the UI instead of the work.
  */
 
 :root {
-  /* ---- Paper: warm off-white ramp, light theme surfaces ---- */
-  --paper-50: #fbfaf7;
-  --paper-100: #f6f4ef;
-  --paper-200: #efece5;
-  --paper-300: #e5e1d8;
-  --paper-400: #d6d1c5;
-  --paper-500: #c2bcae;
+  /* ---- Paper: cool off-white ramp, light theme surfaces ---- */
+  --paper-50: #f8f9fa;
+  --paper-100: #f1f3f4;
+  --paper-200: #e7ebed;
+  --paper-300: #dbe0e2;
+  --paper-400: #c9d0d2;
+  --paper-500: #b3bbbe;
 
-  /* ---- Ink: warm charcoal ramp, dark theme surfaces + light theme text ---- */
-  --ink-950: #131311;
-  --ink-900: #1a1a18;
-  --ink-850: #202020;
-  --ink-800: #262623;
-  --ink-700: #302f2c;
-  --ink-600: #3f3e3a;
-  --ink-500: #55544e;
-  --ink-400: #706f67;
-  --ink-300: #8d8c83;
-  --ink-200: #aaa99f;
-  --ink-100: #c8c7bd;
+  /* ---- Ink: cool slate ramp, dark theme surfaces + light theme text ---- */
+  --ink-950: #101315;
+  --ink-900: #151b1c;
+  --ink-850: #1b2224;
+  --ink-800: #1f272a;
+  --ink-700: #273134;
+  --ink-600: #344145;
+  --ink-500: #46575d;
+  --ink-400: #5d737b;
+  --ink-300: #779099;
+  --ink-200: #98abb1;
+  --ink-100: #bac7cb;
 
-  /* ---- Chalk: dusted light ramp, dark theme text ---- */
-  --chalk-50: #f4f3ee;
+  /* ---- Chalk: dusted cool-light ramp, dark theme text ---- */
+  --chalk-50: #eff2f3;
 
-  --chalk-100: #e6e4dc;
-  --chalk-200: #d2d0c7;
+  --chalk-100: #dee2e4;
+  --chalk-200: #c9ced0;
 
   /* ---- Accent: dusty indigo. Muted on purpose — it marks state, it does not shout. ---- */
   --accent-200: #c3ccdf;

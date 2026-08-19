@@ -1,5 +1,6 @@
 export { CameraRig } from './CameraRig'
 export { FlyCamera } from './FlyCamera'
+export { dolly, orbitDistance } from './navigate'
 export {
   CAMERA_PRESETS,
   applyCameraPreset,

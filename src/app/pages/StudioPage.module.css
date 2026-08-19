@@ -1,5 +1,16 @@
+/*
+ * A two-row frame: the site navbar keeps its natural height, and the studio
+ * takes exactly what is left. Grid rather than flex so the shell can never
+ * overflow the viewport and push the navbar off the top.
+ */
 .studio {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   height: 100vh;
   height: 100svh;
   overflow: hidden;
+}
+
+.shell {
+  min-height: 0;
 }

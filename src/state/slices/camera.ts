@@ -1,8 +1,10 @@
 import {
   applyCameraPreset,
   defaultCamera,
+  dolly,
   findCameraPreset,
   type CameraConfig,
+  type CameraMode,
 } from '@/features/camera'
 import { frameDevice, resolveDevice } from '@/features/devices'
 import type { SliceCreator } from '../types'
@@ -13,6 +15,9 @@ export interface CameraSlice {
   frameCurrentDevice: () => void
   selectCameraPreset: (presetId: string) => void
   resetCamera: () => void
+  /** Below 1 zooms in, above 1 zooms out. Mirrors the scroll wheel. */
+  dollyCamera: (factor: number) => void
+  setCameraMode: (mode: CameraMode) => void
 }
 
 export const createCameraSlice: SliceCreator<CameraSlice> = (set) => ({
@@ -39,5 +44,27 @@ export const createCameraSlice: SliceCreator<CameraSlice> = (set) => ({
   resetCamera: () =>
     set((draft) => {
       draft.camera = defaultCamera()
+    }),
+
+  /*
+   * Zoom is a store change, not a call into the controls instance, so the
+   * toolbar buttons and the scroll wheel end up in the same place — and a zoom
+   * level is captured by a preset like every other camera value.
+   */
+  dollyCamera: (factor) =>
+    set((draft) => {
+      draft.camera.position = dolly(
+        draft.camera.position,
+        draft.camera.target,
+        factor,
+        draft.camera.minDistance,
+        draft.camera.maxDistance,
+      )
+      draft.camera.preset = 'custom'
+    }),
+
+  setCameraMode: (mode) =>
+    set((draft) => {
+      draft.camera.mode = mode
     }),
 })

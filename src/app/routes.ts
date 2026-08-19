@@ -85,6 +85,8 @@ export const footerRoutes = (): RouteMeta[] => SITE_ROUTES.filter((r) => r.inFoo
 /** Canonical external links, so they are never retyped. */
 export const LINKS = {
   repo: 'https://github.com/AnahatM/MockupStudio',
+  repoIssues: 'https://github.com/AnahatM/MockupStudio/issues',
+  license: 'https://github.com/AnahatM/MockupStudio/blob/main/LICENSE',
   author: 'https://anahatmudgal.com',
   authorGithub: 'https://github.com/anahatm',
 } as const

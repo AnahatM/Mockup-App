@@ -38,6 +38,7 @@ export function Inspector() {
           onChange={setTab}
           tabs={TABS}
           label="Inspector sections"
+          wrap
         />
         <div className={styles.body}>{PANELS[tab].render()}</div>
       </aside>

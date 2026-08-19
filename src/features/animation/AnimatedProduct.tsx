@@ -20,6 +20,7 @@ import { findClip } from './clips'
 export function AnimatedProduct({ children }: { children: ReactNode }) {
   const group = useRef<Group>(null)
   const elapsed = useRef(0)
+  const epoch = useRef(0)
   const baseAzimuth = useRef<number | null>(null)
   const controls = useThree((state) => state.controls) as OrbitControlsImpl | null
 
@@ -32,8 +33,15 @@ export function AnimatedProduct({ children }: { children: ReactNode }) {
     const node = group.current
     if (!node) return
 
-    const { clip, duration, easing, amplitude, loop, playing, progress } =
-      useAppStore.getState().animation
+    const { animation, animationEpoch } = useAppStore.getState()
+    const { clip, duration, easing, amplitude, loop, playing, progress } = animation
+
+    // A restart is signalled by the epoch changing, because the clock that
+    // needs rewinding is this ref, not anything the store holds.
+    if (animationEpoch !== epoch.current) {
+      epoch.current = animationEpoch
+      elapsed.current = 0
+    }
     const definition = findClip(clip)
 
     if (!definition || clip === 'none') {

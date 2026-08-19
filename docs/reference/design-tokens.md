@@ -53,9 +53,26 @@ The app is a _viewer for someone else's work_, so its own UI is deliberately qui
 warm-neutral, low-glare, and low-contrast enough to recede while still being readable.
 
 **There is no pure white and no pure black anywhere.** Both read as harsh next to a rendered
-3D product and pull the eye toward the interface instead of the render. Light mode is a warm
-off-white paper ramp; dark mode is a warm charcoal ramp with dusted chalk text. The accent
-is a muted dusty indigo — it marks state, it does not shout.
+3D product and pull the eye toward the interface instead of the render. Light mode is a cool
+off-white paper ramp; dark mode is a cool slate ramp with dusted chalk text. The accent is a
+muted dusty indigo — it sits naturally in the same cool family and marks state without
+shouting.
+
+### The neutral ramps' hue cast
+
+`--paper-*`, `--ink-*` and `--chalk-*` all share one hue, a desaturated blue-green slate at
+~195° (between cyan and blue), instead of each drifting independently. That consistency is
+what makes the tint read as a deliberate colour-graded neutral rather than an accidental
+grey. Saturation is kept low and tapers toward the lightness extremes — roughly 8-18% for
+`--paper-*`, 6-12% for `--chalk-*`, and a flatter ~14% for `--ink-*` — so the cast stays
+"quiet and matte", never a visibly blue-tinted screen.
+
+An earlier revision ran `--ink-*` at only 4-9% saturation with the hue drifting step to step
+(one step, `--ink-850`, was pure achromatic grey with 0% saturation), which read as washed
+out. Before that, the whole scheme leaned warm amber/cream, which read as too yellow/brown.
+Both were corrected in the same pass. Lightness steps are unchanged throughout — only hue and
+saturation moved — so existing contrast ratios hold (see the ramp values in
+`tokens/primitives.css` and the measurements in the token tests).
 
 ## How theme switching works
 

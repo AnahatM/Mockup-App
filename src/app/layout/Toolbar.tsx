@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom'
-import { ThemeSwitch } from '@/features/theme'
 import { Button, Icon, IconButton } from '@/ui'
 import { useAppStore } from '@/state/store'
-import { ROUTES } from '../routes'
+import { PlaybackControls } from './PlaybackControls'
+import { ViewportControls } from './ViewportControls'
 import styles from './Toolbar.module.css'
 
-/** Top bar: identity on the left, panel toggles and global actions on the right. */
+/**
+ * The studio control bar.
+ *
+ * It sits *under* the site navbar rather than replacing it, so the app's
+ * identity and navigation stay put when you move between the site and the tool.
+ * This bar therefore carries only studio actions — theme and site links belong
+ * to the navbar above it.
+ */
 export function Toolbar() {
   const sidebarOpen = useAppStore((state) => state.ui.sidebarOpen)
   const inspectorOpen = useAppStore((state) => state.ui.inspectorOpen)
@@ -15,8 +21,8 @@ export function Toolbar() {
   const setTab = useAppStore((state) => state.setInspectorTab)
 
   return (
-    <header className={styles.toolbar}>
-      <div className={styles.group}>
+    <div className={styles.toolbar}>
+      <div className={styles.cluster}>
         <IconButton
           icon="layers"
           label={sidebarOpen ? 'Hide device rail' : 'Show device rail'}
@@ -24,28 +30,6 @@ export function Toolbar() {
           active={sidebarOpen}
           onClick={toggleSidebar}
         />
-        <Link to={ROUTES.home} className={styles.brand}>
-          <Icon name="phone" size={14} className={styles.brandIcon} />
-          Mockup Studio
-        </Link>
-      </div>
-
-      <button type="button" className={styles.search} onClick={() => openPalette(true)}>
-        <Icon name="sliders" size={13} />
-        <span className={styles.searchLabel}>Search settings…</span>
-        <kbd className={styles.kbd}>/</kbd>
-      </button>
-
-      <div className={styles.group}>
-        <ThemeSwitch className={styles.theme} />
-        <Button
-          icon="download"
-          size="sm"
-          variant="primary"
-          onClick={() => setTab('export')}
-        >
-          Export
-        </Button>
         <IconButton
           icon="sliders"
           label={inspectorOpen ? 'Hide inspector' : 'Show inspector'}
@@ -54,6 +38,34 @@ export function Toolbar() {
           onClick={toggleInspector}
         />
       </div>
-    </header>
+
+      <ViewportControls />
+      <PlaybackControls />
+
+      <div className={styles.spacer} />
+
+      <button type="button" className={styles.search} onClick={() => openPalette(true)}>
+        <Icon name="target" size={13} />
+        <span className={styles.searchLabel}>Search settings…</span>
+        <kbd className={styles.kbd}>/</kbd>
+      </button>
+
+      <div className={styles.cluster}>
+        <IconButton
+          icon="save"
+          label="Presets"
+          size="sm"
+          onClick={() => setTab('presets')}
+        />
+        <Button
+          icon="download"
+          size="sm"
+          variant="primary"
+          onClick={() => setTab('export')}
+        >
+          Export
+        </Button>
+      </div>
+    </div>
   )
 }

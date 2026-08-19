@@ -11,6 +11,12 @@
   display: none;
 }
 
+.wrap {
+  flex-wrap: wrap;
+  overflow-x: visible;
+  row-gap: 0;
+}
+
 .tab {
   display: inline-flex;
   flex: none;

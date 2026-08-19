@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import type { ReactNode } from 'react'
 import { cx } from '@/lib/cx'
+import { place, type Side } from '@/lib/dom/placement'
 import styles from './Tooltip.module.css'
 
-export type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
+export type TooltipSide = Side
 
 export interface TooltipProps {
   label: ReactNode
@@ -19,13 +21,16 @@ export interface TooltipProps {
  *
  * The native one cannot be styled, appears after an uncontrollable delay,
  * renders in the OS font, and never appears on keyboard focus at all — so a
- * toolbar of icon buttons is unlabelled for anyone not using a mouse. This shows
- * on hover and on focus.
+ * toolbar of icon buttons is unlabelled for anyone not using a mouse.
  *
- * It is deliberately presentational: the wrapped control is expected to carry
- * its own `aria-label`, so the tooltip repeats a name that is already announced
- * rather than being the only source of it. That keeps it safe to drop around
- * anything without auditing what the control exposes to assistive tech.
+ * Positioned with `fixed` against measured rectangles rather than with CSS
+ * offsets. That buys two things CSS alone cannot: it flips and clamps to stay
+ * on screen for controls near a viewport edge, and it escapes any scrolling or
+ * `overflow: hidden` ancestor that would otherwise clip it.
+ *
+ * It is deliberately presentational: the wrapped control carries its own
+ * `aria-label`, so the tooltip repeats a name that is already announced rather
+ * than being the only source of it.
  */
 export function Tooltip({
   label,
@@ -35,22 +40,46 @@ export function Tooltip({
   children,
 }: TooltipProps) {
   const [open, setOpen] = useState(false)
+  const [placement, setPlacement] = useState<{ left: number; top: number } | null>(null)
   const timer = useRef<number | undefined>(undefined)
+  const anchor = useRef<HTMLSpanElement>(null)
+  const tip = useRef<HTMLSpanElement>(null)
 
   useEffect(() => () => window.clearTimeout(timer.current), [])
 
-  const show = () => {
+  const show = useCallback(() => {
     window.clearTimeout(timer.current)
     timer.current = window.setTimeout(() => setOpen(true), delay)
-  }
+  }, [delay])
 
-  const hide = () => {
+  const hide = useCallback(() => {
     window.clearTimeout(timer.current)
     setOpen(false)
-  }
+    setPlacement(null)
+  }, [])
+
+  // Measured after paint, because the tip's size is only known once it exists.
+  // It renders invisible for that one frame rather than flashing in the wrong
+  // place first.
+  useLayoutEffect(() => {
+    if (!open) return
+    const anchorNode = anchor.current
+    const tipNode = tip.current
+    if (!anchorNode || !tipNode) return
+
+    setPlacement(
+      place({
+        anchor: anchorNode.getBoundingClientRect(),
+        floating: tipNode.getBoundingClientRect(),
+        viewport: { left: 0, top: 0, width: innerWidth, height: innerHeight },
+        preferred: side,
+      }),
+    )
+  }, [open, side])
 
   return (
     <span
+      ref={anchor}
       className={cx(styles.wrap, className)}
       onPointerEnter={show}
       onPointerLeave={hide}
@@ -60,7 +89,12 @@ export function Tooltip({
     >
       {children}
       {open && (
-        <span role="presentation" className={cx(styles.tip, styles[side])}>
+        <span
+          ref={tip}
+          role="presentation"
+          className={cx(styles.tip, placement && styles.placed)}
+          style={placement ?? undefined}
+        >
           {label}
         </span>
       )}
