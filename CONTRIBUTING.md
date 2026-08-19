@@ -62,6 +62,28 @@ Controls are data, not JSX. Add one line to the relevant panel schema in
 for free. If you find yourself writing a bespoke input, check whether a `ui/` primitive
 already covers it.
 
+## Verifying in a real browser
+
+Unit tests cover the pure layers, but most of this app is a render — and a render
+can compile perfectly and still be wrong. `scripts/` holds headless checks that
+drive the real UI against a running dev server (`npm run dev` first):
+
+| Script                | Checks                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| `verify-catalog.mjs`  | Every device renders, with no console errors and no suspiciously blank frame                |
+| `verify-media.mjs`    | A screenshot uploads and lands on the device screen                                         |
+| `verify-video.mjs`    | A generated WebM decodes and plays, confirmed by sampling pixels over time                  |
+| `verify-export.mjs`   | Exported PNG has the exact requested dimensions; `--transparent` checks real alpha          |
+| `verify-record.mjs`   | The scene animates and the Record button produces a valid WebM                              |
+| `verify-presets.mjs`  | A preset survives a page reload, exports, and a corrupted file is rejected without crashing |
+| `verify-window.mjs`   | Window chrome renders on a device and exports flat                                          |
+| `verify-exposure.mjs` | Tone-mapping exposure actually reaches the renderer                                         |
+| `probe-capture.mjs`   | Isolates canvas capture behaviour when recording misbehaves                                 |
+
+These measure rather than eyeball, which is deliberate: exposure once appeared to
+work and was doing nothing at all, and recording once produced zero bytes while
+reporting success. Both were found by measuring, not looking.
+
 ## Commits
 
 Conventional-commit prefixes (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`). Keep code and
