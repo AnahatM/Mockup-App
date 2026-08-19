@@ -30,7 +30,25 @@ export const lightSchema = z.object({
 
 export type LightConfig = z.infer<typeof lightSchema>
 
+/**
+ * The enclosing room.
+ *
+ * Without this every direction that is not a light panel reflects black, which
+ * is what makes a dark device read as vantablack and a camera lens stop looking
+ * like glass. See EnvironmentDome.
+ */
+export const roomSchema = z.object({
+  enabled: z.boolean().default(true),
+  intensity: z.number().min(0).max(3).default(1),
+  top: hexSchema.default('#f2f3f5'),
+  horizon: hexSchema.default('#c9cdd4'),
+  bottom: hexSchema.default('#6f747c'),
+})
+
+export type RoomConfig = z.infer<typeof roomSchema>
+
 export const lightingSchema = z.object({
+  room: roomSchema.prefault({}),
   /** Name of the applied preset, or 'custom' once the user edits a light. */
   preset: z.string().default('studio'),
   /** Overall strength of the generated environment map. */
@@ -38,6 +56,14 @@ export const lightingSchema = z.object({
   /** Soft fill so unlit faces never crush to pure black. */
   ambient: z.number().min(0).max(3).default(0.25),
   lights: z.array(lightSchema).max(8).default([]),
+  /**
+   * Cubemap resolution for the generated environment. Higher is sharper but
+   * costs a re-bake; too low makes a polished surface sparkle as the highlight
+   * crawls across texels while the camera moves.
+   */
+  resolution: z.number().int().min(128).max(1024).default(512),
+  /** Draw a wireframe marker at each light, so the rig can be seen. */
+  showHelpers: z.boolean().default(false),
 })
 
 export type LightingConfig = z.infer<typeof lightingSchema>

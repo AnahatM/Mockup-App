@@ -4,11 +4,13 @@ import { lightingSchema, type LightingConfig } from './schema'
 /**
  * The rig a fresh scene starts with.
  *
- * Soft box rather than the darker studio rig, because the default backdrop is a
- * bright neutral sweep — a contrasty rig over a light background reads as a
- * mistake rather than as drama.
+ * The three-point studio rig, now that the environment dome supplies the fill
+ * that used to be missing. Before the dome existed this rig left every
+ * non-key face black, so the flatter soft-box preset was the safer default;
+ * with a room behind it the directional key is what gives the product its
+ * modelling instead of washing it out.
  */
-const DEFAULT_PRESET = 'soft'
+const DEFAULT_PRESET = 'studio'
 
 export function defaultLighting(): LightingConfig {
   const preset = findLightingPreset(DEFAULT_PRESET) ?? LIGHTING_PRESETS[0]

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Environment, Lightformer } from '@react-three/drei'
 import { useAppStore } from '@/state/store'
+import { EnvironmentDome } from './EnvironmentDome'
 import type { LightConfig } from './schema'
 
 /**
@@ -8,11 +9,19 @@ import type { LightConfig } from './schema'
  *
  * `frames={1}` bakes the cubemap once for performance, so the Environment must be
  * remounted when the rig changes — hence the config hash used as its key.
+ *
+ * Resolution matters more than it looks. A polished surface reflects a small
+ * bright panel across only a few texels, so at a low cubemap resolution the
+ * highlight crawls from texel to texel as the camera moves and reads as a
+ * sparkle. 512 is the default for that reason rather than for sharpness.
  */
 export function LightRig() {
   const lighting = useAppStore((state) => state.lighting)
   const active = lighting.lights.filter((light) => light.enabled)
-  const bakeKey = useMemo(() => hashRig(active), [active])
+  const bakeKey = useMemo(
+    () => `${hashRig(active)}#${JSON.stringify(lighting.room)}`,
+    [active, lighting.room],
+  )
 
   return (
     <>
@@ -20,9 +29,12 @@ export function LightRig() {
       <Environment
         key={bakeKey}
         frames={1}
-        resolution={256}
+        resolution={lighting.resolution}
         environmentIntensity={lighting.environmentIntensity}
       >
+        {/* The room first: it sets the base luminance every other reflection
+            sits on top of. */}
+        <EnvironmentDome room={lighting.room} />
         {active.map((light) => (
           <StudioLight key={light.id} light={light} />
         ))}

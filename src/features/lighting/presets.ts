@@ -1,5 +1,6 @@
 import { createId } from '@/lib/id'
-import type { LightConfig, LightForm, LightingConfig } from './schema'
+import { roomSchema } from './schema'
+import type { LightConfig, LightForm, LightingConfig, RoomConfig } from './schema'
 
 /**
  * Built-in lighting rigs.
@@ -30,6 +31,8 @@ export interface LightingPreset {
   ambient: number
   environmentIntensity: number
   lights: readonly LightSeed[]
+  /** The enclosing room. Overrides only what it names. */
+  room?: Partial<RoomConfig>
 }
 
 export const LIGHTING_PRESETS: readonly LightingPreset[] = [
@@ -37,6 +40,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'studio',
     label: 'Studio',
     description: 'Balanced three-point rig. The safe default.',
+    room: { intensity: 0.9 },
     ambient: 0.08,
     environmentIntensity: 1,
     lights: [
@@ -54,6 +58,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'rim-glow',
     label: 'Rim glow',
     description: 'Dim front, bright edges. Makes metal rails read as metal.',
+    room: { intensity: 0.45, top: '#cfd6e4', horizon: '#8b93a4', bottom: '#33373f' },
     ambient: 0.1,
     environmentIntensity: 1.1,
     lights: [
@@ -67,6 +72,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'soft',
     label: 'Soft box',
     description: 'Large, wrapping, almost shadowless. Flattering and neutral.',
+    room: { intensity: 1.25, top: '#ffffff', horizon: '#e6e8ec', bottom: '#a9aeb6' },
     ambient: 0.45,
     environmentIntensity: 1,
     lights: [
@@ -80,6 +86,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'dramatic',
     label: 'Dramatic',
     description: 'One hard key and a cold rim. Deep, contrasty shadows.',
+    room: { intensity: 0.28, top: '#9aa3b4', horizon: '#5a606c', bottom: '#22252b' },
     ambient: 0.04,
     environmentIntensity: 1.2,
     lights: [
@@ -91,6 +98,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'neon',
     label: 'Neon',
     description: 'Magenta and cyan edges over a dark room.',
+    room: { intensity: 0.35, top: '#4a3a6b', horizon: '#2b2440', bottom: '#141322' },
     ambient: 0.06,
     environmentIntensity: 1.3,
     lights: [
@@ -103,6 +111,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'product-white',
     label: 'Product white',
     description: 'Bright, even, catalogue-style. Pairs with a light backdrop.',
+    room: { intensity: 1.6, top: '#ffffff', horizon: '#f4f5f7', bottom: '#d5d8dc' },
     ambient: 0.7,
     environmentIntensity: 1,
     lights: [
@@ -116,6 +125,7 @@ export const LIGHTING_PRESETS: readonly LightingPreset[] = [
     id: 'moody',
     label: 'Moody',
     description: 'Low warm key with a single cool kicker.',
+    room: { intensity: 0.42, top: '#b9a894', horizon: '#6d6156', bottom: '#2b2723' },
     ambient: 0.08,
     environmentIntensity: 1,
     lights: [
@@ -129,12 +139,23 @@ export function findLightingPreset(id: string): LightingPreset | undefined {
   return LIGHTING_PRESETS.find((preset) => preset.id === id)
 }
 
-/** Materialises a preset into store-ready config, assigning fresh light ids. */
-export function applyLightingPreset(preset: LightingPreset): LightingConfig {
+/**
+ * Materialises a preset into store-ready config, assigning fresh light ids.
+ *
+ * Rig-wide render settings (resolution, helper visibility) are deliberately not
+ * part of a preset: they are how the user prefers to work, not part of the look.
+ */
+export function applyLightingPreset(
+  preset: LightingPreset,
+  current?: Pick<LightingConfig, 'resolution' | 'showHelpers'>,
+): LightingConfig {
   return {
     preset: preset.id,
     ambient: preset.ambient,
     environmentIntensity: preset.environmentIntensity,
+    resolution: current?.resolution ?? 512,
+    showHelpers: current?.showHelpers ?? false,
+    room: roomSchema.parse(preset.room ?? {}),
     lights: preset.lights.map((light) => ({
       enabled: true,
       visibleInBackground: false,

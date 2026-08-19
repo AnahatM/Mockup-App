@@ -1,5 +1,6 @@
 import {
   Bloom,
+  N8AO,
   ChromaticAberration,
   DepthOfField,
   EffectComposer,
@@ -26,6 +27,20 @@ export function PostFx() {
 
   return (
     <EffectComposer enableNormalPass={false}>
+      {/* Ambient occlusion first, on the raw scene. This is what makes a camera
+          bump read as sitting ON the back panel rather than printed onto it,
+          and what gives chamfers and seams their edge without a rim light. */}
+      {post.aoEnabled ? (
+        <N8AO
+          aoRadius={post.aoRadius}
+          intensity={post.aoIntensity}
+          distanceFalloff={0.6}
+          quality="medium"
+          halfRes
+        />
+      ) : (
+        <></>
+      )}
       {post.bloomEnabled ? (
         <Bloom
           intensity={post.bloomIntensity}

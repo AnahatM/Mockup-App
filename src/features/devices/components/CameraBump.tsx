@@ -36,19 +36,42 @@ export function CameraBump({ spec, bump, bodyColor, frameColor }: CameraBumpProp
             />
             <FinishMaterial finish="steel" color={frameColor} />
           </mesh>
-          {/* Glass element, sunk slightly so it catches a highlight */}
-          <mesh position={[0, 0, -bump.depth * 0.16]} rotation={[Math.PI / 2, 0, 0]}>
+          {/* Glass element, sunk so the ring casts a shadow across it.
+              Iridescence stands in for the anti-reflective coating: without it
+              a smooth dark lens reflects almost nothing and reads as a printed
+              black disc rather than glass. */}
+          <mesh position={[0, 0, -bump.depth * 0.2]} rotation={[Math.PI / 2, 0, 0]}>
             <cylinderGeometry
-              args={[lens.radius * 0.78, lens.radius * 0.78, bump.depth * 0.3, 32]}
+              args={[lens.radius * 0.74, lens.radius * 0.74, bump.depth * 0.26, 40]}
             />
             <meshPhysicalMaterial
-              color="#0a0c12"
-              roughness={0.04}
-              metalness={0.1}
+              color="#05070d"
+              roughness={0.03}
+              metalness={0}
               clearcoat={1}
               clearcoatRoughness={0.02}
-              reflectivity={0.9}
+              reflectivity={1}
+              ior={1.75}
+              iridescence={0.65}
+              iridescenceIOR={1.9}
+              iridescenceThicknessRange={[120, 520]}
+              envMapIntensity={2.2}
             />
+          </mesh>
+
+          {/* Inner barrel wall, so the lens has visible depth. */}
+          <mesh position={[0, 0, -bump.depth * 0.05]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry
+              args={[
+                lens.radius * 0.74,
+                lens.radius * 0.74,
+                bump.depth * 0.34,
+                40,
+                1,
+                true,
+              ]}
+            />
+            <meshStandardMaterial color="#0d0f14" roughness={0.55} side={2} />
           </mesh>
         </group>
       ))}

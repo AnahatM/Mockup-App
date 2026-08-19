@@ -9,6 +9,7 @@ import {
 import { useAppStore } from '@/state/store'
 import type { AppState } from '@/state/types'
 import { lightControls } from './lightControls'
+import { roomControls } from './roomControls'
 import styles from './LightingPanel.module.css'
 
 const PRESET_OPTIONS = [
@@ -60,6 +61,10 @@ export function LightingPanel() {
     <>
       <Panel title="Rig">
         <ControlList controls={rigControls} />
+      </Panel>
+
+      <Panel title="Room">
+        <ControlList controls={roomControls} />
       </Panel>
 
       {lights.map((light, index) => (

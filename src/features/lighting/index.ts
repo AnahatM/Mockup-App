@@ -1,4 +1,6 @@
 export { LightRig } from './LightRig'
+export { LightHelpers } from './LightHelpers'
+export { EnvironmentDome } from './EnvironmentDome'
 export {
   LIGHTING_PRESETS,
   applyLightingPreset,
@@ -13,4 +15,5 @@ export {
   type LightConfig,
   type LightForm,
   type LightingConfig,
+  type RoomConfig,
 } from './schema'
