@@ -4,6 +4,7 @@ import { ChoiceRow } from './rows/ChoiceRow'
 import { ColorRow } from './rows/ColorRow'
 import { CustomRow } from './rows/CustomRow'
 import { NumericRow } from './rows/NumericRow'
+import { TextRow } from './rows/TextRow'
 import { ToggleRow } from './rows/ToggleRow'
 import { Vec3Row } from './rows/Vec3Row'
 import type { Control } from './types'
@@ -21,6 +22,9 @@ export interface ControlRowProps<S> {
  * Dispatches one control definition to its renderer, and owns the shared
  * `visible`/`disabled` predicates so no individual row re-implements them.
  */
+/* An exhaustive dispatch over a discriminated union is flat and compiler-checked
+   — every branch is a single line — so cyclomatic complexity is a poor proxy here. */
+// eslint-disable-next-line complexity
 export function ControlRow<S>({ control, renderGroup }: ControlRowProps<S>) {
   const binding = useControlBinding<S>()
   const visible = binding.useValue((state) => control.visible?.(state) ?? true)
@@ -37,6 +41,8 @@ export function ControlRow<S>({ control, renderGroup }: ControlRowProps<S>) {
       return <ToggleRow control={control} disabled={disabled} />
     case 'color':
       return <ColorRow control={control} disabled={disabled} />
+    case 'text':
+      return <TextRow control={control} disabled={disabled} />
     case 'select':
     case 'segmented':
       return <ChoiceRow control={control} disabled={disabled} />

@@ -4,6 +4,7 @@ import { createCameraSlice } from './slices/camera'
 import { createDeviceSlice } from './slices/device'
 import { createLightingSlice } from './slices/lighting'
 import { createMediaSlice } from './slices/media'
+import { createOverlaysSlice } from './slices/overlays'
 import { createSceneSlice } from './slices/scene'
 import { createUiSlice } from './slices/ui'
 import type { AppState } from './types'
@@ -23,5 +24,6 @@ export const useAppStore = create<AppState>()(
     ...createLightingSlice(...args),
     ...createDeviceSlice(...args),
     ...createMediaSlice(...args),
+    ...createOverlaysSlice(...args),
   })),
 )

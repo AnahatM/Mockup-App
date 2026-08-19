@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import type { Texture } from 'three'
 import { fitMedia } from '@/lib/media/fit'
+import { useOverlayTexture } from '@/features/screen'
 import { useAppStore } from '@/state/store'
 import { buildScreen, screenLayout } from '../builders/screen'
 import type { DeviceSpec } from '../spec/types'
@@ -36,6 +37,10 @@ export function DeviceScreen({
   const screen = useAppStore((state) => state.screen)
   const layout = useMemo(() => screenLayout(spec.body, spec.screen), [spec])
   const geometry = useMemo(() => buildScreen(layout), [layout])
+  const overlay = useOverlayTexture(
+    spec.supportedOverlays,
+    layout.width / layout.height,
+  )
 
   const placement = useMemo(
     () =>
@@ -85,6 +90,15 @@ export function DeviceScreen({
             roughness={0.16}
             metalness={0}
           />
+        </mesh>
+      )}
+
+      {/* Status bar, gesture bar, menu bar and dock, composited as one layer in
+          front of the media so they are independent of both it and the geometry. */}
+      {overlay && (
+        <mesh position={[0, 0, 0.04]} renderOrder={3}>
+          <planeGeometry args={[layout.width, layout.height]} />
+          <meshBasicMaterial map={overlay} transparent toneMapped={false} />
         </mesh>
       )}
     </group>

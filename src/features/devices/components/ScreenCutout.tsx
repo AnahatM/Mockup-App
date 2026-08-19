@@ -67,17 +67,18 @@ function buildCutout(spec: DeviceSpec, cutout: CutoutSpec): ShapeGeometry | null
     }
 
     case 'notch': {
-      // A notch hangs from the top edge, so only its lower corners are rounded.
+      // A notch hangs from the top edge of the screen. Its upper corners sit
+      // flush against that edge, so rounding them is invisible in practice.
       const geometry = new ShapeGeometry(
         squircleShape({
           width: cutout.width,
-          height: cutout.height * 2,
-          radius: Math.min(cutout.height, cutout.width / 4),
+          height: cutout.height,
+          radius: Math.min(cutout.height / 2, cutout.width / 6),
           exponent: 4,
           segments: 14,
         }),
       )
-      geometry.translate(0, topEdge - cutout.height, 0)
+      geometry.translate(0, topEdge - cutout.height / 2, 0)
       return geometry
     }
   }

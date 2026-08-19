@@ -78,10 +78,10 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | E1  | Upload a screenshot of an app, product, or website       | `features/media` dropzone plus file picker                                           | P4    | DONE   |
 | E2  | **Upload a video file, used in place of a static image** | `VideoTexture` with play, pause, loop, mute, seek, and rate controls                 | P4    | DONE   |
 | E3  | Screenshot maps correctly onto the device screen         | aspect fit, fill, stretch, offset, zoom                                              | P4    | DONE   |
-| E4  | **Enable/disable the iPhone gesture bar**                | `overlays/GestureBar`                                                                | P5    | TODO   |
-| E5  | **Enable/disable the time, wifi, and battery icons**     | `overlays/StatusBar`, iOS and Android styling, light/dark, editable time and carrier | P5    | TODO   |
-| E6  | **Enable/disable the MacBook dock**                      | `overlays/Dock` plus `overlays/MenuBar`                                              | P5    | TODO   |
-| E7  | Per-device toggles offer only what makes sense           | `spec.supportedOverlays` drives the panel                                            | P5    | TODO   |
+| E4  | **Enable/disable the iPhone gesture bar**                | `overlays/GestureBar`                                                                | P5    | DONE   |
+| E5  | **Enable/disable the time, wifi, and battery icons**     | `overlays/StatusBar`, iOS and Android styling, light/dark, editable time and carrier | P5    | DONE   |
+| E6  | **Enable/disable the MacBook dock**                      | `overlays/Dock` plus `overlays/MenuBar`                                              | P5    | DONE   |
+| E7  | Per-device toggles offer only what makes sense           | `spec.supportedOverlays` drives the panel                                            | P5    | DONE   |
 
 ## F. Digital (2D) mockups
 

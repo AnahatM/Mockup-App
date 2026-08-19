@@ -7,6 +7,7 @@ import type {
   GroupControl,
   NumericControl,
   Option,
+  TextControl,
   ToggleControl,
   Vec3Control,
 } from './types'
@@ -50,6 +51,11 @@ export const toggle = <S>(def: Omit<ToggleControl<S>, 'kind'>): Control<S> => ({
 export const color = <S>(def: Omit<ColorControl<S>, 'kind'>): Control<S> => ({
   ...def,
   kind: 'color',
+})
+
+export const text = <S>(def: Omit<TextControl<S>, 'kind'>): Control<S> => ({
+  ...def,
+  kind: 'text',
 })
 
 interface ChoiceDef<S, T extends string> {

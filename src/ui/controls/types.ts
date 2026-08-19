@@ -42,6 +42,14 @@ export interface ToggleControl<S> extends ControlBase<S> {
   update: (draft: Draft<S>, value: boolean) => void
 }
 
+export interface TextControl<S> extends ControlBase<S> {
+  kind: 'text'
+  placeholder?: string | undefined
+  maxLength?: number | undefined
+  select: (state: S) => string
+  update: (draft: Draft<S>, value: string) => void
+}
+
 export interface ColorControl<S> extends ControlBase<S> {
   kind: 'color'
   select: (state: S) => string
@@ -87,6 +95,7 @@ export type Control<S> =
   | NumericControl<S>
   | ToggleControl<S>
   | ColorControl<S>
+  | TextControl<S>
   | ChoiceControl<S>
   | Vec3Control<S>
   | GroupControl<S>
