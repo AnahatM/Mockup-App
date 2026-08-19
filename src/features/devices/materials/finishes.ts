@@ -5,8 +5,8 @@ import type { FinishKind } from '../spec/types'
  *
  * Values are chosen to be *physically plausible* rather than tuned to look good
  * under one particular rig: metals are fully metallic, dielectrics are not, and
- * the difference between titanium and aluminium is roughness and anisotropy,
- * which is what it actually is.
+ * the difference between brushed titanium and polished steel is roughness and
+ * anisotropy, which is what it actually is.
  */
 export interface Finish {
   metalness: number
@@ -42,6 +42,13 @@ export const FINISHES: Record<FinishKind, Finish> = {
     map: 'brushed-v',
     mapContrast: 0.07,
   },
+  /** Bead-blasted anodised aluminium: metal, but with no directional grain. */
+  anodised: {
+    metalness: 1,
+    roughness: 0.46,
+    map: 'speckle',
+    mapContrast: 0.05,
+  },
   steel: {
     metalness: 1,
     roughness: 0.12,
@@ -49,6 +56,11 @@ export const FINISHES: Record<FinishKind, Finish> = {
     anisotropyRotation: Math.PI / 2,
     map: 'brushed-v',
     mapContrast: 0.04,
+  },
+  /** Mirror-polished metal, as on a stainless band. */
+  'polished-metal': {
+    metalness: 1,
+    roughness: 0.04,
   },
   'matte-glass': {
     metalness: 0,
@@ -80,4 +92,50 @@ export const FINISHES: Record<FinishKind, Finish> = {
     mapContrast: 0.08,
     reflectivity: 0.28,
   },
+  'gloss-plastic': {
+    metalness: 0,
+    roughness: 0.14,
+    clearcoat: 0.85,
+    clearcoatRoughness: 0.1,
+    reflectivity: 0.5,
+  },
+}
+
+/** Human labels, for the finish pickers. */
+export const FINISH_LABELS: Record<FinishKind, string> = {
+  titanium: 'Brushed titanium',
+  aluminium: 'Brushed aluminium',
+  anodised: 'Anodised aluminium',
+  steel: 'Brushed steel',
+  'polished-metal': 'Polished metal',
+  'matte-glass': 'Matte glass',
+  'gloss-glass': 'Glossy glass',
+  ceramic: 'Ceramic',
+  'soft-plastic': 'Soft-touch plastic',
+  'gloss-plastic': 'Glossy plastic',
+}
+
+export const FINISH_KINDS = Object.keys(FINISHES) as FinishKind[]
+
+/**
+ * Screen glass.
+ *
+ * A separate axis from the body finishes because a display is always glass —
+ * the only real question is whether it is glossy or has an anti-glare etch,
+ * and that changes how much of the room it mirrors back.
+ */
+export const SCREEN_FINISHES = ['glossy', 'matte'] as const
+export type ScreenFinish = (typeof SCREEN_FINISHES)[number]
+
+export const SCREEN_FINISH_LABELS: Record<ScreenFinish, string> = {
+  glossy: 'Glossy',
+  matte: 'Matte / anti-glare',
+}
+
+export const SCREEN_FINISH_VALUES: Record<
+  ScreenFinish,
+  { roughness: number; clearcoat: number; clearcoatRoughness: number }
+> = {
+  glossy: { roughness: 0.06, clearcoat: 1, clearcoatRoughness: 0.04 },
+  matte: { roughness: 0.42, clearcoat: 0.4, clearcoatRoughness: 0.5 },
 }

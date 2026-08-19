@@ -1,4 +1,5 @@
 import type { Texture } from 'three'
+import { backFinishOf, frameFinishOf } from '../materials/resolve'
 import { CameraBump } from './CameraBump'
 import { DeviceBody } from './DeviceBody'
 import { DeviceScreen } from './DeviceScreen'
@@ -31,6 +32,8 @@ export function ProceduralDevice({
 }: ProceduralDeviceProps) {
   // Front face, with a hair of clearance so nothing z-fights with the shell.
   const frontZ = spec.body.depth / 2 + 0.02
+  const frameFinish = frameFinishOf(spec, config)
+  const backFinish = backFinishOf(spec, config)
 
   // Clamshells have a second body and a pivot, so they compose differently.
   if (spec.hinge) {
@@ -52,6 +55,8 @@ export function ProceduralDevice({
         bodyColor={config.bodyColor}
         frameColor={config.frameColor}
         showRails={config.showRails}
+        frameFinish={frameFinish}
+        backFinish={backFinish}
       />
 
       <DeviceScreen
@@ -60,16 +65,24 @@ export function ProceduralDevice({
         texture={screenTexture}
         mediaAspect={mediaAspect}
         brightness={config.screenBrightness}
+        screenFinish={config.screenFinish}
       />
 
       {config.showCutout && (
         <ScreenCutout spec={spec} cutout={spec.cutout} z={frontZ + 0.04} />
       )}
 
-      {config.showButtons && <SideButtons spec={spec} frameColor={config.frameColor} />}
+      {config.showButtons && (
+        <SideButtons spec={spec} frameColor={config.frameColor} finish={frameFinish} />
+      )}
 
       {spec.stand && (
-        <DeviceStand spec={spec} stand={spec.stand} frameColor={config.frameColor} />
+        <DeviceStand
+          spec={spec}
+          stand={spec.stand}
+          frameColor={config.frameColor}
+          finish={frameFinish}
+        />
       )}
 
       {spec.band && <WatchBand spec={spec} band={spec.band} />}

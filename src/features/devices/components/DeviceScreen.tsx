@@ -3,6 +3,7 @@ import type { Texture } from 'three'
 import { fitMedia } from '@/lib/media/fit'
 import { useOverlayTexture } from '@/features/screen'
 import { useAppStore } from '@/state/store'
+import { SCREEN_FINISH_VALUES, type ScreenFinish } from '../materials/finishes'
 import { buildScreen, screenLayout } from '../builders/screen'
 import type { DeviceSpec } from '../spec/types'
 
@@ -14,6 +15,8 @@ export interface DeviceScreenProps {
   mediaAspect: number
   /** How brightly the display self-illuminates. */
   brightness: number
+  /** Glossy mirrors the room; matte is an anti-glare etch. */
+  screenFinish: ScreenFinish
 }
 
 /**
@@ -33,6 +36,7 @@ export function DeviceScreen({
   texture,
   mediaAspect,
   brightness,
+  screenFinish,
 }: DeviceScreenProps) {
   const screen = useAppStore((state) => state.screen)
   const layout = useMemo(() => screenLayout(spec.body, spec.screen), [spec])
@@ -41,6 +45,10 @@ export function DeviceScreen({
     spec.supportedOverlays,
     layout.width / layout.height,
   )
+  // Glossy glass mirrors the room; a matte etch scatters it. This is the single
+  // most noticeable material choice on a device, because the screen is the
+  // largest flat surface facing the camera.
+  const glass = SCREEN_FINISH_VALUES[screenFinish]
 
   const placement = useMemo(
     () =>
@@ -69,11 +77,13 @@ export function DeviceScreen({
     <group position={[0, layout.offsetY, z]}>
       {/* Base panel: the switched-off display, and the letterbox in `contain`. */}
       <mesh geometry={geometry} renderOrder={1}>
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           color={screen.background}
           emissive={screen.background}
           emissiveIntensity={texture ? 0.15 : 0.4}
-          roughness={0.08}
+          roughness={glass.roughness}
+          clearcoat={glass.clearcoat}
+          clearcoatRoughness={glass.clearcoatRoughness}
           metalness={0}
         />
       </mesh>

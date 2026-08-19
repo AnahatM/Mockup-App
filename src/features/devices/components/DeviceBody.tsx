@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { buildBody } from '../builders/body'
 import { FinishMaterial } from '../materials/FinishMaterial'
-import type { DeviceSpec } from '../spec/types'
+import type { DeviceSpec, FinishKind } from '../spec/types'
 
 export interface DeviceBodyProps {
   spec: DeviceSpec
@@ -9,6 +9,8 @@ export interface DeviceBodyProps {
   frameColor: string
   /** When false, the side band takes the body finish instead of the frame's. */
   showRails: boolean
+  frameFinish: FinishKind
+  backFinish: FinishKind
 }
 
 /**
@@ -28,19 +30,17 @@ export function DeviceBody({
   bodyColor,
   frameColor,
   showRails,
+  frameFinish,
+  backFinish,
 }: DeviceBodyProps) {
   const geometry = useMemo(() => buildBody(spec.body), [spec.body])
 
   return (
     <mesh geometry={geometry} castShadow receiveShadow>
-      <FinishMaterial
-        attach="material-0"
-        finish={spec.materials.back}
-        color={bodyColor}
-      />
+      <FinishMaterial attach="material-0" finish={backFinish} color={bodyColor} />
       <FinishMaterial
         attach="material-1"
-        finish={showRails ? spec.materials.frame : spec.materials.back}
+        finish={showRails ? frameFinish : backFinish}
         color={showRails ? frameColor : bodyColor}
       />
     </mesh>

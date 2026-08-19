@@ -11,6 +11,14 @@ export const deviceConfigSchema = z.object({
   colorway: z.string().default('black-titanium'),
   bodyColor: hexSchema.default('#3a3a3d'),
   frameColor: hexSchema.default('#4a4a4f'),
+  /**
+   * Finish overrides. Null means "use whatever the device spec declares", so a
+   * device keeps its real construction until the user deliberately changes it.
+   */
+  frameFinish: z.string().nullable().default(null),
+  backFinish: z.string().nullable().default(null),
+  screenFinish: z.enum(['glossy', 'matte']).default('glossy'),
+
   /** Per-device detail toggles. */
   showCutout: z.boolean().default(true),
   showCameraBump: z.boolean().default(true),

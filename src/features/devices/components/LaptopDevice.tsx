@@ -63,6 +63,7 @@ export function LaptopDevice({
             texture={screenTexture}
             mediaAspect={mediaAspect}
             brightness={config.screenBrightness}
+            screenFinish={config.screenFinish}
           />
 
           {config.showCutout && (

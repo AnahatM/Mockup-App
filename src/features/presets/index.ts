@@ -17,4 +17,9 @@ export {
   importManifest,
   toShareFragment,
 } from './io'
-export { BUILTIN_PRESETS, findBuiltinPreset, type BuiltinPreset } from './builtin'
+export {
+  BUILTIN_PRESETS,
+  builtinPresetGroups,
+  findBuiltinPreset,
+  type BuiltinPreset,
+} from './builtin'

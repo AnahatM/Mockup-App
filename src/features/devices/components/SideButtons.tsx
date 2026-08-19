@@ -1,15 +1,16 @@
 import { useMemo } from 'react'
 import { buildButton } from '../builders/buttons'
 import { FinishMaterial } from '../materials/FinishMaterial'
-import type { DeviceSpec } from '../spec/types'
+import type { DeviceSpec, FinishKind } from '../spec/types'
 
 export interface SideButtonsProps {
   spec: DeviceSpec
   frameColor: string
+  finish: FinishKind
 }
 
 /** Volume rocker, power and action buttons, placed from the spec's rail offsets. */
-export function SideButtons({ spec, frameColor }: SideButtonsProps) {
+export function SideButtons({ spec, frameColor, finish }: SideButtonsProps) {
   const placements = useMemo(
     () => spec.buttons.map((button) => buildButton(spec.body, button)),
     [spec],
@@ -25,7 +26,7 @@ export function SideButtons({ spec, frameColor }: SideButtonsProps) {
           castShadow
         >
           {/* Buttons are the same metal as the rail; the chamfer distinguishes them. */}
-          <FinishMaterial finish={spec.materials.frame} color={frameColor} />
+          <FinishMaterial finish={finish} color={frameColor} />
         </mesh>
       ))}
     </>

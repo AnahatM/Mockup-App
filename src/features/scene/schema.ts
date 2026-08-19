@@ -14,14 +14,21 @@ export const BACKDROP_MODES = [
   'solid',
   'gradient',
   'glow',
+  'environment',
   'cyclorama',
   'grid',
 ] as const
 
 export const backdropSchema = z.object({
-  mode: z.enum(BACKDROP_MODES).default('glow'),
+  /**
+   * `environment` shows the lighting room itself as the background, so it has
+   * real depth and parallaxes as the camera orbits. A painted gradient is flat
+   * by construction — it cannot move with the camera, which is what gives away
+   * that the product is composited onto a picture rather than standing in a room.
+   */
+  mode: z.enum(BACKDROP_MODES).default('cyclorama'),
   /** Base colour, and the outer colour for gradient and glow modes. */
-  color: hexSchema.default('#e8e6e1'),
+  color: hexSchema.default('#e3e1dc'),
   /** Highlight colour: gradient end, glow centre, grid lines. */
   accent: hexSchema.default('#fbfaf7'),
   /** Gradient direction, in radians. */

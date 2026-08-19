@@ -12,7 +12,7 @@ const TEXTURE_SIZE = 512
  */
 export function useBackdropTexture(config: BackdropConfig): CanvasTexture | null {
   const texture = useMemo(() => {
-    if (config.mode === 'transparent') return null
+    if (config.mode === 'transparent' || config.mode === 'environment') return null
 
     const canvas = document.createElement('canvas')
     canvas.width = TEXTURE_SIZE

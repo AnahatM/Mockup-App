@@ -12,15 +12,25 @@ export function Cyclorama({ config }: { config: BackdropConfig }) {
 
   return (
     <mesh geometry={geometry} position={[0, 0, 0]} receiveShadow>
-      <meshStandardMaterial color={config.color} roughness={0.92} metalness={0} />
+      {/* Slightly glossy rather than pure matte: a real cove sweep picks up a
+          soft sheen from the key light, and that gradient across the floor is
+          most of what makes the space read as three-dimensional. */}
+      <meshStandardMaterial
+        color={config.color}
+        roughness={0.78}
+        metalness={0}
+        envMapIntensity={0.85}
+      />
     </mesh>
   )
 }
 
-const DEPTH = 26
-const FLOOR = 9
-const WALL = 11
-const CURVE = 3.2
+// Generous enough that the sweep's edges stay out of frame at any sensible
+// camera distance — a visible edge is what turns a cove back into a backdrop.
+const DEPTH = 44
+const FLOOR = 16
+const WALL = 18
+const CURVE = 4.5
 
 function buildSweep(): ExtrudeGeometry {
   // Drawn in profile (z across, y up) then extruded sideways, which is the

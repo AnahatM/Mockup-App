@@ -15,8 +15,12 @@ export function paintBackdrop(
 ): void {
   ctx.clearRect(0, 0, size, size)
 
+  // `environment` paints nothing here either: the lighting rig draws the room
+  // as the background itself, and a texture over it would cover the very depth
+  // it exists to provide.
   switch (config.mode) {
     case 'transparent':
+    case 'environment':
       return
     case 'gradient':
       paintGradient(ctx, size, config)

@@ -24,11 +24,14 @@ export type DeviceMeshSource =
 export type FinishKind =
   | 'titanium'
   | 'aluminium'
+  | 'anodised'
   | 'steel'
+  | 'polished-metal'
   | 'matte-glass'
   | 'gloss-glass'
   | 'ceramic'
   | 'soft-plastic'
+  | 'gloss-plastic'
 
 export interface BodySpec {
   width: number

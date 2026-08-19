@@ -17,6 +17,11 @@ import type { LightConfig } from './schema'
  */
 export function LightRig() {
   const lighting = useAppStore((state) => state.lighting)
+  // Showing the environment as the background is what gives the scene depth:
+  // it parallaxes with the camera, which a painted gradient cannot do.
+  const asBackground = useAppStore(
+    (state) => state.scene.backdrop.mode === 'environment',
+  )
   const active = lighting.lights.filter((light) => light.enabled)
   const bakeKey = useMemo(
     () => `${hashRig(active)}#${JSON.stringify(lighting.room)}`,
@@ -31,13 +36,16 @@ export function LightRig() {
            point of loading one is its own light, not a blend with ours. */
         <Environment
           files={lighting.hdri.url}
+          background={asBackground}
+          backgroundRotation={[0, lighting.hdriRotation, 0]}
           environmentIntensity={lighting.environmentIntensity}
           environmentRotation={[0, lighting.hdriRotation, 0]}
         />
       ) : (
         <Environment
-          key={bakeKey}
+          key={`${bakeKey}#${String(asBackground)}`}
           frames={1}
+          background={asBackground}
           resolution={lighting.resolution}
           environmentIntensity={lighting.environmentIntensity}
         >
