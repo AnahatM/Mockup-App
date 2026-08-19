@@ -10,11 +10,11 @@ a customizable 3D studio, then export stills or video.
 
 ## Read these first
 
-- [`docs/PLAN.md`](docs/PLAN.md) — the approved architecture and phased roadmap (P0-P11).
-- [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) — every tracked requirement with a status.
+- [`docs/planning/PLAN.md`](docs/planning/PLAN.md) — the approved architecture and phased roadmap (P0-P11).
+- [`docs/planning/REQUIREMENTS.md`](docs/planning/REQUIREMENTS.md) — every tracked requirement with a status.
   **Update the status column as you complete work.** Nothing may be dropped from this list;
   if something proves infeasible, mark it `BLOCKED` with a written reason.
-- [`docs/architecture.md`](docs/architecture.md) — layering and cross-cutting decisions.
+- [`docs/reference/architecture.md`](docs/reference/architecture.md) — layering and cross-cutting decisions.
 - [`docs/adr/`](docs/adr/) — why things are the way they are. Read the relevant ADR before
   reversing a decision.
 

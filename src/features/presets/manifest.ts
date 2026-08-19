@@ -23,7 +23,7 @@ import { overlaysSchema } from '@/features/screen/schema'
  * with no React and no store, so depending on them directly is safe by
  * construction. ESLint permits this one path shape.
  *
- * See docs/preset-manifest.md.
+ * See docs/reference/preset-manifest.md.
  */
 
 export const MANIFEST_KIND = 'mockup-studio'

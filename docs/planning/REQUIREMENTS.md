@@ -23,7 +23,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | A8  | **Strict TypeScript**                                     | `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns` | P0     | DONE   |
 | A9  | Clean up boilerplate, start from a clean state            | delete template `App.tsx`, `App.css`, `assets/`, `icons.svg`                                                      | P0     | DONE   |
 | A10 | Document everything as we go                              | `docs/` plus ADRs plus per-feature READMEs, updated in the same commit as the code                                | all    | DONE   |
-| A11 | Plan first, then implement                                | `docs/PLAN.md`, approved before any code was written                                                              | pre-P0 | DONE   |
+| A11 | Plan first, then implement                                | `docs/planning/PLAN.md`, approved before any code was written                                                              | pre-P0 | DONE   |
 | A12 | Download all libraries needed                             | full 3D, state, and validation stack installed locally                                                            | P0     | DONE   |
 | A13 | Use latest package versions where sensible                | all deps pinned to current latest; Node 22.14 already clears every floor                                          | P0     | DONE   |
 

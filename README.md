@@ -88,14 +88,14 @@ ones that quietly erode:
 3. **Strict TypeScript**, including `noUncheckedIndexedAccess` and
    `exactOptionalPropertyTypes`.
 
-See [`docs/architecture.md`](docs/architecture.md) for how the code is organised
-and [`docs/design-tokens.md`](docs/design-tokens.md) for the theming system.
+See [`docs/reference/architecture.md`](docs/reference/architecture.md) for how the code is organised
+and [`docs/reference/design-tokens.md`](docs/reference/design-tokens.md) for the theming system.
 
 ## Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md). Adding a device is intentionally the
 easiest contribution to make — it is usually a single data file. See
-[`docs/device-specs.md`](docs/device-specs.md).
+[`docs/reference/device-specs.md`](docs/reference/device-specs.md).
 
 ## Licence
 

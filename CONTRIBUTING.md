@@ -22,7 +22,7 @@ These are checked by tooling, not by review, because they are the conventions th
 erode in every codebase:
 
 1. **No hardcoded colours.** Literal colours belong only in `src/styles/tokens/`. Everywhere
-   else uses `var(--semantic-token)`. See [`docs/design-tokens.md`](docs/design-tokens.md).
+   else uses `var(--semantic-token)`. See [`docs/reference/design-tokens.md`](docs/reference/design-tokens.md).
 2. **No long files.** 150 lines per file, 80 per function. If you hit the limit, extract a
    component, a hook, or a pure helper into `lib/`. Please do not raise the limit — the limit
    is doing its job.
@@ -50,7 +50,7 @@ This is the highest-value contribution and usually a single data file.
 2. Register it in `src/features/devices/spec/registry.ts`.
 
 Full walkthrough, including the dimension and material fields:
-[`docs/device-specs.md`](docs/device-specs.md).
+[`docs/reference/device-specs.md`](docs/reference/device-specs.md).
 
 Devices are original procedural approximations. Please do not contribute models copied from
 a manufacturer's assets, and keep brand references to describing the form factor.

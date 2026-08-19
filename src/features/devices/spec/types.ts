@@ -1,7 +1,7 @@
 import type { IconName } from '@/ui'
 
 /**
- * A device is DATA, not a model. See docs/device-specs.md.
+ * A device is DATA, not a model. See docs/reference/device-specs.md.
  *
  * All dimensions are in **millimetres**, so a spec can be written straight from
  * published measurements. The renderer converts once via `MM_TO_UNITS`.

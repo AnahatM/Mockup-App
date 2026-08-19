@@ -127,7 +127,7 @@ mesh: { kind: 'glb', url: '/models/my-phone.glb', screenMesh: 'Screen_01' }
 
 Nothing else in the spec changes. Screen overlays keep working, because they are
 texture layers rather than geometry. See
-[`adr/0001-procedural-geometry.md`](adr/0001-procedural-geometry.md) for why
+[`adr/0001-procedural-geometry.md`](../adr/0001-procedural-geometry.md) for why
 procedural is the default.
 
 ## Sizing and framing

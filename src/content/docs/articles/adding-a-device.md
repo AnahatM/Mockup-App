@@ -52,4 +52,4 @@ All dimensions are millimetres, so they can be copied straight from published me
 
 Do not hand-tune the camera. Camera distance, plinth radius and shadow extent are all derived from the device's own bounding size, so a new device arrives correctly composed.
 
-Full field reference is in `docs/device-specs.md` in the repository.
+Full field reference is in `docs/reference/device-specs.md` in the repository.

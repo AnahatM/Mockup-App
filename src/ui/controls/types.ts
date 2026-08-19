@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import type { IconName } from '../icons'
 
 /**
- * A control is DATA, not JSX. See docs/architecture.md.
+ * A control is DATA, not JSX. See docs/reference/architecture.md.
  *
  * Every control carries a typed `select`/`update` accessor pair rather than a
  * string path into the store, so renaming a state field is a compile error

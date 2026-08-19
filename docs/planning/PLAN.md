@@ -185,7 +185,7 @@ Each phase ends with `npm run typecheck && npm run lint && npm run build` green 
 - Stylelint config with the color-literal ban.
 - Scripts: `dev · build · preview · lint · lint:css · typecheck · format · test`.
 - **Chalk token system**: `primitives.css` (warm-paper and soft-charcoal ramps, spacing, radii, type scale, elevation, motion) → `semantic.css` (`--surface-*`, `--text-*`, `--border-*`, `--accent-*`, `--control-*`) with `:root` = light and `[data-theme='dark']` overriding only semantics. No pure black or pure white anywhere; hairline borders; matte, near-shadowless.
-- Docs scaffold: root `README.md` (OSS-facing), `LICENSE` (MIT), `CONTRIBUTING.md`, `CLAUDE.md`, `docs/architecture.md`, `docs/design-tokens.md`, `docs/device-specs.md`, `docs/preset-manifest.md`, `docs/adr/0001-procedural-geometry.md`, `docs/adr/0002-drop-react-compiler.md`.
+- Docs scaffold: root `README.md` (OSS-facing), `LICENSE` (MIT), `CONTRIBUTING.md`, `CLAUDE.md`, `docs/reference/architecture.md`, `docs/reference/design-tokens.md`, `docs/reference/device-specs.md`, `docs/reference/preset-manifest.md`, `docs/adr/0001-procedural-geometry.md`, `docs/adr/0002-drop-react-compiler.md`.
 - First git commit capturing the scaffold, then a second for the cleanup.
 
 ### P1 — App shell + UI primitives + theme

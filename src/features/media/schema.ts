@@ -27,7 +27,7 @@ export const defaultScreen = (): ScreenConfig => screenSchema.parse({})
  *
  * Held outside the serialisable config because `url` is a session-scoped object
  * URL. Saving a preset either omits the media or embeds it as a data URL — see
- * docs/preset-manifest.md.
+ * docs/reference/preset-manifest.md.
  */
 export type MediaSource =
   | { kind: 'none' }

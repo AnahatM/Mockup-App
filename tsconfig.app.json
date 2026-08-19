@@ -21,7 +21,7 @@
       "@/*": ["./src/*"]
     },
 
-    /* Strictness — see docs/architecture.md */
+    /* Strictness — see docs/reference/architecture.md */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,

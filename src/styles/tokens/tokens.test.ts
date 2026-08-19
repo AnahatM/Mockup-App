@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 /**
- * Guards the token contract described in docs/design-tokens.md.
+ * Guards the token contract described in docs/reference/design-tokens.md.
  *
  * A semantic token defined in only one theme is a real bug and a nasty one: the
  * component silently falls back to an unset variable, so an element goes invisible
@@ -64,7 +64,7 @@ describe('token tiering', () => {
     const banned = primitivesCss.match(/#(?:fff(?:fff)?|000(?:000)?)\b/gi)
     expect(
       banned,
-      'chalk uses no pure black or white — see docs/design-tokens.md',
+      'chalk uses no pure black or white — see docs/reference/design-tokens.md',
     ).toBe(null)
   })
 })

@@ -82,7 +82,7 @@ type DeviceMeshSource =
 Procedural geometry keeps the app fully local, keeps device colours _changeable_ (which the
 colour-match feature depends on), and avoids licensing and trademark risk on a public repo.
 The `glb` variant exists from day one so a hand-modelled asset can be dropped in later
-without a refactor. See [`adr/0001-procedural-geometry.md`](adr/0001-procedural-geometry.md).
+without a refactor. See [`adr/0001-procedural-geometry.md`](../adr/0001-procedural-geometry.md).
 
 ### Screen content is a layer stack, not one texture
 
@@ -103,7 +103,7 @@ identically for procedural and GLB devices because it never touches geometry.
 The studio environment is built from `<Lightformer>` panels driven by the store. This keeps
 the app fully local (drei's built-in environment presets fetch from a CDN) and makes every
 rim light and glow a live, colour-bindable knob.
-See [`adr/0003-parametric-lighting.md`](adr/0003-parametric-lighting.md).
+See [`adr/0003-parametric-lighting.md`](../adr/0003-parametric-lighting.md).
 
 ### Tone mapping belongs to the composer, not the renderer
 

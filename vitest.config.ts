@@ -16,7 +16,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       // Only the pure layers are meaningfully coverable; 3D components are
-      // verified visually and via the end-to-end script in docs/PLAN.md.
+      // verified visually and via the end-to-end script in docs/planning/PLAN.md.
       include: ['src/lib/**', 'src/features/presets/**'],
     },
   },
