@@ -14,7 +14,7 @@ const browser = await puppeteer.launch({
 })
 const page = await browser.newPage()
 await page.setViewport({ width: 1200, height: 800 })
-await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' })
+await page.goto('http://localhost:5173/studio', { waitUntil: 'networkidle0' })
 await new Promise((r) => setTimeout(r, 3000))
 
 const luminance = () =>

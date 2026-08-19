@@ -1,0 +1,122 @@
+.prose {
+  max-width: 72ch;
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.prose h2 {
+  margin: var(--space-8) 0 var(--space-3);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  margin: var(--space-6) 0 var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.prose p {
+  margin: 0 0 var(--space-4);
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--space-4);
+  padding-left: var(--space-5);
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  margin-bottom: var(--space-2);
+}
+
+.prose strong {
+  color: var(--text-primary);
+}
+
+.prose code {
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--text-primary);
+  background: var(--surface-sunken);
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+}
+
+.prose pre {
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4);
+  overflow-x: auto;
+  background: var(--surface-sunken);
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.link {
+  color: var(--text-accent);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* A table that cannot fit scrolls itself rather than widening the page. */
+.tableWrap {
+  margin: 0 0 var(--space-4);
+  overflow-x: auto;
+  border: var(--hairline) solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  font-size: var(--text-md);
+  border-collapse: collapse;
+}
+
+.table :global(th),
+.table :global(td) {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-bottom: var(--hairline) solid var(--border-subtle);
+}
+
+.table :global(th) {
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  background: var(--surface-sunken);
+}
+
+.table :global(tr):last-child :global(td) {
+  border-bottom: none;
+}
+
+.quote {
+  padding: var(--space-3) var(--space-4);
+  margin: 0 0 var(--space-4);
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.quote p:last-child {
+  margin-bottom: 0;
+}

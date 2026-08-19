@@ -42,7 +42,7 @@ await client.send('Browser.setDownloadBehavior', {
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'light'),
 )
-await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' })
+await page.goto('http://localhost:5173/studio', { waitUntil: 'networkidle0' })
 await new Promise((r) => setTimeout(r, 3500))
 
 await openTab(page, 'Export')

@@ -7,7 +7,7 @@
   "description": "Free, open-source, fully-local 3D mockup generator for websites and apps.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && npm run sitemap && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint .",
@@ -17,7 +17,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run typecheck && npm run lint && npm run lint:css && npm run test"
+    "verify": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
+    "sitemap": "node scripts/build-sitemap.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

@@ -1,11 +1,13 @@
 import { ThemeProvider } from '@/features/theme'
-import { AppShell } from '@/app/layout/AppShell'
+import { LoadingBar } from '@/ui'
+import { AppRouter } from '@/app/AppRouter'
 
-/** Composition root: providers wrapping the application frame. */
+/** Composition root: providers, the global loading indicator, and the router. */
 export function App() {
   return (
     <ThemeProvider>
-      <AppShell />
+      <LoadingBar />
+      <AppRouter />
     </ThemeProvider>
   )
 }

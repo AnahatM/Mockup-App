@@ -4,7 +4,11 @@
  */
 export { Button, type ButtonProps, type ButtonVariant } from './Button'
 export { ColorField, type ColorFieldProps } from './ColorField'
+export { Dialog, type DialogProps } from './Dialog'
 export { EmptyState, type EmptyStateProps } from './EmptyState'
+export { LoadingBar } from './LoadingBar'
+export { Tooltip, type TooltipProps } from './Tooltip'
+export { useConfirm, type ConfirmOptions } from './hooks/useConfirm'
 export { Field, type FieldProps } from './Field'
 export { Icon, type IconProps } from './Icon'
 export { IconButton, type IconButtonProps } from './IconButton'

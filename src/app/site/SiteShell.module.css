@@ -1,0 +1,11 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow-y: auto;
+  background: var(--surface-app);
+}
+
+.main {
+  flex: 1 0 auto;
+}

@@ -10,7 +10,7 @@
 import puppeteer from 'puppeteer-core'
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
-const URL = process.env.APP_URL ?? 'http://localhost:5173/'
+const URL = process.env.APP_URL ?? 'http://localhost:5173/studio'
 const [, , out = 'shot.png', theme = 'dark', waitMs = '3500'] = process.argv
 
 const browser = await puppeteer.launch({

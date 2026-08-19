@@ -1,0 +1,52 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.tip {
+  position: absolute;
+  z-index: var(--z-popover);
+  max-width: 18rem;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--text-inverse);
+  text-align: center;
+  white-space: nowrap;
+  background: var(--text-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-popover);
+  pointer-events: none;
+  animation: fade var(--duration-fast) var(--ease-out);
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+}
+
+.top {
+  bottom: calc(100% + var(--space-1));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom {
+  top: calc(100% + var(--space-1));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.left {
+  top: 50%;
+  right: calc(100% + var(--space-1));
+  transform: translateY(-50%);
+}
+
+.right {
+  top: 50%;
+  left: calc(100% + var(--space-1));
+  transform: translateY(-50%);
+}

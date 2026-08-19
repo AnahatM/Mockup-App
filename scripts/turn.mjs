@@ -22,7 +22,7 @@ page.on('console', (m) => m.type() === 'error' && problems.push(m.text()))
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'dark'),
 )
-await page.goto('http://localhost:5173/', { waitUntil: 'networkidle0' })
+await page.goto('http://localhost:5173/studio', { waitUntil: 'networkidle0' })
 await new Promise((r) => setTimeout(r, 3000))
 
 if (device) {

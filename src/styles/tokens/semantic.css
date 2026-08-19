@@ -68,6 +68,9 @@
 
   /* Viewport scrim — the neutral behind the 3D canvas before the backdrop paints */
   --viewport-void: var(--paper-200);
+
+  /* Dimming behind a modal */
+  --scrim: rgb(26 26 24 / 32%);
 }
 
 [data-theme='dark'] {
@@ -124,4 +127,6 @@
   --shadow-popover: 0 4px 14px rgb(0 0 0 / 40%), 0 1px 3px rgb(0 0 0 / 30%);
 
   --viewport-void: var(--ink-950);
+
+  --scrim: rgb(0 0 0 / 55%);
 }

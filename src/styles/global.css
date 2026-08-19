@@ -9,8 +9,8 @@ body {
   color: var(--text-primary);
   background: var(--surface-app);
 
-  /* The UI is a fixed-frame tool, not a scrolling document. */
-  overflow: hidden;
+  /* The studio is a fixed-frame tool and locks scrolling itself; the site
+     pages around it are ordinary documents. */
   overscroll-behavior: none;
 }
 

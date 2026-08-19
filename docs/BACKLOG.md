@@ -46,12 +46,12 @@ Root is the landing page; the studio moves to `/studio`.
 
 | # | Item | Status |
 |---|---|---|
-| 19 | Router, navbar, footer | TODO |
-| 20 | Landing page — hero, features, screenshots, CTA | TODO |
-| 21 | About page — project purpose, development story, developer | TODO |
-| 22 | Privacy page | TODO |
-| 23 | Sitemap page + `sitemap.xml` | TODO |
-| 24 | Searchable, browsable in-app documentation (~16 articles) | TODO |
+| 19 | Router, navbar, footer | DONE |
+| 20 | Landing page — hero, features, screenshots, CTA | DONE |
+| 21 | About page — project purpose, development story, developer | DONE |
+| 22 | Privacy page | DONE |
+| 23 | Sitemap page + `sitemap.xml` | DONE |
+| 24 | Searchable, browsable in-app documentation (~16 articles) | DONE |
 
 ## Mockup features
 
