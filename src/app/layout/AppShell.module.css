@@ -1,0 +1,11 @@
+.shell {
+  display: grid;
+  grid-template-rows: var(--toolbar-height) minmax(0, 1fr);
+  height: 100%;
+  background: var(--surface-app);
+}
+
+.body {
+  display: flex;
+  min-height: 0;
+}

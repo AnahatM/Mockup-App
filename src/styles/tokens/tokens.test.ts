@@ -62,8 +62,9 @@ describe('token tiering', () => {
 
   it('keeps the chalk palette free of pure black and pure white', () => {
     const banned = primitivesCss.match(/#(?:fff(?:fff)?|000(?:000)?)\b/gi)
-    expect(banned, 'chalk uses no pure black or white — see docs/design-tokens.md').toBe(
-      null,
-    )
+    expect(
+      banned,
+      'chalk uses no pure black or white — see docs/design-tokens.md',
+    ).toBe(null)
   })
 })

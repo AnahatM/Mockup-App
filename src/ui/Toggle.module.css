@@ -1,0 +1,55 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Visually hidden, but still focusable and hit-testable via the label. */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: 1.75rem;
+  height: 1rem;
+  background: var(--track-bg);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--thumb-bg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-panel);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.input:checked + .track {
+  background: var(--track-fill);
+}
+
+.input:checked + .track .thumb {
+  transform: translateX(0.75rem);
+}
+
+.input:focus-visible + .track {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.input:disabled + .track {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

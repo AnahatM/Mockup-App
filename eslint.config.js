@@ -59,7 +59,8 @@ export default defineConfig([
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      eqeqeq: ['error', 'always'],
+      // `== null` is the idiomatic nullish check; everything else stays strict.
+      eqeqeq: ['error', 'always', { null: 'ignore' }],
     },
   },
   {

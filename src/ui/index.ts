@@ -1,0 +1,20 @@
+/**
+ * Design-system barrel. These primitives know nothing about mockups and could be
+ * lifted into any other app. They consume semantic tokens exclusively.
+ */
+export { Button, type ButtonProps, type ButtonVariant } from './Button'
+export { ColorField, type ColorFieldProps } from './ColorField'
+export { EmptyState, type EmptyStateProps } from './EmptyState'
+export { Field, type FieldProps } from './Field'
+export { Icon, type IconProps } from './Icon'
+export { IconButton, type IconButtonProps } from './IconButton'
+export { NumberInput, type NumberInputProps } from './NumberInput'
+export { Panel, type PanelProps } from './Panel'
+export { SegmentedControl, type Segment } from './SegmentedControl'
+export { Select, type SelectOption } from './Select'
+export { Slider, type SliderProps } from './Slider'
+export { Tabs, type Tab } from './Tabs'
+export { Toggle, type ToggleProps } from './Toggle'
+export { Vec3Field, type Vec3Value } from './Vec3Field'
+export { ICON_NAMES, type IconName } from './icons'
+export { useDismiss } from './hooks/useDismiss'

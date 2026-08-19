@@ -1,0 +1,57 @@
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: 0 var(--space-2) 0 3px;
+  background: var(--control-bg);
+  border: var(--hairline) solid var(--control-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.field:focus-within {
+  border-color: var(--accent);
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.swatch {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  border: var(--hairline) solid var(--border-strong);
+  border-radius: var(--radius-xs);
+}
+
+.text {
+  width: 100%;
+  min-width: 0;
+  height: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--control-fg);
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: var(--z-popover);
+  padding: var(--space-2);
+  background: var(--surface-overlay);
+  border: var(--hairline) solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+}

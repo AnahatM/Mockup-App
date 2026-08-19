@@ -15,17 +15,17 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ | ------ |
 | A1  | React + Vite + TypeScript app                             | scaffold retained and upgraded                                                                                    | P0     | DONE   |
 | A2  | Clean code patterns throughout                            | feature-sliced structure, pure `lib/`, barrel-only cross-feature imports                                          | all    | WIP    |
-| A3  | Customizable themes                                       | `features/theme` + `[data-theme]` semantic token overrides                                                        | P0/P1  | TODO   |
+| A3  | Customizable themes                                       | `features/theme` + `[data-theme]` semantic token overrides                                                        | P0/P1  | DONE   |
 | A4  | Consistent CSS tokens                                     | 3 tiers: `primitives.css` -> `semantic.css` -> component modules                                                  | P0     | DONE   |
 | A5  | **No hardcoded CSS colors**                               | stylelint bans hex/rgb/hsl/named colors outside `src/styles/tokens/**`; build fails otherwise                     | P0     | DONE   |
 | A6  | **No long code files**                                    | `eslint max-lines: 150`, `max-lines-per-function: 80`; build fails otherwise                                      | P0     | DONE   |
-| A7  | Modular components for reuse, customizability, fewer bugs | `ui/` design-system primitives, schema-driven panels, pure geometry builders                                      | P1/P3  | TODO   |
+| A7  | Modular components for reuse, customizability, fewer bugs | `ui/` design-system primitives, schema-driven panels, pure geometry builders                                      | P1/P3  | DONE   |
 | A8  | **Strict TypeScript**                                     | `strict` plus `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns` | P0     | DONE   |
 | A9  | Clean up boilerplate, start from a clean state            | delete template `App.tsx`, `App.css`, `assets/`, `icons.svg`                                                      | P0     | DONE   |
 | A10 | Document everything as we go                              | `docs/` plus ADRs plus per-feature READMEs, updated in the same commit as the code                                | all    | WIP    |
 | A11 | Plan first, then implement                                | `docs/PLAN.md`, approved before any code was written                                                              | pre-P0 | DONE   |
-| A12 | Download all libraries needed                             | full 3D, state, and validation stack installed locally                                                            | P0     | DONE    |
-| A13 | Use latest package versions where sensible                | all deps pinned to current latest; Node 22.14 already clears every floor                                          | P0     | DONE    |
+| A12 | Download all libraries needed                             | full 3D, state, and validation stack installed locally                                                            | P0     | DONE   |
+| A13 | Use latest package versions where sensible                | all deps pinned to current latest; Node 22.14 already clears every floor                                          | P0     | DONE   |
 
 ## B. Product scope
 
@@ -107,7 +107,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                               | Delivered by                                                                        | Phase | Status |
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----- | ------ |
-| H1  | **Configuration panel edited in realtime**                | schema-driven `ControlList`; every change is a live store write                     | P1    | TODO   |
+| H1  | **Configuration panel edited in realtime**                | schema-driven `ControlList`; every change is a live store write                     | P1    | WIP    |
 | H2  | **Preset save/load in localStorage**                      | `presets/storage.ts`: save, load, rename, duplicate, delete                         | P10   | TODO   |
 | H3  | **Premade presets**                                       | `presets/builtin/*.ts`, typed and schema-validated                                  | P10   | TODO   |
 | H4  | **Manifest file system**, one file holds the whole config | `MockupManifest` zod schema, versioned                                              | P10   | TODO   |
@@ -119,9 +119,9 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                       | Delivered by                                                                                  | Phase | Status |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----- | ------ |
-| I1  | **Minimalist** app style                          | quiet chrome, hairline borders, near-shadowless surfaces                                      | P0/P1 | TODO   |
+| I1  | **Minimalist** app style                          | quiet chrome, hairline borders, near-shadowless surfaces                                      | P0/P1 | DONE   |
 | I2  | **Chalk theme**, light/dark switchable            | warm-paper and soft-charcoal ramps, with no pure black or pure white anywhere                 | P0/P1 | WIP    |
-| I3  | **Focus off the app, on the product and visuals** | the viewport dominates, panels recede and collapse, and the UI theme never affects the render | P1    | TODO   |
+| I3  | **Focus off the app, on the product and visuals** | the viewport dominates, panels recede and collapse, and the UI theme never affects the render | P1    | DONE   |
 
 ---
 
