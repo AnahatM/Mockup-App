@@ -1,0 +1,7 @@
+/**
+ * Single stylesheet entry point, imported once from `main.tsx`.
+ * Order is load-bearing: tokens define the variables that reset and global consume.
+ */
+@import './tokens/index.css';
+@import './reset.css';
+@import './global.css';

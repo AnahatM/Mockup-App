@@ -1,10 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mockup-studio</title>
+    <title>Mockup Studio</title>
+    <meta
+      name="description"
+      content="Free, open-source, fully-local 3D mockup generator. Drop in a screenshot or screen recording and render it on real device models with full control over camera, lighting, animation and export."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      /**
+       * Resolve the theme before first paint so there is never a flash of the
+       * wrong palette. `features/theme` takes ownership after hydration and
+       * reads back whatever this wrote. Kept inline and tiny on purpose.
+       */
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('mockup-studio:theme')
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+          var resolved =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : prefersDark
+                ? 'dark'
+                : 'light'
+          document.documentElement.dataset.theme = resolved
+        } catch (_) {
+          document.documentElement.dataset.theme = 'light'
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

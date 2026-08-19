@@ -1,0 +1,74 @@
+# Contributing
+
+Thanks for helping. This project is deliberately structured so that the most useful
+contributions are also the easiest ones.
+
+## Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Before opening a PR:
+
+```bash
+npm run verify   # typecheck + eslint + stylelint + tests
+```
+
+## The three enforced rules
+
+These are checked by tooling, not by review, because they are the conventions that quietly
+erode in every codebase:
+
+1. **No hardcoded colours.** Literal colours belong only in `src/styles/tokens/`. Everywhere
+   else uses `var(--semantic-token)`. See [`docs/design-tokens.md`](docs/design-tokens.md).
+2. **No long files.** 150 lines per file, 80 per function. If you hit the limit, extract a
+   component, a hook, or a pure helper into `lib/`. Please do not raise the limit — the limit
+   is doing its job.
+3. **Strict TypeScript.** No `any`, no non-null assertions to silence the compiler. If the
+   types are fighting you, the model is usually wrong somewhere upstream.
+
+## Where code goes
+
+| Layer           | Contains                     | Rule                                             |
+| --------------- | ---------------------------- | ------------------------------------------------ |
+| `src/lib/`      | Pure functions, no React     | Must be unit-testable with no mocks              |
+| `src/ui/`       | Design-system primitives     | No domain knowledge; reusable in any app         |
+| `src/state/`    | Zustand slices               | One file per domain                              |
+| `src/features/` | Domain slices                | Cross-feature imports go through `index.ts` only |
+| `src/app/`      | Layout and panel composition | Thin — composition, not logic                    |
+
+Reaching into another feature's internals (`@/features/scene/Backdrop`) is blocked by
+ESLint. Import the barrel (`@/features/scene`) instead.
+
+## Adding a device
+
+This is the highest-value contribution and usually a single data file.
+
+1. Create `src/features/devices/catalog/<your-device>.ts` exporting a `DeviceSpec`.
+2. Register it in `src/features/devices/spec/registry.ts`.
+
+Full walkthrough, including the dimension and material fields:
+[`docs/device-specs.md`](docs/device-specs.md).
+
+Devices are original procedural approximations. Please do not contribute models copied from
+a manufacturer's assets, and keep brand references to describing the form factor.
+
+## Adding a control
+
+Controls are data, not JSX. Add one line to the relevant panel schema in
+`src/app/panels/` — labelling, keyboard handling, focus behaviour and store binding all come
+for free. If you find yourself writing a bespoke input, check whether a `ui/` primitive
+already covers it.
+
+## Commits
+
+Conventional-commit prefixes (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`). Keep code and
+its documentation in the same commit.
+
+## Reporting bugs
+
+Include your browser and GPU, and — if it is a rendering issue — the exported preset JSON.
+A preset file reproduces a scene exactly, which usually turns a vague report into a one-minute
+diagnosis.

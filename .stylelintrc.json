@@ -1,0 +1,45 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "import-notation": "string",
+    "color-no-hex": true,
+    "color-named": "never",
+    "function-disallowed-list": [
+      "rgb",
+      "rgba",
+      "hsl",
+      "hsla",
+      "hwb",
+      "lab",
+      "lch",
+      "oklab",
+      "oklch",
+      "color"
+    ],
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9]*$",
+      {
+        "message": "CSS Module class names use camelCase so they are valid JS identifiers."
+      }
+    ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["global", "local"] }
+    ],
+    "property-no-unknown": [true, { "ignoreProperties": ["composes"] }],
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "no-descending-specificity": null
+  },
+  "overrides": [
+    {
+      "comment": "The token layer is the ONLY place a literal colour may be written. Everything else must reference a semantic token via var().",
+      "files": ["src/styles/tokens/**/*.css"],
+      "rules": {
+        "color-no-hex": null,
+        "color-named": null,
+        "function-disallowed-list": null
+      }
+    }
+  ]
+}

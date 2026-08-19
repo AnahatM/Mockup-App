@@ -1,0 +1,6 @@
+/**
+ * Token entry point. Order matters: primitives must be defined before the
+ * semantic layer that references them.
+ */
+@import './primitives.css';
+@import './semantic.css';

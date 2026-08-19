@@ -1,0 +1,127 @@
+/**
+ * TIER 2 — SEMANTIC TOKENS
+ *
+ * Role-named tokens. Components consume ONLY these, never the primitives above.
+ * That indirection is what makes a theme a data change: a new theme is a new
+ * `[data-theme='...']` block here, and zero component edits.
+ *
+ * `data-theme` is always an explicit 'light' or 'dark' on <html>. It is written by the
+ * blocking inline script in index.html before first paint (so there is no flash), and
+ * thereafter owned by `features/theme`. System preference is *resolved* to one of the
+ * two rather than handled with a media query, which keeps this file free of duplication.
+ */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Surfaces */
+  --surface-app: var(--paper-100);
+  --surface-panel: var(--paper-50);
+  --surface-raised: var(--paper-50);
+  --surface-sunken: var(--paper-200);
+  --surface-overlay: var(--paper-50);
+  --surface-hover: var(--paper-200);
+  --surface-active: var(--paper-300);
+
+  /* Text */
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-400);
+  --text-disabled: var(--ink-200);
+  --text-inverse: var(--chalk-50);
+  --text-accent: var(--accent-600);
+
+  /* Borders */
+  --border-subtle: var(--paper-300);
+  --border-default: var(--paper-400);
+  --border-strong: var(--paper-500);
+
+  /* Accent */
+  --accent: var(--accent-500);
+  --accent-hover: var(--accent-600);
+  --accent-soft: var(--accent-200);
+  --accent-contrast: var(--chalk-50);
+
+  /* Controls */
+  --control-bg: var(--paper-200);
+  --control-bg-hover: var(--paper-300);
+  --control-bg-active: var(--paper-400);
+  --control-fg: var(--ink-800);
+  --control-border: var(--paper-400);
+  --track-bg: var(--paper-300);
+  --track-fill: var(--accent-500);
+  --thumb-bg: var(--paper-50);
+  --thumb-border: var(--paper-500);
+
+  /* Status */
+  --status-success: var(--sage-500);
+  --status-warning: var(--ochre-500);
+  --status-danger: var(--clay-500);
+
+  /* Focus */
+  --focus-ring: var(--accent-500);
+
+  /* Elevation — chalk is matte, so shadows stay barely-there */
+  --shadow-panel: 0 1px 2px rgb(26 26 24 / 4%);
+  --shadow-popover: 0 4px 12px rgb(26 26 24 / 8%), 0 1px 3px rgb(26 26 24 / 6%);
+
+  /* Viewport scrim — the neutral behind the 3D canvas before the backdrop paints */
+  --viewport-void: var(--paper-200);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --surface-app: var(--ink-950);
+  --surface-panel: var(--ink-900);
+  --surface-raised: var(--ink-850);
+  --surface-sunken: var(--ink-950);
+  --surface-overlay: var(--ink-850);
+  --surface-hover: var(--ink-800);
+  --surface-active: var(--ink-700);
+
+  /* Text */
+  --text-primary: var(--chalk-50);
+  --text-secondary: var(--ink-200);
+  --text-muted: var(--ink-300);
+  --text-disabled: var(--ink-500);
+  --text-inverse: var(--ink-900);
+  --text-accent: var(--accent-300);
+
+  /* Borders */
+  --border-subtle: var(--ink-800);
+  --border-default: var(--ink-700);
+  --border-strong: var(--ink-600);
+
+  /* Accent */
+  --accent: var(--accent-400);
+  --accent-hover: var(--accent-300);
+  --accent-soft: var(--accent-700);
+  --accent-contrast: var(--ink-950);
+
+  /* Controls */
+  --control-bg: var(--ink-800);
+  --control-bg-hover: var(--ink-700);
+  --control-bg-active: var(--ink-600);
+  --control-fg: var(--chalk-100);
+  --control-border: var(--ink-700);
+  --track-bg: var(--ink-700);
+  --track-fill: var(--accent-400);
+  --thumb-bg: var(--ink-500);
+  --thumb-border: var(--ink-400);
+
+  /* Status */
+  --status-success: var(--sage-400);
+  --status-warning: var(--ochre-400);
+  --status-danger: var(--clay-400);
+
+  /* Focus */
+  --focus-ring: var(--accent-300);
+
+  --shadow-panel: 0 1px 2px rgb(0 0 0 / 24%);
+  --shadow-popover: 0 4px 14px rgb(0 0 0 / 40%), 0 1px 3px rgb(0 0 0 / 30%);
+
+  --viewport-void: var(--ink-950);
+}
