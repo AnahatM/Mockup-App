@@ -1,4 +1,4 @@
-import { deviceConfigSchema, type DeviceConfig } from './config'
+import { deviceConfigSchema, type DeviceConfig } from '../schema'
 import { DEVICES } from './registry'
 import type { DeviceSpec } from './types'
 

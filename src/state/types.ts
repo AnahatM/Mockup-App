@@ -7,6 +7,7 @@ import type { FlatSlice } from './slices/flat'
 import type { LightingSlice } from './slices/lighting'
 import type { MediaSlice } from './slices/media'
 import type { OverlaysSlice } from './slices/overlays'
+import type { PresetsSlice } from './slices/presets'
 import type { SceneSlice } from './slices/scene'
 import type { UiSlice } from './slices/ui'
 
@@ -26,7 +27,8 @@ export type AppState = UiSlice &
   OverlaysSlice &
   AnimationSlice &
   ExportSlice &
-  FlatSlice
+  FlatSlice &
+  PresetsSlice
 
 /** Slice signature, pre-bound to the immer middleware. */
 export type SliceCreator<T> = StateCreator<AppState, [['zustand/immer', never]], [], T>

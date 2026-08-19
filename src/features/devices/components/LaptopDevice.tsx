@@ -6,7 +6,7 @@ import { FinishMaterial } from '../materials/FinishMaterial'
 import { DeviceScreen } from './DeviceScreen'
 import { LaptopBase } from './LaptopBase'
 import { ScreenCutout } from './ScreenCutout'
-import type { DeviceConfig } from '../spec/config'
+import type { DeviceConfig } from '../schema'
 import type { DeviceSpec, HingeSpec } from '../spec/types'
 
 export interface LaptopDeviceProps {

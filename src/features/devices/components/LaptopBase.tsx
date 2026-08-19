@@ -5,7 +5,7 @@ import { buildBody } from '../builders/body'
 import { keyboardTexture } from '../builders/keyboard'
 import { squircleShape } from '../builders/shape'
 import { FinishMaterial } from '../materials/FinishMaterial'
-import type { DeviceConfig } from '../spec/config'
+import type { DeviceConfig } from '../schema'
 import type { DeviceSpec, HingeSpec } from '../spec/types'
 
 export interface LaptopBaseProps {

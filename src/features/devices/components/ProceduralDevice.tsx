@@ -5,7 +5,7 @@ import { DeviceScreen } from './DeviceScreen'
 import { LaptopDevice } from './LaptopDevice'
 import { ScreenCutout } from './ScreenCutout'
 import { SideButtons } from './SideButtons'
-import type { DeviceConfig } from '../spec/config'
+import type { DeviceConfig } from '../schema'
 import type { DeviceSpec } from '../spec/types'
 
 export interface ProceduralDeviceProps {

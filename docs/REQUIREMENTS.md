@@ -35,7 +35,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | B2  | **Free and open source**                                    | MIT `LICENSE`, `CONTRIBUTING.md`, OSS-facing README                                                   | P0     | DONE   |
 | B3  | Generate mockups of websites and apps across device formats | device catalog plus screen pipeline                                                                   | P3-P5  | DONE   |
 | B4  | An all-in-one place for mockups                             | 3D devices, 2D window chrome, and export presets in one tool                                          | all    | DONE   |
-| B5  | **Runs fully locally**, no server and no network calls      | procedural geometry, procedural lighting (no CDN HDRI), local file handling, localStorage persistence | all    | TODO   |
+| B5  | **Runs fully locally**, no server and no network calls      | procedural geometry, procedural lighting (no CDN HDRI), local file handling, localStorage persistence | all    | DONE   |
 | B6  | Any type of mockup a user may want                          | broad catalog, custom device dimensions, GLB import seam                                              | P3/P11 | TODO   |
 
 ## C. 3D scene
@@ -108,12 +108,12 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | #   | Requirement                                               | Delivered by                                                                        | Phase | Status |
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----- | ------ |
 | H1  | **Configuration panel edited in realtime**                | schema-driven `ControlList`; every change is a live store write                     | P1    | DONE   |
-| H2  | **Preset save/load in localStorage**                      | `presets/storage.ts`: save, load, rename, duplicate, delete                         | P10   | TODO   |
-| H3  | **Premade presets**                                       | `presets/builtin/*.ts`, typed and schema-validated                                  | P10   | TODO   |
-| H4  | **Manifest file system**, one file holds the whole config | `MockupManifest` zod schema, versioned                                              | P10   | TODO   |
-| H5  | **Shareable**                                             | export to `.mockup.json`, plus URL-hash sharing for media-less presets              | P10   | TODO   |
-| H6  | **Importable**                                            | validated import with friendly errors; invalid or hostile JSON cannot crash the app | P10   | TODO   |
-| H7  | Presets survive schema changes                            | `presets/migrate.ts` version migration chain, unit-tested                           | P10   | TODO   |
+| H2  | **Preset save/load in localStorage**                      | `presets/storage.ts`: save, load, rename, duplicate, delete                         | P10   | DONE   |
+| H3  | **Premade presets**                                       | `presets/builtin/*.ts`, typed and schema-validated                                  | P10   | DONE   |
+| H4  | **Manifest file system**, one file holds the whole config | `MockupManifest` zod schema, versioned                                              | P10   | DONE   |
+| H5  | **Shareable**                                             | export to `.mockup.json`, plus URL-hash sharing for media-less presets              | P10   | DONE   |
+| H6  | **Importable**                                            | validated import with friendly errors; invalid or hostile JSON cannot crash the app | P10   | DONE   |
+| H7  | Presets survive schema changes                            | `presets/migrate.ts` version migration chain, unit-tested                           | P10   | DONE   |
 
 ## I. Look and feel
 

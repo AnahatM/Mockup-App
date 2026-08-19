@@ -42,9 +42,13 @@ export default defineConfig([
         {
           patterns: [
             {
-              group: ['@/features/*/*'],
+              // `<feature>/schema` is the one deep path allowed: it is a pure
+              // data contract with no React and no store, and importing it
+              // directly is what keeps the preset manifest out of the
+              // barrel -> component -> store -> feature import cycle.
+              group: ['@/features/*/*', '!@/features/*/schema'],
               message:
-                'Import a feature through its public barrel (@/features/<name>), not its internals.',
+                'Import a feature through its public barrel (@/features/<name>), not its internals. The one exception is @/features/<name>/schema.',
             },
           ],
         },

@@ -1,0 +1,76 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.builtin {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  text-align: left;
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.builtin:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-subtle);
+}
+
+.name {
+  font-size: var(--text-md);
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.saveRow {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.apply {
+  flex: 1;
+  min-width: 0;
+  height: 1.75rem;
+  padding: 0 var(--space-2);
+  overflow: hidden;
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+}
+
+.apply:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  padding: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--status-danger);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}

@@ -6,7 +6,7 @@ import { CameraPanel } from './CameraPanel'
 import { ExportPanel } from './ExportPanel'
 import { DevicePanel } from './DevicePanel'
 import { LightingPanel } from './LightingPanel'
-import { PlaceholderPanel } from './PlaceholderPanel'
+import { PresetsPanel } from './PresetsPanel'
 import { RenderPanel } from './RenderPanel'
 import { ScenePanel } from './ScenePanel'
 import { ScreenPanel } from './ScreenPanel'
@@ -16,10 +16,6 @@ export interface PanelDefinition {
   icon: IconName
   render: () => ReactNode
 }
-
-const pending = (icon: IconName, title: string, description: string) => () => (
-  <PlaceholderPanel icon={icon} title={title} description={description} />
-)
 
 /**
  * Single source of truth for the inspector's tabs. Adding a panel is one entry
@@ -69,10 +65,6 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
   presets: {
     label: 'Presets',
     icon: 'sparkle',
-    render: pending(
-      'sparkle',
-      'Presets',
-      'Save, load, import and share the whole scene as one file.',
-    ),
+    render: () => <PresetsPanel />,
   },
 }
