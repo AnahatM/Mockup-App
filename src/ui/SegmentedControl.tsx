@@ -1,5 +1,6 @@
 import { cx } from '@/lib/cx'
 import { Icon } from './Icon'
+import { Tooltip } from './Tooltip'
 import type { IconName } from './icons'
 import styles from './SegmentedControl.module.css'
 
@@ -32,13 +33,12 @@ export function SegmentedControl<T extends string>({
       {segments.map((segment) => {
         const selected = segment.value === value
         const name = segment.title ?? segment.label ?? segment.value
-        return (
+        const button = (
           <button
             key={segment.value}
             type="button"
             role="radio"
             aria-checked={selected}
-            title={name}
             aria-label={segment.label ? undefined : name}
             className={cx(styles.segment, selected && styles.selected)}
             onClick={() => onChange(segment.value)}
@@ -46,6 +46,16 @@ export function SegmentedControl<T extends string>({
             {segment.icon && <Icon name={segment.icon} size={13} />}
             {segment.label}
           </button>
+        )
+
+        // Only icon-only segments get a tooltip; on a labelled one it would
+        // just repeat the word already printed on the button.
+        return segment.label ? (
+          button
+        ) : (
+          <Tooltip key={segment.value} label={name}>
+            {button}
+          </Tooltip>
         )
       })}
     </div>

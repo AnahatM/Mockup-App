@@ -26,9 +26,12 @@
 .name {
   flex: 1;
   min-width: 0;
-  overflow: hidden;
   font-size: var(--text-sm);
   color: var(--text-primary);
+}
+
+.nameText {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

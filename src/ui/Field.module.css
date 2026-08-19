@@ -5,10 +5,18 @@
   align-items: center;
 }
 
+/*
+ * The label is a tooltip wrapper, so truncation has to live on the inner text:
+ * clipping the wrapper would clip the tooltip it positions.
+ */
 .label {
-  overflow: hidden;
+  min-width: 0;
   font-size: var(--text-sm);
   color: var(--text-secondary);
+}
+
+.labelText {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

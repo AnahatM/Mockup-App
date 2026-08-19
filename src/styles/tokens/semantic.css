@@ -71,6 +71,15 @@
 
   /* Dimming behind a modal */
   --scrim: rgb(26 26 24 / 32%);
+
+  /*
+   * Marks drawn on top of an arbitrary user colour — the tick on a colour
+   * swatch. Deliberately identical in both themes: the surface underneath is
+   * the colour the user picked, not one of ours, so flipping these with the
+   * theme would make the tick vanish on half the palette.
+   */
+  --on-color-mark: var(--chalk-50);
+  --on-color-shade: var(--ink-950);
 }
 
 [data-theme='dark'] {
@@ -129,4 +138,13 @@
   --viewport-void: var(--ink-950);
 
   --scrim: rgb(0 0 0 / 55%);
+
+  /*
+   * Marks drawn on top of an arbitrary user colour — the tick on a colour
+   * swatch. Deliberately identical in both themes: the surface underneath is
+   * the colour the user picked, not one of ours, so flipping these with the
+   * theme would make the tick vanish on half the palette.
+   */
+  --on-color-mark: var(--chalk-50);
+  --on-color-shade: var(--ink-950);
 }

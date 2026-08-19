@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { cx } from '@/lib/cx'
+import { Tooltip } from './Tooltip'
 import styles from './Field.module.css'
 
 export interface FieldProps {
@@ -20,9 +21,9 @@ export interface FieldProps {
 export function Field({ label, children, hint, stacked, className }: FieldProps) {
   return (
     <div className={cx(styles.field, stacked && styles.stacked, className)}>
-      <span className={styles.label} title={label}>
-        {label}
-      </span>
+      <Tooltip label={label} side="right" className={styles.label}>
+        <span className={styles.labelText}>{label}</span>
+      </Tooltip>
       <div className={styles.control}>{children}</div>
       {hint && <p className={styles.hint}>{hint}</p>}
     </div>

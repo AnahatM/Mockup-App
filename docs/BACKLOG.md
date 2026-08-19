@@ -33,10 +33,10 @@ Status: `TODO` · `WIP` · `DONE`
 
 | # | Item | Status |
 |---|---|---|
-| 13 | Site-wide thin top loading bar for *any* async work (textures, HDRIs, pages, exports) | TODO |
-| 14 | Custom tooltips replacing browser `title=` | TODO |
-| 15 | Custom confirmation modals replacing `confirm()` — preset delete, reset | TODO |
-| 16 | Colour palettes as cards with colour names, not bare swatches | TODO |
+| 13 | Site-wide thin top loading bar for *any* async work (textures, HDRIs, pages, exports) | DONE |
+| 14 | Replace browser tooltips with the custom Tooltip | DONE |
+| 15 | Replace browser confirms with the custom Dialog | DONE |
+| 16 | Colour palettes as named cards | DONE |
 | 17 | Resizable sidebar and inspector | DONE |
 | 18 | Searchable settings across every panel | DONE |
 

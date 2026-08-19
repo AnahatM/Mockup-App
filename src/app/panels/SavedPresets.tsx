@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { Button, EmptyState, IconButton, Panel, TextInput } from '@/ui'
+import { Button, EmptyState, IconButton, Panel, TextInput, useConfirm } from '@/ui'
 import { importManifest } from '@/features/presets'
 import { useAppStore } from '@/state/store'
+import { useBusy } from '@/state/useBusy'
 import styles from './PresetsPanel.module.css'
 
 /**
@@ -18,12 +19,13 @@ export function SavedPresets() {
   const setError = useAppStore((state) => state.setPresetError)
   const loadManifest = useAppStore((state) => state.loadManifest)
 
+  const busy = useBusy()
   const [name, setName] = useState('')
   const input = useRef<HTMLInputElement>(null)
 
   const onImport = async (file: File | undefined) => {
     if (!file) return
-    const result = await importManifest(file)
+    const result = await busy(() => importManifest(file))
     if (result.ok) loadManifest(result.value)
     else setError(result.error)
   }
@@ -86,39 +88,54 @@ function PresetList() {
   const deletePreset = useAppStore((state) => state.deletePreset)
   const duplicatePreset = useAppStore((state) => state.duplicatePreset)
   const downloadPreset = useAppStore((state) => state.downloadPreset)
+  const { confirm, dialog } = useConfirm()
+
+  /** Deleting a saved look is unrecoverable — there is no undo for local storage. */
+  const askThenDelete = async (id: string, name: string) => {
+    const ok = await confirm({
+      title: `Delete "${name}"?`,
+      description: 'This removes the preset from this browser. It cannot be undone.',
+      confirmLabel: 'Delete',
+      destructive: true,
+    })
+    if (ok) deletePreset(id)
+  }
 
   return (
-    <ul className={styles.list}>
-      {presets.map((preset) => (
-        <li key={preset.id} className={styles.row}>
-          <button
-            type="button"
-            className={styles.apply}
-            title={`Apply ${preset.name}`}
-            onClick={() => applyPreset(preset.id)}
-          >
-            {preset.name}
-          </button>
-          <IconButton
-            icon="download"
-            size="sm"
-            label={`Export ${preset.name}`}
-            onClick={() => downloadPreset(preset.id)}
-          />
-          <IconButton
-            icon="copy"
-            size="sm"
-            label={`Duplicate ${preset.name}`}
-            onClick={() => duplicatePreset(preset.id)}
-          />
-          <IconButton
-            icon="trash"
-            size="sm"
-            label={`Delete ${preset.name}`}
-            onClick={() => deletePreset(preset.id)}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className={styles.list}>
+        {presets.map((preset) => (
+          <li key={preset.id} className={styles.row}>
+            <button
+              type="button"
+              className={styles.apply}
+              aria-label={`Apply ${preset.name}`}
+              onClick={() => applyPreset(preset.id)}
+            >
+              {preset.name}
+            </button>
+            <IconButton
+              icon="download"
+              size="sm"
+              label={`Export ${preset.name}`}
+              onClick={() => downloadPreset(preset.id)}
+            />
+            <IconButton
+              icon="copy"
+              size="sm"
+              label={`Duplicate ${preset.name}`}
+              onClick={() => duplicatePreset(preset.id)}
+            />
+            <IconButton
+              icon="trash"
+              size="sm"
+              label={`Delete ${preset.name}`}
+              onClick={() => void askThenDelete(preset.id, preset.name)}
+            />
+          </li>
+        ))}
+      </ul>
+      {dialog}
+    </>
   )
 }

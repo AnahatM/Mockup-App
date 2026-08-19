@@ -59,17 +59,34 @@ const input = await page.$('input[type=file]')
 await input.uploadFile('scripts/out/screenshot.png')
 await new Promise((r) => setTimeout(r, 2500))
 
-const frameButton = await page.$(
-  `[role="radio"][title="${style === 'browser' ? 'Browser' : 'macOS'}"]`,
-)
+const wanted = style === 'browser' ? 'Browser' : 'macOS'
+const frameButton = await findRadio(page, wanted)
 if (!frameButton) throw new Error('window style control not found')
 await frameButton.click()
-await new Promise((r) => setTimeout(r, 2000))
+await new Promise((r) => setTimeout(r, 800))
+
+// The export button stays disabled while the style is "none", so confirm the
+// choice actually took before blaming the exporter for producing nothing.
+const styleApplied = await frameButton.evaluate(
+  (el) => el.getAttribute('aria-checked') === 'true',
+)
+if (!styleApplied) {
+  await frameButton.click()
+  await new Promise((r) => setTimeout(r, 800))
+}
+const exportReady = await page.evaluate(() => {
+  const button = [...document.querySelectorAll('button')].find((b) =>
+    b.textContent?.includes('Export window PNG'),
+  )
+  return button ? !button.disabled : null
+})
 
 await page.screenshot({ path: `scripts/out/window-${style}.png` })
 
 await clickByText(page, 'Export window PNG')
-await new Promise((r) => setTimeout(r, 4000))
+// Poll rather than sleep: a fixed wait made this intermittently report no
+// export at all when the encode happened to run long.
+await waitForDownload(8000)
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.png'))
 let flat = null
@@ -84,7 +101,23 @@ if (files.length) {
 }
 
 await browser.close()
-console.log(JSON.stringify({ device, style, flat, problems }, null, 2))
+console.log(
+  JSON.stringify({ device, style, styleApplied, exportReady, flat, problems }, null, 2),
+)
+
+/** Resolves once a completed .png appears, or after the timeout. */
+async function waitForDownload(timeoutMs) {
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    const done = readdirSync(DIR).filter((f) => f.endsWith('.png'))
+    // Chrome writes .crdownload first, so a bare .png means the write finished.
+    if (done.length > 0) {
+      await new Promise((r) => setTimeout(r, 250))
+      return
+    }
+    await new Promise((r) => setTimeout(r, 200))
+  }
+}
 
 async function openTab(page, name) {
   const tabs = await page.$$('[role="tab"]')
@@ -105,4 +138,23 @@ async function clickByText(page, text) {
     }
   }
   throw new Error(`button "${text}" not found`)
+}
+
+/**
+ * Finds a segmented-control option by its accessible name.
+ *
+ * Segments used to carry a `title` attribute; they now carry `aria-label` when
+ * icon-only and visible text when labelled, so match on either.
+ */
+async function findRadio(page, name) {
+  const radios = await page.$$('[role="radio"]')
+  for (const radio of radios) {
+    const match = await radio.evaluate(
+      (el, wanted) =>
+        el.getAttribute('aria-label') === wanted || el.textContent?.trim() === wanted,
+      name,
+    )
+    if (match) return radio
+  }
+  return null
 }

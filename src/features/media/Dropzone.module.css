@@ -36,9 +36,13 @@
 
 .title {
   max-width: 100%;
-  overflow: hidden;
+  min-width: 0;
   font-size: var(--text-md);
   color: var(--text-primary);
+}
+
+.titleText {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

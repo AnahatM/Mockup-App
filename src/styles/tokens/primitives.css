@@ -37,6 +37,7 @@
 
   /* ---- Chalk: dusted light ramp, dark theme text ---- */
   --chalk-50: #f4f3ee;
+
   --chalk-100: #e6e4dc;
   --chalk-200: #d2d0c7;
 
@@ -80,6 +81,7 @@
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Menlo', 'Consolas', monospace;
 
+  --text-2xs: 0.625rem;
   --text-xs: 0.6875rem;
   --text-sm: 0.75rem;
   --text-md: 0.8125rem;

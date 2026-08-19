@@ -1,13 +1,14 @@
-import { cx } from '@/lib/cx'
+import { Swatch } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { resolveDevice } from '../spec/registry'
 import styles from './ColorwayPicker.module.css'
 
 /**
- * Swatch row for the selected device's factory colours.
+ * The selected device's factory colours.
  *
- * Swatches rather than a dropdown because the choice *is* visual — and because
- * the underlying colours stay editable afterwards, so a colourway is a starting
+ * Named cards rather than bare chips because these are real product finishes —
+ * "Natural Titanium" is the thing being chosen, not just a shade of grey — and
+ * because the colours stay editable afterwards, so a colourway is a starting
  * point rather than a fixed option.
  */
 export function ColorwayPicker() {
@@ -17,24 +18,15 @@ export function ColorwayPicker() {
   const spec = resolveDevice(specId)
 
   return (
-    <div className={styles.row}>
+    <div className={styles.grid}>
       {spec.colorways.map((colorway) => (
-        <button
+        <Swatch
           key={colorway.id}
-          type="button"
-          title={colorway.label}
-          aria-label={colorway.label}
-          aria-pressed={colorway.id === selected}
-          className={cx(styles.swatch, colorway.id === selected && styles.selected)}
-          onClick={() => selectColorway(colorway.id)}
-        >
-          <span
-            className={styles.fill}
-            style={{
-              background: `linear-gradient(135deg, ${colorway.frame ?? colorway.body} 0%, ${colorway.body} 55%)`,
-            }}
-          />
-        </button>
+          color={`linear-gradient(135deg, ${colorway.frame ?? colorway.body} 0%, ${colorway.body} 55%)`}
+          label={colorway.label}
+          selected={colorway.id === selected}
+          onSelect={() => selectColorway(colorway.id)}
+        />
       ))}
     </div>
   )

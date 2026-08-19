@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { cx } from '@/lib/cx'
 import { useAppStore } from '@/state/store'
+import { useBusy } from '@/state/useBusy'
 import { loadMediaFile } from './decode'
 import { DropzoneContent } from './DropzoneContent'
 import styles from './Dropzone.module.css'
@@ -22,6 +23,7 @@ export function Dropzone() {
   const setLoading = useAppStore((state) => state.setMediaLoading)
   const clearMedia = useAppStore((state) => state.clearMedia)
 
+  const busy = useBusy()
   const [dragging, setDragging] = useState(false)
   const input = useRef<HTMLInputElement>(null)
 
@@ -29,11 +31,12 @@ export function Dropzone() {
     async (file: File | undefined) => {
       if (!file) return
       setLoading(true)
-      const result = await loadMediaFile(file)
+      // Decoding a large screen recording is slow enough to look like a hang.
+      const result = await busy(() => loadMediaFile(file))
       if (result.ok) setSource(result.value)
       else setError(result.error)
     },
-    [setLoading, setSource, setError],
+    [busy, setLoading, setSource, setError],
   )
 
   return (

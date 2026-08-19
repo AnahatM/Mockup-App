@@ -4,6 +4,7 @@ import { ControlList } from '@/ui/controls'
 import { exportFlatWindow } from '@/features/flat'
 import { mediaPalette } from '@/features/media'
 import { useAppStore } from '@/state/store'
+import { useBusy } from '@/state/useBusy'
 import { windowContentControls } from './windowControls'
 import { windowStyleControls } from './windowStyleControls'
 import styles from './ExportPanel.module.css'
@@ -20,6 +21,7 @@ export function WindowPanel() {
   const filename = useAppStore((state) => state.exportConfig.filename)
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const whileBusy = useBusy()
 
   const palette = mediaPalette(source)
   const chrome = config.colorMatch && palette[0] ? palette[0] : config.chrome
@@ -27,14 +29,16 @@ export function WindowPanel() {
   const exportFlat = async () => {
     setBusy(true)
     setError(null)
-    const image = await loadImage(source.kind === 'none' ? null : source.url)
-    const result = await exportFlatWindow({
-      config,
-      content: image,
-      contentAspect: source.kind === 'none' ? 1 : source.width / source.height,
-      chrome,
-      width: 2400,
-      filename: `${filename}-window`,
+    const result = await whileBusy(async () => {
+      const image = await loadImage(source.kind === 'none' ? null : source.url)
+      return exportFlatWindow({
+        config,
+        content: image,
+        contentAspect: source.kind === 'none' ? 1 : source.width / source.height,
+        chrome,
+        width: 2400,
+        filename: `${filename}-window`,
+      })
     })
     if (!result.ok) setError(result.error)
     setBusy(false)

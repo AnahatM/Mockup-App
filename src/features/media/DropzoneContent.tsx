@@ -1,4 +1,4 @@
-import { Button, Icon } from '@/ui'
+import { Button, Icon, Tooltip } from '@/ui'
 import type { MediaSource } from './schema'
 import styles from './Dropzone.module.css'
 
@@ -40,9 +40,9 @@ export function DropzoneContent({
         size={18}
         className={styles.icon}
       />
-      <p className={styles.title} title={source.name}>
-        {source.name}
-      </p>
+      <Tooltip label={source.name} className={styles.title}>
+        <span className={styles.titleText}>{source.name}</span>
+      </Tooltip>
       <p className={styles.hint}>
         {source.width} × {source.height}
       </p>

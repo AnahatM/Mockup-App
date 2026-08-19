@@ -1,4 +1,4 @@
-import { cx } from '@/lib/cx'
+import { Swatch } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { PAINT_COLORS } from '../paint'
 import styles from './PaintPicker.module.css'
@@ -12,24 +12,19 @@ import styles from './PaintPicker.module.css'
 export function PaintPicker() {
   const bodyColor = useAppStore((state) => state.device.bodyColor)
   const paintDevice = useAppStore((state) => state.paintDevice)
+  const current = bodyColor.toLowerCase()
 
   return (
     <div className={styles.grid}>
       {PAINT_COLORS.map((paint) => (
-        <button
+        <Swatch
           key={paint.id}
-          type="button"
-          title={paint.label}
-          aria-label={paint.label}
-          aria-pressed={paint.body.toLowerCase() === bodyColor.toLowerCase()}
-          className={cx(
-            styles.swatch,
-            paint.body.toLowerCase() === bodyColor.toLowerCase() && styles.selected,
-          )}
-          onClick={() => paintDevice(paint.body)}
-        >
-          <span className={styles.fill} style={{ background: paint.body }} />
-        </button>
+          color={paint.body}
+          label={paint.label}
+          detail={paint.body.toUpperCase()}
+          selected={paint.body.toLowerCase() === current}
+          onSelect={() => paintDevice(paint.body)}
+        />
       ))}
     </div>
   )

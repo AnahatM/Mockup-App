@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Button, Icon } from '@/ui'
+import { Button, Icon, Tooltip } from '@/ui'
 import { useAppStore } from '@/state/store'
 import styles from './HdriPicker.module.css'
 
@@ -43,9 +43,9 @@ export function HdriPicker() {
       {hdri ? (
         <div className={styles.loaded}>
           <Icon name="image" size={14} className={styles.icon} />
-          <span className={styles.name} title={hdri.name}>
-            {hdri.name}
-          </span>
+          <Tooltip label={hdri.name} className={styles.name}>
+            <span className={styles.nameText}>{hdri.name}</span>
+          </Tooltip>
           <Button size="sm" variant="subtle" onClick={clearHdri}>
             Remove
           </Button>

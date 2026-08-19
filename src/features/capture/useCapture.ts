@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { downloadBlob, safeFilename, withExtension } from '@/lib/download'
 import { useAppStore } from '@/state/store'
+import { useBusy } from '@/state/useBusy'
 import { getCaptureHandle } from './handle'
 import { capturePng } from './png'
 import { resolveSize } from './sizePresets'
@@ -16,6 +17,7 @@ export interface CaptureState {
 /** Drives PNG export and video recording from the inspector. */
 export function useCapture() {
   const config = useAppStore((state) => state.exportConfig)
+  const busy = useBusy()
   const [state, setState] = useState<CaptureState>({
     busy: false,
     progress: 0,
@@ -41,12 +43,14 @@ export function useCapture() {
         viewport,
       )
 
-      const blob = await capturePng({
-        ...handle,
-        width: Math.round(base.width * config.scale),
-        height: Math.round(base.height * config.scale),
-        transparent: config.transparent,
-      })
+      const blob = await busy(() =>
+        capturePng({
+          ...handle,
+          width: Math.round(base.width * config.scale),
+          height: Math.round(base.height * config.scale),
+          transparent: config.transparent,
+        }),
+      )
 
       if (!blob) throw new Error('The renderer produced no image.')
       downloadBlob(blob, withExtension(safeFilename(config.filename), 'png'))
@@ -58,7 +62,7 @@ export function useCapture() {
         error: error instanceof Error ? error.message : 'Export failed.',
       })
     }
-  }, [config])
+  }, [busy, config])
 
   const recordVideo = useCallback(async () => {
     const handle = getCaptureHandle()
@@ -69,13 +73,15 @@ export function useCapture() {
 
     setState({ busy: true, progress: 0, error: null })
     try {
-      const result = await recordWebm({
-        canvas: handle.renderer.domElement,
-        fps: config.fps,
-        duration: config.videoDuration,
-        bitrateMbps: config.bitrateMbps,
-        onProgress: (progress) => setState((previous) => ({ ...previous, progress })),
-      })
+      const result = await busy(() =>
+        recordWebm({
+          canvas: handle.renderer.domElement,
+          fps: config.fps,
+          duration: config.videoDuration,
+          bitrateMbps: config.bitrateMbps,
+          onProgress: (progress) => setState((previous) => ({ ...previous, progress })),
+        }),
+      )
 
       // Distinguishing "cannot record" from "recorded nothing" matters: they
       // have completely different fixes, and reporting the wrong one sends the
@@ -94,7 +100,7 @@ export function useCapture() {
         error: error instanceof Error ? error.message : 'Recording failed.',
       })
     }
-  }, [config])
+  }, [busy, config])
 
   return { ...state, exportPng, recordVideo }
 }

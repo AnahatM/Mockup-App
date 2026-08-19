@@ -33,7 +33,6 @@ export function Tabs<T extends string>({
             key={tab.value}
             type="button"
             role="tab"
-            title={tab.label}
             aria-selected={selected}
             className={cx(styles.tab, selected && styles.selected)}
             onClick={() => onChange(tab.value)}

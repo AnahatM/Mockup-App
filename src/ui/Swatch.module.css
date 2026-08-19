@@ -1,0 +1,62 @@
+.card {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 0;
+  padding: var(--space-1);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  background: none;
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.card:hover {
+  background: var(--surface-hover);
+}
+
+.selected {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
+.chip {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: var(--hairline) solid var(--border-default);
+  border-radius: var(--radius-xs);
+}
+
+/*
+ * The tick sits on top of an arbitrary user colour, so it cannot take a fixed
+ * ink. A white glyph with a dark shadow stays legible on both.
+ */
+.check {
+  color: var(--on-color-mark);
+  filter: drop-shadow(0 0 1px var(--on-color-shade));
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  overflow: hidden;
+  font-size: var(--text-xs);
+  color: var(--text-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail {
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}

@@ -51,13 +51,17 @@ if (!input) throw new Error('file input not rendered')
 await input.uploadFile('scripts/out/screenshot.png')
 await new Promise((r) => setTimeout(r, 2500))
 
+// The filename used to live in a title attribute; it is now visible text
+// inside a custom tooltip wrapper.
 const loaded = await page.evaluate(() => {
-  const el = document.querySelector('aside[aria-label="Inspector"] p[title]')
-  return el?.getAttribute('title') ?? null
+  const el = document.querySelector(
+    'aside[aria-label="Inspector"] span[class*="titleText"]',
+  )
+  return el?.textContent ?? null
 })
 
 if (fit) {
-  const btn = await page.$(`[role="radio"][title="${fit}"]`)
+  const btn = await findRadio(page, fit)
   if (btn) {
     await btn.click()
     await new Promise((r) => setTimeout(r, 1200))
@@ -67,3 +71,22 @@ if (fit) {
 await page.screenshot({ path: out })
 await browser.close()
 console.log(JSON.stringify({ loaded, problems }, null, 2))
+
+/**
+ * Finds a segmented-control option by its accessible name.
+ *
+ * Segments used to carry a `title` attribute; they now carry `aria-label` when
+ * icon-only and visible text when labelled, so match on either.
+ */
+async function findRadio(page, name) {
+  const radios = await page.$$('[role="radio"]')
+  for (const radio of radios) {
+    const match = await radio.evaluate(
+      (el, wanted) =>
+        el.getAttribute('aria-label') === wanted || el.textContent?.trim() === wanted,
+      name,
+    )
+    if (match) return radio
+  }
+  return null
+}
