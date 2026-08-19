@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import type { IconName } from '@/ui'
 import type { InspectorTab } from '@/state/slices/ui'
+import { AnimationPanel } from './AnimationPanel'
 import { CameraPanel } from './CameraPanel'
+import { ExportPanel } from './ExportPanel'
 import { DevicePanel } from './DevicePanel'
 import { LightingPanel } from './LightingPanel'
 import { PlaceholderPanel } from './PlaceholderPanel'
@@ -57,16 +59,12 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
   animation: {
     label: 'Animate',
     icon: 'film',
-    render: pending('film', 'Animation', 'Motion presets, timing and recording.'),
+    render: () => <AnimationPanel />,
   },
   export: {
     label: 'Export',
     icon: 'download',
-    render: pending(
-      'download',
-      'Export',
-      'Resolution, transparency and platform size presets.',
-    ),
+    render: () => <ExportPanel />,
   },
   presets: {
     label: 'Presets',

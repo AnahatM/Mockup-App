@@ -1,5 +1,7 @@
 import { Suspense } from 'react'
 import { CameraRig } from '@/features/camera'
+import { AnimatedProduct } from '@/features/animation'
+import { CaptureBridge } from '@/features/capture'
 import { Device } from '@/features/devices'
 import { LightRig } from '@/features/lighting'
 import { Backdrop } from './backdrop/Backdrop'
@@ -17,10 +19,13 @@ export function Stage() {
   return (
     <Suspense fallback={null}>
       <RendererSettings />
+      <CaptureBridge />
       <LightRig />
       <Backdrop />
       <Pedestal />
-      <Device />
+      <AnimatedProduct>
+        <Device />
+      </AnimatedProduct>
       <ContactShadow />
       <CameraRig />
       <PostFx />

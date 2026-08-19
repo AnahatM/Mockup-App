@@ -51,7 +51,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | C7  | Color-match app theme colors to backdrop, lighting, glows, rim lights | `lib/color/extract.ts` median-cut palette from the upload, one-click bind to any color channel       | P4/P6 | DONE   |
 | C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | DONE   |
 | C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | DONE   |
-| C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | TODO   |
+| C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | DONE   |
 | C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | DONE   |
 
 ## D. Devices
@@ -98,10 +98,10 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                   | Delivered by                                                                                                | Phase | Status |
 | --- | ----------------------------- | ----------------------------------------------------------------------------------------------------------- | ----- | ------ |
-| G1  | Export images for mockups     | `capture/png.ts` at 1x, 2x, 4x, resolution independent of window size                                       | P8    | TODO   |
-| G2  | Transparent background export | scene background nulled and backdrop hidden, alpha preserved                                                | P8    | TODO   |
-| G3  | Platform size presets         | App Store, Play Store, Dribbble, OG image, X card, Product Hunt, 4K, custom                                 | P8    | TODO   |
-| G4  | **Record** animations         | `capture/webm.ts` using `captureStream` and `MediaRecorder` (VP9), with fps, duration, and bitrate controls | P7    | TODO   |
+| G1  | Export images for mockups     | `capture/png.ts` at 1x, 2x, 4x, resolution independent of window size                                       | P8    | DONE   |
+| G2  | Transparent background export | scene background nulled and backdrop hidden, alpha preserved                                                | P8    | DONE   |
+| G3  | Platform size presets         | App Store, Play Store, Dribbble, OG image, X card, Product Hunt, 4K, custom                                 | P8    | DONE   |
+| G4  | **Record** animations         | `capture/webm.ts` using `captureStream` and `MediaRecorder` (VP9), with fps, duration, and bitrate controls | P7    | DONE   |
 
 ## H. Configuration and presets
 

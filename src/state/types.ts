@@ -1,6 +1,8 @@
 import type { StateCreator } from 'zustand'
+import type { AnimationSlice } from './slices/animation'
 import type { CameraSlice } from './slices/camera'
 import type { DeviceSlice } from './slices/device'
+import type { ExportSlice } from './slices/exportConfig'
 import type { LightingSlice } from './slices/lighting'
 import type { MediaSlice } from './slices/media'
 import type { OverlaysSlice } from './slices/overlays'
@@ -20,7 +22,9 @@ export type AppState = UiSlice &
   LightingSlice &
   DeviceSlice &
   MediaSlice &
-  OverlaysSlice
+  OverlaysSlice &
+  AnimationSlice &
+  ExportSlice
 
 /** Slice signature, pre-bound to the immer middleware. */
 export type SliceCreator<T> = StateCreator<AppState, [['zustand/immer', never]], [], T>
