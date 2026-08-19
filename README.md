@@ -3,6 +3,9 @@
 **A free, open-source, fully-local 3D mockup generator for websites and apps.**
 
 <p>
+  <a href="https://mockup-studio.anahatmudgal.com">
+    <img src="https://img.shields.io/badge/Open%20the%20Studio-796eb3?style=for-the-badge&logo=vercel&logoColor=white" alt="Open the live app" />
+  </a>
   <a href="https://github.com/AnahatM/MockupStudio">
     <img src="https://img.shields.io/badge/View%20Source-181717?style=for-the-badge&logo=github&logoColor=white" alt="View source on GitHub" />
   </a>
@@ -22,6 +25,8 @@ device — phone, folding phone, tablet, laptop, desktop or watch — inside a
 customizable 3D studio with parametric lighting, backdrops, camera angles and
 motion, then exports a still or a video. No watermark, no account, no upload:
 the whole app, and every file you give it, stays on your machine.
+
+**Try it: [mockup-studio.anahatmudgal.com](https://mockup-studio.anahatmudgal.com)**
 
 <p align="center">
   <img src="docs/images/studio-hero.png" alt="Mockup Studio's 3D viewport showing a phone with a brushed-titanium finish under rim lighting on a soft studio backdrop" width="820" />

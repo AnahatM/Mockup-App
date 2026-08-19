@@ -28,6 +28,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | DONE |
 | S16 | Palette reads too yellow/brown — move the whole scheme cool, blue/green | DONE |
 | S17 | Studio toolbar controls left-aligned, not spread across the bar | DONE |
+| S19 | Whole app mobile-responsive — every page, and the studio's panels/tools/options | TODO |
+| S20 | Footer local-only badge: rectangular, small radius, not a pill | DONE |
+| S21 | Landing backdrop gradient still visibly cuts off before the page edge | TODO |
 | S18 | Tooltips must flip/clamp so they stay on screen near any viewport edge | DONE |
 
 ## Mockup features
@@ -53,8 +56,32 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | U4 | Keyboard shortcut reference / help overlay | TODO |
 | U5 | Focus-visible styling audit across every interactive control | TODO |
 | U6 | `prefers-reduced-motion` honoured by every animation | TODO |
-| U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | TODO |
+| U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | DONE |
 | U8 | Offline/local reassurance surfaced in the UI, not only in the docs | TODO |
+
+## Theme — Horizon
+
+The user has asked for the whole app to adopt the Horizon palette
+(<https://github.com/jolaleye/horizon-theme-vscode>). **This supersedes the
+earlier "cool blue/green" direction (S16)** — Horizon is a warm sunset palette,
+so that instruction is now obsolete. Keep the earlier lessons that still apply:
+no pure black or white, light/dark token parity, and every colour pair measured
+for contrast rather than eyeballed.
+
+| # | Task | Status |
+|---|---|---|
+| T1 | Adopt the Horizon palette across primitives and semantics, light and dark | TODO |
+| T2 | Give the primary colour an accompanying shade for gradients | TODO |
+| T3 | Use that gradient on primary buttons, toggle switches, cards, landing design | TODO |
+| T4 | Reading pages: headings distinguished from body by colour and/or weight | TODO |
+| T5 | Re-measure every contrast pair after the palette change | TODO |
+
+## Deployment
+
+| # | Task | Status |
+|---|---|---|
+| D1 | Production URL is `https://mockup-studio.anahatmudgal.com` — use it in README, docs, sitemap and canonical links | DONE |
+| D2 | `vercel.json` — SPA rewrites so deep links work, plus sensible headers | DONE |
 
 ## Competitive features
 
@@ -85,6 +112,7 @@ things paid products do that we should match or beat.
 | P2 | Organise `docs/` into folders | DONE |
 | P3 | Maintain this checklist as tasks arrive | ONGOING |
 | P4 | Commit in stages as work lands | ONGOING |
+| P5 | **FINAL PASS** — capture real screenshots for every placeholder slot across the whole site (landing hero, landing showcase ×3, About) and the README's image slots, then wire them in and delete the "coming soon" states. Do this last, once the UI has settled. `scripts/capture-shots.mjs` is the harness. | TODO |
 
 ## Standing constraints
 

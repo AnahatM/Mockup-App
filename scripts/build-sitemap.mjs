@@ -7,7 +7,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs'
 
-const BASE = (process.env.SITE_URL ?? 'https://mockupstudio.app').replace(/\/$/, '')
+const BASE = (process.env.SITE_URL ?? 'https://mockup-studio.anahatmudgal.com').replace(/\/$/, '')
 
 const routesSource = readFileSync('src/app/routes.ts', 'utf8')
 

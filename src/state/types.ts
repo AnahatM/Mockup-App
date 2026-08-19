@@ -10,6 +10,7 @@ import type { MediaSlice } from './slices/media'
 import type { OverlaysSlice } from './slices/overlays'
 import type { PresetsSlice } from './slices/presets'
 import type { SceneSlice } from './slices/scene'
+import type { ToastSlice } from './slices/toasts'
 import type { UiSlice } from './slices/ui'
 
 /**
@@ -30,7 +31,8 @@ export type AppState = UiSlice &
   ExportSlice &
   FlatSlice &
   PresetsSlice &
-  HistorySlice
+  HistorySlice &
+  ToastSlice
 
 /** Slice signature, pre-bound to the immer middleware. */
 export type SliceCreator<T> = StateCreator<AppState, [['zustand/immer', never]], [], T>

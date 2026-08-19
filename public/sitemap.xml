@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mockupstudio.app/</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/</loc>
     <priority>1</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/studio</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/studio</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/about</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/about</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/privacy</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/privacy</loc>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/sitemap</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/sitemap</loc>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/quick-start</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/quick-start</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/interface</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/interface</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/shortcuts</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/shortcuts</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/devices</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/devices</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/screen-content</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/screen-content</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/overlays</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/overlays</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/window-mockups</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/window-mockups</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/lighting</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/lighting</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/materials</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/materials</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/camera</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/camera</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/backdrops</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/backdrops</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/exporting-images</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/exporting-images</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/recording-video</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/recording-video</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/presets</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/presets</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/importing-models</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/importing-models</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/adding-a-device</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/adding-a-device</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mockupstudio.app/docs/manifest-format</loc>
+    <loc>https://mockup-studio.anahatmudgal.com/docs/manifest-format</loc>
     <priority>0.5</priority>
   </url>
 </urlset>

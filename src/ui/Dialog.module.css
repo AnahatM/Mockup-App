@@ -1,5 +1,12 @@
+/*
+ * `margin: auto` is restated deliberately. A modal <dialog> is centred by the
+ * UA's own `margin: auto` rule, which this project's reset overrides with
+ * `* { margin: 0 }` — so without this the dialog pins itself to the top-left
+ * corner of the viewport.
+ */
 .dialog {
   max-width: 26rem;
+  margin: auto;
   padding: 0;
   color: var(--text-primary);
   background: var(--surface-overlay);

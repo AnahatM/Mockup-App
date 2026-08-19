@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mockupstudio.app/sitemap.xml
+Sitemap: https://mockup-studio.anahatmudgal.com/sitemap.xml

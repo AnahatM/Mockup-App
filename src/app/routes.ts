@@ -84,6 +84,8 @@ export const footerRoutes = (): RouteMeta[] => SITE_ROUTES.filter((r) => r.inFoo
 
 /** Canonical external links, so they are never retyped. */
 export const LINKS = {
+  /** Where the app is deployed. Used for canonical URLs and share links. */
+  site: 'https://mockup-studio.anahatmudgal.com',
   repo: 'https://github.com/AnahatM/MockupStudio',
   repoIssues: 'https://github.com/AnahatM/MockupStudio/issues',
   license: 'https://github.com/AnahatM/MockupStudio/blob/main/LICENSE',

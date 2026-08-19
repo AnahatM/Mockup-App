@@ -11,6 +11,7 @@ import { createMediaSlice } from './slices/media'
 import { createOverlaysSlice } from './slices/overlays'
 import { createPresetsSlice } from './slices/presets'
 import { createSceneSlice } from './slices/scene'
+import { createToastSlice } from './slices/toasts'
 import { createUiSlice } from './slices/ui'
 import type { AppState } from './types'
 
@@ -35,5 +36,6 @@ export const useAppStore = create<AppState>()(
     ...createFlatSlice(...args),
     ...createPresetsSlice(...args),
     ...createHistorySlice(...args),
+    ...createToastSlice(...args),
   })),
 )

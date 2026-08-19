@@ -22,6 +22,7 @@ export interface CaptureState {
 export function useCapture() {
   const config = useAppStore((state) => state.exportConfig)
   const busy = useBusy()
+  const notify = useAppStore((state) => state.notify)
   const [state, setState] = useState<CaptureState>({
     busy: false,
     progress: 0,
@@ -32,12 +33,14 @@ export function useCapture() {
     setState({ busy: true, progress: 0, error: null })
     try {
       const blob = await busy(() => renderStill(config))
-      downloadBlob(blob, withExtension(safeFilename(config.filename), 'png'))
+      const name = withExtension(safeFilename(config.filename), 'png')
+      downloadBlob(blob, name)
       setState({ busy: false, progress: 1, error: null })
+      notify(`Saved ${name}`)
     } catch (error) {
       setState({ busy: false, progress: 0, error: messageFor(error, 'Export failed.') })
     }
-  }, [busy, config])
+  }, [busy, config, notify])
 
   /** Copies the same image the download would produce. */
   const copyPng = useCallback(async () => {
@@ -45,6 +48,7 @@ export function useCapture() {
     try {
       const blob = await busy(() => renderStill(config))
       const copied = await copyImageToClipboard(blob)
+      if (copied) notify('Copied to clipboard')
       setState({
         busy: false,
         progress: 1,
@@ -55,7 +59,7 @@ export function useCapture() {
     } catch (error) {
       setState({ busy: false, progress: 0, error: messageFor(error, 'Copy failed.') })
     }
-  }, [busy, config])
+  }, [busy, config, notify])
 
   const recordVideo = useCallback(async () => {
     const handle = getCaptureHandle()
@@ -84,8 +88,10 @@ export function useCapture() {
         return
       }
 
-      downloadBlob(result.value, withExtension(safeFilename(config.filename), 'webm'))
+      const name = withExtension(safeFilename(config.filename), 'webm')
+      downloadBlob(result.value, name)
       setState({ busy: false, progress: 1, error: null })
+      notify(`Saved ${name}`)
     } catch (error) {
       setState({
         busy: false,
@@ -93,7 +99,7 @@ export function useCapture() {
         error: error instanceof Error ? error.message : 'Recording failed.',
       })
     }
-  }, [busy, config])
+  }, [busy, config, notify])
 
   return { ...state, exportPng, copyPng, recordVideo }
 }

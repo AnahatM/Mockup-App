@@ -59,9 +59,12 @@
   gap: var(--space-2);
   width: fit-content;
   max-width: 34ch;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3);
   border: var(--hairline) solid var(--border-subtle);
-  border-radius: var(--radius-full);
+
+  /* Rectangular, not a pill: the text wraps to two lines, and a full radius on
+     a multi-line block reads as a lozenge rather than a badge. */
+  border-radius: var(--radius-sm);
   background: color-mix(in oklab, var(--surface-raised), var(--accent) 5%);
   font-size: var(--text-xs);
   line-height: var(--leading-tight);
