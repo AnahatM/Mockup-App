@@ -1,3 +1,4 @@
+import { useFramedTexture } from '@/features/flat'
 import { mediaAspect, useScreenTexture } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'
@@ -14,7 +15,14 @@ export function Device() {
   const config = useAppStore((state) => state.device)
   const source = useAppStore((state) => state.media.source)
   const spec = resolveDevice(config.specId)
-  const texture = useScreenTexture()
+  const media = useScreenTexture()
+
+  // When a window frame is active the screen shows the composed window rather
+  // than the bare screenshot — which is how a laptop ends up displaying a
+  // browser window containing the user's site.
+  const framed = useFramedTexture(media, mediaAspect(source))
+  const texture = framed.texture ?? media
+  const screenAspect = framed.texture ? framed.aspect : mediaAspect(source)
 
   // A clamshell already places its own base on the pedestal; a slab device is
   // modelled centred on its body, so it needs lifting by half its height.
@@ -34,7 +42,7 @@ export function Device() {
         spec={spec}
         config={config}
         screenTexture={texture}
-        mediaAspect={mediaAspect(source)}
+        mediaAspect={screenAspect}
       />
     </group>
   )

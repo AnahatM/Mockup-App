@@ -84,6 +84,7 @@ export default defineConfig([
       'src/features/screen/**/*.tsx',
       'src/features/media/**/*.ts*',
       'src/features/capture/**/*.ts*',
+      'src/features/flat/**/*.ts*',
     ],
     rules: {
       'react-hooks/immutability': 'off',

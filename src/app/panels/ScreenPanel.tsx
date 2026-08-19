@@ -5,6 +5,7 @@ import { Dropzone, PalettePicker } from '@/features/media'
 import { FIT_MODES, type FitMode } from '@/lib/media/fit'
 import type { AppState } from '@/state/types'
 import { OverlaysPanel } from './OverlaysPanel'
+import { WindowPanel } from './WindowPanel'
 
 /** The screenshot or recording shown on the device, and how it is placed. */
 
@@ -116,6 +117,7 @@ export function ScreenPanel() {
         <ControlList controls={contentControls} />
       </Panel>
       <PlaybackPanel />
+      <WindowPanel />
       <OverlaysPanel />
     </>
   )

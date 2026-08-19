@@ -34,7 +34,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | B1  | Mockup generator app                                        | the whole app                                                                                         | all    | TODO   |
 | B2  | **Free and open source**                                    | MIT `LICENSE`, `CONTRIBUTING.md`, OSS-facing README                                                   | P0     | DONE   |
 | B3  | Generate mockups of websites and apps across device formats | device catalog plus screen pipeline                                                                   | P3-P5  | DONE   |
-| B4  | An all-in-one place for mockups                             | 3D devices, 2D window chrome, and export presets in one tool                                          | all    | TODO   |
+| B4  | An all-in-one place for mockups                             | 3D devices, 2D window chrome, and export presets in one tool                                          | all    | DONE   |
 | B5  | **Runs fully locally**, no server and no network calls      | procedural geometry, procedural lighting (no CDN HDRI), local file handling, localStorage persistence | all    | TODO   |
 | B6  | Any type of mockup a user may want                          | broad catalog, custom device dimensions, GLB import seam                                              | P3/P11 | TODO   |
 
@@ -87,12 +87,12 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                              | Delivered by                                                                   | Phase | Status |
 | --- | ---------------------------------------- | ------------------------------------------------------------------------------ | ----- | ------ |
-| F1  | Screenshot inside a **macOS window**     | `flat/MacWindow`                                                               | P9    | TODO   |
-| F2  | **Traffic-light window controls**        | `flat/TrafficLights`                                                           | P9    | TODO   |
-| F3  | **Customizable title bar**               | `flat/TitleBar`: text, alignment, height, style (inline, unified, transparent) | P9    | TODO   |
-| F4  | **Color-matched** to the screenshot      | extracted palette auto-applied to the window chrome                            | P9    | TODO   |
-| F5  | Browser window variant                   | `flat/BrowserWindow`: tabs, URL bar, light/dark                                | P9    | TODO   |
-| F6  | Usable both flat and inside the 3D scene | flat PNG export, and usable as a screen source for any 3D device               | P9    | TODO   |
+| F1  | Screenshot inside a **macOS window**     | `flat/MacWindow`                                                               | P9    | DONE   |
+| F2  | **Traffic-light window controls**        | `flat/TrafficLights`                                                           | P9    | DONE   |
+| F3  | **Customizable title bar**               | `flat/TitleBar`: text, alignment, height, style (inline, unified, transparent) | P9    | DONE   |
+| F4  | **Color-matched** to the screenshot      | extracted palette auto-applied to the window chrome                            | P9    | DONE   |
+| F5  | Browser window variant                   | `flat/BrowserWindow`: tabs, URL bar, light/dark                                | P9    | DONE   |
+| F6  | Usable both flat and inside the 3D scene | flat PNG export, and usable as a screen source for any 3D device               | P9    | DONE   |
 
 ## G. Output
 
