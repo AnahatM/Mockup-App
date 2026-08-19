@@ -5,7 +5,6 @@ import type { BodySpec, ButtonSpec } from '../spec/types'
 export interface ButtonPlacement {
   geometry: ExtrudeGeometry
   position: [number, number, number]
-  rotation: [number, number, number]
 }
 
 const DEFAULT_PROTRUSION = 0.5
@@ -19,20 +18,27 @@ const DEFAULT_PROTRUSION = 0.5
  * which is how a real button reads — same material as the rail, distinguished by
  * the light catching its border.
  *
- * Extrusion runs along local +Z, then the whole button is rotated onto its rail.
+ * The geometry is rotated into place here rather than on the mesh. Euler order
+ * makes it far too easy to get a composed mesh rotation subtly wrong — the first
+ * version put the button's *length* along the phone's thickness, so volume keys
+ * ran horizontally across the rail instead of up it. Applying one explicit axis
+ * rotation to the geometry is unambiguous and verifiable.
  */
 export function buildButton(body: BodySpec, button: ButtonSpec): ButtonPlacement {
   const protrusion = button.protrusion ?? DEFAULT_PROTRUSION
   // Width across the rail. Just over half the body depth matches real hardware.
   const across = button.width ?? body.depth * 0.52
   // Sunk into the rail so the base is never visible against a curved surface.
-  const sink = protrusion * 1.4
-  const depth = protrusion + sink
+  const depth = protrusion * 2.4
   const chamfer = Math.min(protrusion * 0.5, across * 0.2, 0.25)
 
+  const onSideRail = button.side === 'left' || button.side === 'right'
+
+  // Extrusion always runs along local +Z, which becomes the outward direction.
+  // Shape axes are chosen so a single rotation lands length along the rail.
   const shape = squircleShape({
-    width: button.length - chamfer * 2,
-    height: across - chamfer * 2,
+    width: (onSideRail ? across : button.length) - chamfer * 2,
+    height: (onSideRail ? button.length : across) - chamfer * 2,
     radius: Math.max(across / 2 - chamfer, 0.05),
     exponent: 3.2,
     segments: 8,
@@ -47,35 +53,32 @@ export function buildButton(body: BodySpec, button: ButtonSpec): ButtonPlacement
     curveSegments: 1,
   })
   geometry.center()
-  geometry.computeVertexNormals()
 
-  const outward = body.width / 2 + protrusion - depth / 2
-  const upward = body.height / 2 + protrusion - depth / 2
+  // Sits a fraction inside the rail so its outer face lands exactly at
+  // `protrusion` beyond the body.
+  const inset = depth / 2 - protrusion
 
   switch (button.side) {
+    // rotateY(+90): local X -> -Z (across), Y -> Y (length), Z -> +X (outward)
     case 'right':
-      return {
-        geometry,
-        position: [outward, button.offset, 0],
-        rotation: [0, Math.PI / 2, 0],
-      }
+      geometry.rotateY(Math.PI / 2)
+      geometry.computeVertexNormals()
+      return { geometry, position: [body.width / 2 - inset, button.offset, 0] }
+
     case 'left':
-      return {
-        geometry,
-        position: [-outward, button.offset, 0],
-        rotation: [0, -Math.PI / 2, 0],
-      }
+      geometry.rotateY(-Math.PI / 2)
+      geometry.computeVertexNormals()
+      return { geometry, position: [-(body.width / 2 - inset), button.offset, 0] }
+
+    // rotateX(-90): local X -> X (length), Y -> -Z (across), Z -> +Y (outward)
     case 'top':
-      return {
-        geometry,
-        position: [button.offset, upward, 0],
-        rotation: [-Math.PI / 2, 0, Math.PI / 2],
-      }
+      geometry.rotateX(-Math.PI / 2)
+      geometry.computeVertexNormals()
+      return { geometry, position: [button.offset, body.height / 2 - inset, 0] }
+
     case 'bottom':
-      return {
-        geometry,
-        position: [button.offset, -upward, 0],
-        rotation: [Math.PI / 2, 0, Math.PI / 2],
-      }
+      geometry.rotateX(Math.PI / 2)
+      geometry.computeVertexNormals()
+      return { geometry, position: [button.offset, -(body.height / 2 - inset), 0] }
   }
 }

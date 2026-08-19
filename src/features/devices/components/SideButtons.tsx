@@ -22,7 +22,6 @@ export function SideButtons({ spec, frameColor }: SideButtonsProps) {
           key={index}
           geometry={placement.geometry}
           position={placement.position}
-          rotation={placement.rotation}
           castShadow
         >
           {/* Buttons are the same metal as the rail; the chamfer distinguishes them. */}

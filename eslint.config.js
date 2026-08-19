@@ -82,6 +82,7 @@ export default defineConfig([
       'src/features/camera/**/*.tsx',
       'src/features/devices/**/*.tsx',
       'src/features/screen/**/*.tsx',
+      'src/features/media/**/*.ts*',
       'src/features/capture/**/*.ts*',
     ],
     rules: {

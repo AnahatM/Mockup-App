@@ -52,7 +52,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | DONE   |
 | C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | DONE   |
 | C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | TODO   |
-| C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | WIP    |
+| C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | DONE   |
 
 ## D. Devices
 
@@ -75,9 +75,9 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                              | Delivered by                                                                         | Phase | Status |
 | --- | -------------------------------------------------------- | ------------------------------------------------------------------------------------ | ----- | ------ |
-| E1  | Upload a screenshot of an app, product, or website       | `features/media` dropzone plus file picker                                           | P4    | TODO   |
-| E2  | **Upload a video file, used in place of a static image** | `VideoTexture` with play, pause, loop, mute, seek, and rate controls                 | P4    | TODO   |
-| E3  | Screenshot maps correctly onto the device screen         | aspect fit, fill, stretch, offset, zoom                                              | P4    | TODO   |
+| E1  | Upload a screenshot of an app, product, or website       | `features/media` dropzone plus file picker                                           | P4    | DONE   |
+| E2  | **Upload a video file, used in place of a static image** | `VideoTexture` with play, pause, loop, mute, seek, and rate controls                 | P4    | DONE   |
+| E3  | Screenshot maps correctly onto the device screen         | aspect fit, fill, stretch, offset, zoom                                              | P4    | DONE   |
 | E4  | **Enable/disable the iPhone gesture bar**                | `overlays/GestureBar`                                                                | P5    | TODO   |
 | E5  | **Enable/disable the time, wifi, and battery icons**     | `overlays/StatusBar`, iOS and Android styling, light/dark, editable time and carrier | P5    | TODO   |
 | E6  | **Enable/disable the MacBook dock**                      | `overlays/Dock` plus `overlays/MenuBar`                                              | P5    | TODO   |

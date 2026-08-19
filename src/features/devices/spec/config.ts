@@ -8,9 +8,9 @@ import { hexSchema, vec3Schema } from '@/lib/schema/primitives'
  */
 export const deviceConfigSchema = z.object({
   specId: z.string().default('iphone-pro'),
-  colorway: z.string().default('natural-titanium'),
-  bodyColor: hexSchema.default('#c3bdb3'),
-  frameColor: hexSchema.default('#a09a91'),
+  colorway: z.string().default('black-titanium'),
+  bodyColor: hexSchema.default('#3a3a3d'),
+  frameColor: hexSchema.default('#4a4a4f'),
   /** Per-device detail toggles. */
   showCutout: z.boolean().default(true),
   showCameraBump: z.boolean().default(true),

@@ -3,6 +3,7 @@ import { immer } from 'zustand/middleware/immer'
 import { createCameraSlice } from './slices/camera'
 import { createDeviceSlice } from './slices/device'
 import { createLightingSlice } from './slices/lighting'
+import { createMediaSlice } from './slices/media'
 import { createSceneSlice } from './slices/scene'
 import { createUiSlice } from './slices/ui'
 import type { AppState } from './types'
@@ -21,5 +22,6 @@ export const useAppStore = create<AppState>()(
     ...createCameraSlice(...args),
     ...createLightingSlice(...args),
     ...createDeviceSlice(...args),
+    ...createMediaSlice(...args),
   })),
 )

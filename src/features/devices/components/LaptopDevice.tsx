@@ -14,6 +14,7 @@ export interface LaptopDeviceProps {
   hinge: HingeSpec
   config: DeviceConfig
   screenTexture: Texture | null
+  mediaAspect: number
 }
 
 /**
@@ -27,6 +28,7 @@ export function LaptopDevice({
   hinge,
   config,
   screenTexture,
+  mediaAspect,
 }: LaptopDeviceProps) {
   const lid = spec.body
   const lidGeometry = useMemo(() => buildBody(lid), [lid])
@@ -59,6 +61,7 @@ export function LaptopDevice({
             spec={spec}
             z={frontZ}
             texture={screenTexture}
+            mediaAspect={mediaAspect}
             brightness={config.screenBrightness}
           />
 

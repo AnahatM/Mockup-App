@@ -2,6 +2,7 @@ import type { StateCreator } from 'zustand'
 import type { CameraSlice } from './slices/camera'
 import type { DeviceSlice } from './slices/device'
 import type { LightingSlice } from './slices/lighting'
+import type { MediaSlice } from './slices/media'
 import type { SceneSlice } from './slices/scene'
 import type { UiSlice } from './slices/ui'
 
@@ -12,7 +13,12 @@ import type { UiSlice } from './slices/ui'
  * separate from scene config, because only scene config is serialised into a
  * preset manifest.
  */
-export type AppState = UiSlice & SceneSlice & CameraSlice & LightingSlice & DeviceSlice
+export type AppState = UiSlice &
+  SceneSlice &
+  CameraSlice &
+  LightingSlice &
+  DeviceSlice &
+  MediaSlice
 
 /** Slice signature, pre-bound to the immer middleware. */
 export type SliceCreator<T> = StateCreator<AppState, [['zustand/immer', never]], [], T>

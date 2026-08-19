@@ -7,6 +7,7 @@ import { LightingPanel } from './LightingPanel'
 import { PlaceholderPanel } from './PlaceholderPanel'
 import { RenderPanel } from './RenderPanel'
 import { ScenePanel } from './ScenePanel'
+import { ScreenPanel } from './ScreenPanel'
 
 export interface PanelDefinition {
   label: string
@@ -31,11 +32,7 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
   screen: {
     label: 'Screen',
     icon: 'image',
-    render: pending(
-      'image',
-      'Screen',
-      'Your screenshot or video, plus the status bar, gesture bar and dock overlays.',
-    ),
+    render: () => <ScreenPanel />,
   },
   scene: {
     label: 'Scene',

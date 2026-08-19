@@ -17,9 +17,20 @@ export const cameraSchema = z.object({
   autoRotateSpeed: z.number().min(-8).max(8).default(0.6),
   /** Orbit damping — higher is snappier. */
   damping: z.number().min(0.01).max(1).default(0.08),
+  /* Viewport navigation, in the vein of a 3D editor:
+     drag to orbit, right-drag or middle-drag to pan, wheel to zoom. */
   enablePan: z.boolean().default(true),
-  minDistance: z.number().min(0.2).max(20).default(0.8),
-  maxDistance: z.number().min(1).max(60).default(14),
+  enableZoom: z.boolean().default(true),
+  enableRotate: z.boolean().default(true),
+  rotateSpeed: z.number().min(0.1).max(3).default(1),
+  panSpeed: z.number().min(0.1).max(3).default(1),
+  zoomSpeed: z.number().min(0.1).max(3).default(1),
+  /** Pan across the view plane (editor-style) instead of along the ground. */
+  screenSpacePanning: z.boolean().default(true),
+  /** Allow orbiting beneath the floor. Off keeps the product the right way up. */
+  orbitBelowFloor: z.boolean().default(false),
+  minDistance: z.number().min(0.05).max(20).default(0.3),
+  maxDistance: z.number().min(1).max(200).default(60),
 })
 
 export type CameraConfig = z.infer<typeof cameraSchema>

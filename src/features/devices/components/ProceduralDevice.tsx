@@ -12,6 +12,7 @@ export interface ProceduralDeviceProps {
   spec: DeviceSpec
   config: DeviceConfig
   screenTexture: Texture | null
+  mediaAspect: number
 }
 
 /**
@@ -24,6 +25,7 @@ export function ProceduralDevice({
   spec,
   config,
   screenTexture,
+  mediaAspect,
 }: ProceduralDeviceProps) {
   // Front face, with a hair of clearance so nothing z-fights with the shell.
   const frontZ = spec.body.depth / 2 + 0.02
@@ -36,6 +38,7 @@ export function ProceduralDevice({
         hinge={spec.hinge}
         config={config}
         screenTexture={screenTexture}
+        mediaAspect={mediaAspect}
       />
     )
   }
@@ -53,6 +56,7 @@ export function ProceduralDevice({
         spec={spec}
         z={frontZ}
         texture={screenTexture}
+        mediaAspect={mediaAspect}
         brightness={config.screenBrightness}
       />
 

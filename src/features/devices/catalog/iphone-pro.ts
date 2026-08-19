@@ -59,6 +59,12 @@ export const iphonePro: DeviceSpec = {
 
   colorways: [
     {
+      id: 'black-titanium',
+      label: 'Black titanium',
+      body: '#3a3a3d',
+      frame: '#4a4a4f',
+    },
+    {
       id: 'natural-titanium',
       label: 'Natural titanium',
       body: '#c3bdb3',
@@ -70,12 +76,6 @@ export const iphonePro: DeviceSpec = {
       label: 'White titanium',
       body: '#e9e7e2',
       frame: '#cdcac4',
-    },
-    {
-      id: 'black-titanium',
-      label: 'Black titanium',
-      body: '#3a3a3d',
-      frame: '#4a4a4f',
     },
   ],
 
