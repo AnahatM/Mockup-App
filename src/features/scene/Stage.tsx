@@ -1,10 +1,10 @@
 import { Suspense } from 'react'
 import { CameraRig } from '@/features/camera'
+import { Device } from '@/features/devices'
 import { LightRig } from '@/features/lighting'
 import { Backdrop } from './backdrop/Backdrop'
 import { ContactShadow } from './ContactShadow'
 import { Pedestal } from './Pedestal'
-import { PlaceholderProduct } from './PlaceholderProduct'
 import { PostFx } from './PostFx'
 import { RendererSettings } from './RendererSettings'
 
@@ -20,7 +20,7 @@ export function Stage() {
       <LightRig />
       <Backdrop />
       <Pedestal />
-      <PlaceholderProduct />
+      <Device />
       <ContactShadow />
       <CameraRig />
       <PostFx />

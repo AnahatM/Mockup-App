@@ -1,0 +1,51 @@
+import {
+  configForDevice,
+  defaultDeviceConfig,
+  findColorway,
+  frameDevice,
+  pedestalRadiusFor,
+  resolveDevice,
+  type DeviceConfig,
+} from '@/features/devices'
+import type { SliceCreator } from '../types'
+
+export interface DeviceSlice {
+  device: DeviceConfig
+  selectDevice: (specId: string) => void
+  selectColorway: (colorwayId: string) => void
+  resetDevice: () => void
+}
+
+export const createDeviceSlice: SliceCreator<DeviceSlice> = (set) => ({
+  device: defaultDeviceConfig(),
+
+  /**
+   * Switching device re-seeds its colours and re-frames the camera, but keeps
+   * the user's detail toggles. A laptop is twice the size of a phone, so reusing
+   * one fixed camera would crop one and lose the other.
+   */
+  selectDevice: (specId) =>
+    set((draft) => {
+      const spec = resolveDevice(specId)
+      Object.assign(draft.device, configForDevice(spec))
+      const framing = frameDevice(spec, draft.camera.fov)
+      draft.camera.target = framing.target
+      draft.camera.position = framing.position
+      draft.camera.preset = 'auto'
+      draft.scene.pedestal.radius = pedestalRadiusFor(spec)
+    }),
+
+  selectColorway: (colorwayId) =>
+    set((draft) => {
+      const colorway = findColorway(resolveDevice(draft.device.specId), colorwayId)
+      if (!colorway) return
+      draft.device.colorway = colorwayId
+      draft.device.bodyColor = colorway.body
+      draft.device.frameColor = colorway.frame ?? colorway.body
+    }),
+
+  resetDevice: () =>
+    set((draft) => {
+      draft.device = defaultDeviceConfig()
+    }),
+})

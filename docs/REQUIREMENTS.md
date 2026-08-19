@@ -33,7 +33,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | --- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ | ------ |
 | B1  | Mockup generator app                                        | the whole app                                                                                         | all    | TODO   |
 | B2  | **Free and open source**                                    | MIT `LICENSE`, `CONTRIBUTING.md`, OSS-facing README                                                   | P0     | DONE   |
-| B3  | Generate mockups of websites and apps across device formats | device catalog plus screen pipeline                                                                   | P3-P5  | TODO   |
+| B3  | Generate mockups of websites and apps across device formats | device catalog plus screen pipeline                                                                   | P3-P5  | DONE   |
 | B4  | An all-in-one place for mockups                             | 3D devices, 2D window chrome, and export presets in one tool                                          | all    | TODO   |
 | B5  | **Runs fully locally**, no server and no network calls      | procedural geometry, procedural lighting (no CDN HDRI), local file handling, localStorage persistence | all    | TODO   |
 | B6  | Any type of mockup a user may want                          | broad catalog, custom device dimensions, GLB import seam                                              | P3/P11 | TODO   |
@@ -50,7 +50,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | C6  | **Shiny lighting, rim lights, glows**                                 | `LightformerRig` parametric area lights plus bloom post-processing                                   | P2/P6 | WIP    |
 | C7  | Color-match app theme colors to backdrop, lighting, glows, rim lights | `lib/color/extract.ts` median-cut palette from the upload, one-click bind to any color channel       | P4/P6 | TODO   |
 | C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | DONE   |
-| C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | WIP    |
+| C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | DONE   |
 | C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | TODO   |
 | C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | WIP    |
 
@@ -58,18 +58,18 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                                | Delivered by                                                                                     | Phase  | Status |
 | --- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------ | ------ |
-| D1  | 3D models of iPhones                                       | `catalog/iphone-pro.ts`, `catalog/iphone-notch.ts`                                               | P3/P11 | TODO   |
-| D2  | Android phones                                             | `catalog/android-flagship.ts`                                                                    | P3     | TODO   |
+| D1  | 3D models of iPhones                                       | `catalog/iphone-pro.ts`, `catalog/iphone-notch.ts`                                               | P3/P11 | DONE   |
+| D2  | Android phones                                             | `catalog/android-flagship.ts`                                                                    | P3     | DONE   |
 | D3  | **Samsung flip phones**                                    | `catalog/flip-open.ts`, `flip-closed.ts`, `fold-open.ts` with a hinge builder                    | P11    | TODO   |
-| D4  | MacBooks                                                   | `catalog/macbook-pro.ts`, `catalog/macbook-air.ts`                                               | P3/P11 | TODO   |
+| D4  | MacBooks                                                   | `catalog/macbook-pro.ts`, `catalog/macbook-air.ts`                                               | P3/P11 | DONE   |
 | D5  | Laptops (generic)                                          | `catalog/laptop-generic.ts`                                                                      | P11    | TODO   |
 | D6  | Watches                                                    | `catalog/watch-square.ts`, `catalog/watch-round.ts`                                              | P11    | TODO   |
 | D7  | Tablets and desktops (the "etc." in the brief)             | `tablet-pro`, `tablet-mini`, `imac-style`, `monitor-27`                                          | P11    | TODO   |
-| D8  | **Textures on products**, aluminum and titanium side rails | `materials/` procedural brushed-metal roughness, normal, and anisotropy maps generated on canvas | P3     | TODO   |
-| D9  | **Show the Dynamic Island / notch**                        | `builders/` cutout geometry, per-device and toggleable                                           | P3/P5  | TODO   |
-| D10 | **Show camera bumps** with plateau, lenses, and rings      | `builders/cameraBump.ts`                                                                         | P3     | TODO   |
-| D11 | **Show volume and side buttons**                           | `builders/buttons.ts`, placed from spec rail coordinates                                         | P3     | TODO   |
-| D12 | Owner may supply real 3D assets later                      | `DeviceMeshSource` union with a `glb` variant; swap any device with no refactor                  | P3     | TODO   |
+| D8  | **Textures on products**, aluminum and titanium side rails | `materials/` procedural brushed-metal roughness, normal, and anisotropy maps generated on canvas | P3     | DONE   |
+| D9  | **Show the Dynamic Island / notch**                        | `builders/` cutout geometry, per-device and toggleable                                           | P3/P5  | DONE   |
+| D10 | **Show camera bumps** with plateau, lenses, and rings      | `builders/cameraBump.ts`                                                                         | P3     | DONE   |
+| D11 | **Show volume and side buttons**                           | `builders/buttons.ts`, placed from spec rail coordinates                                         | P3     | DONE   |
+| D12 | Owner may supply real 3D assets later                      | `DeviceMeshSource` union with a `glb` variant; swap any device with no refactor                  | P3     | DONE   |
 
 ## E. Screen content
 

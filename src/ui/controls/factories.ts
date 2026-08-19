@@ -31,7 +31,11 @@ export const number = <S>(def: Omit<NumericControl<S>, 'kind'>): Control<S> => (
   kind: 'number',
 })
 
-/** Numeric control whose stored value is radians but which is edited in degrees. */
+/**
+ * Numeric control whose stored value is radians but which is edited in degrees.
+ * `min`, `max` and `step` are therefore given in DEGREES, matching what the user
+ * sees; only the stored value is converted.
+ */
 export const angle = <S>(def: Omit<NumericControl<S>, 'kind'>): Control<S> => ({
   unit: '°',
   ...def,

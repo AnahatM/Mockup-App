@@ -49,3 +49,25 @@ export function rgbToHex({ r, g, b }: Rgb): string {
       .padStart(2, '0')
   return `#${channel(r)}${channel(g)}${channel(b)}`
 }
+
+/**
+ * Blends two colours. `t` is how far to travel from `a` to `b`.
+ *
+ * Mixes in linear light rather than in gamma space, so darkening a colour does
+ * not skew its hue the way naive channel averaging does.
+ */
+export function mix(a: string, b: string, t: number): string {
+  const amount = Math.min(Math.max(t, 0), 1)
+  const from = hexToRgb(a)
+  const to = hexToRgb(b)
+  const blend = (x: number, y: number) => {
+    const linear = (v: number) => (v / 255) ** 2.2
+    const blended = linear(x) + (linear(y) - linear(x)) * amount
+    return blended ** (1 / 2.2) * 255
+  }
+  return rgbToHex({
+    r: blend(from.r, to.r),
+    g: blend(from.g, to.g),
+    b: blend(from.b, to.b),
+  })
+}

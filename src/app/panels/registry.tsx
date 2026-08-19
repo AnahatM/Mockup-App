@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { IconName } from '@/ui'
 import type { InspectorTab } from '@/state/slices/ui'
 import { CameraPanel } from './CameraPanel'
+import { DevicePanel } from './DevicePanel'
 import { LightingPanel } from './LightingPanel'
 import { PlaceholderPanel } from './PlaceholderPanel'
 import { RenderPanel } from './RenderPanel'
@@ -25,11 +26,7 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
   device: {
     label: 'Device',
     icon: 'phone',
-    render: pending(
-      'phone',
-      'Device',
-      'Model, colour, materials and which physical details are shown.',
-    ),
+    render: () => <DevicePanel />,
   },
   screen: {
     label: 'Screen',
