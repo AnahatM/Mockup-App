@@ -19,6 +19,8 @@ export default defineConfig({
     },
   },
   build: {
+    // The postprocessing vendor chunk is legitimately large and rarely changes.
+    chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
         manualChunks(id) {

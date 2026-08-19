@@ -1,5 +1,8 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { createCameraSlice } from './slices/camera'
+import { createLightingSlice } from './slices/lighting'
+import { createSceneSlice } from './slices/scene'
 import { createUiSlice } from './slices/ui'
 import type { AppState } from './types'
 
@@ -13,5 +16,8 @@ import type { AppState } from './types'
 export const useAppStore = create<AppState>()(
   immer((...args) => ({
     ...createUiSlice(...args),
+    ...createSceneSlice(...args),
+    ...createCameraSlice(...args),
+    ...createLightingSlice(...args),
   })),
 )

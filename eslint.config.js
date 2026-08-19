@@ -64,6 +64,31 @@ export default defineConfig([
     },
   },
   {
+    /**
+     * The three.js layer.
+     *
+     * `react-hooks/immutability` forbids mutating values returned from hooks. That
+     * is right for React state, but three.js objects (renderer, scene, materials,
+     * geometries) are mutable by design and are NOT React state — mutating them is
+     * the documented React Three Fiber pattern, not a bug. The rule is therefore
+     * scoped off here and stays on everywhere else.
+     *
+     * This is the same purity assumption that made the React Compiler a poor fit;
+     * see docs/adr/0002-drop-react-compiler.md.
+     */
+    files: [
+      'src/features/scene/**/*.tsx',
+      'src/features/lighting/**/*.tsx',
+      'src/features/camera/**/*.tsx',
+      'src/features/devices/**/*.tsx',
+      'src/features/screen/**/*.tsx',
+      'src/features/capture/**/*.ts*',
+    ],
+    rules: {
+      'react-hooks/immutability': 'off',
+    },
+  },
+  {
     // Tests and the local catalogue of device data are allowed to be longer:
     // they are declarative, not logic, and splitting them would hurt readability.
     files: ['**/*.{test,spec}.{ts,tsx}'],

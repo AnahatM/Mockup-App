@@ -42,17 +42,17 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                                           | Delivered by                                                                                         | Phase | Status |
 | --- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ----- | ------ |
-| C1  | Full 3D space                                                         | `features/scene` R3F canvas                                                                          | P2    | TODO   |
-| C2  | **Fully orbittable**                                                  | `OrbitControls` with damping, bound to the camera store                                              | P2    | TODO   |
-| C3  | Central pedestal highlighting the product                             | `Pedestal` (toggleable) plus `ContactShadows`                                                        | P2    | TODO   |
-| C4  | Parametric 3D background, customizable                                | `Backdrop`: transparent, solid, gradient, radial glow, cyclorama, grid                               | P2    | TODO   |
-| C5  | Mostly blank and minimal by default                                   | default backdrop is a quiet studio sweep; chrome-free viewport                                       | P2    | TODO   |
-| C6  | **Shiny lighting, rim lights, glows**                                 | `LightformerRig` parametric area lights plus bloom post-processing                                   | P2/P6 | TODO   |
+| C1  | Full 3D space                                                         | `features/scene` R3F canvas                                                                          | P2    | DONE   |
+| C2  | **Fully orbittable**                                                  | `OrbitControls` with damping, bound to the camera store                                              | P2    | DONE   |
+| C3  | Central pedestal highlighting the product                             | `Pedestal` (toggleable) plus `ContactShadows`                                                        | P2    | DONE   |
+| C4  | Parametric 3D background, customizable                                | `Backdrop`: transparent, solid, gradient, radial glow, cyclorama, grid                               | P2    | DONE   |
+| C5  | Mostly blank and minimal by default                                   | default backdrop is a quiet studio sweep; chrome-free viewport                                       | P2    | DONE   |
+| C6  | **Shiny lighting, rim lights, glows**                                 | `LightformerRig` parametric area lights plus bloom post-processing                                   | P2/P6 | WIP    |
 | C7  | Color-match app theme colors to backdrop, lighting, glows, rim lights | `lib/color/extract.ts` median-cut palette from the upload, one-click bind to any color channel       | P4/P6 | TODO   |
-| C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | TODO   |
-| C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | TODO   |
+| C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | DONE   |
+| C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | WIP    |
 | C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | TODO   |
-| C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | TODO   |
+| C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | WIP    |
 
 ## D. Devices
 
@@ -107,7 +107,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 
 | #   | Requirement                                               | Delivered by                                                                        | Phase | Status |
 | --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----- | ------ |
-| H1  | **Configuration panel edited in realtime**                | schema-driven `ControlList`; every change is a live store write                     | P1    | WIP    |
+| H1  | **Configuration panel edited in realtime**                | schema-driven `ControlList`; every change is a live store write                     | P1    | DONE   |
 | H2  | **Preset save/load in localStorage**                      | `presets/storage.ts`: save, load, rename, duplicate, delete                         | P10   | TODO   |
 | H3  | **Premade presets**                                       | `presets/builtin/*.ts`, typed and schema-validated                                  | P10   | TODO   |
 | H4  | **Manifest file system**, one file holds the whole config | `MockupManifest` zod schema, versioned                                              | P10   | TODO   |

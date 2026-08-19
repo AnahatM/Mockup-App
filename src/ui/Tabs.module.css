@@ -13,6 +13,7 @@
 
 .tab {
   display: inline-flex;
+  flex: none;
   gap: var(--space-2);
   align-items: center;
   height: 2rem;

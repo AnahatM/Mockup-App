@@ -105,6 +105,27 @@ the app fully local (drei's built-in environment presets fetch from a CDN) and m
 rim light and glow a live, colour-bindable knob.
 See [`adr/0003-parametric-lighting.md`](adr/0003-parametric-lighting.md).
 
+### Tone mapping belongs to the composer, not the renderer
+
+A trap worth knowing about, because it fails silently. three.js applies
+`renderer.toneMapping` only on the final output pass. As soon as an
+`EffectComposer` renders the scene into a render target, the renderer's tone
+mapping is bypassed — so setting `gl.toneMapping` and `gl.toneMappingExposure`
+appears to work, compiles fine, and does absolutely nothing.
+
+`PostFx` therefore always mounts the composer and runs postprocessing's
+`ToneMapping` effect **last**, with `gl.toneMapping = NoToneMapping`. The
+exposure value is still written to the renderer, because three's ACES shader
+chunk — which the effect reuses — reads it from the `toneMappingExposure`
+uniform.
+
+Running tone mapping last is also more correct: bloom then operates on real HDR
+values rather than on already-clipped ones.
+
+This was caught by measuring mean canvas luminance at two exposure settings
+(`scripts/verify-exposure.mjs`) rather than by looking at it — the difference
+was exactly 1.00x. Keep that script working.
+
 ## Enforced constraints
 
 | Constraint                                       | Mechanism                                                                             | Fails via           |

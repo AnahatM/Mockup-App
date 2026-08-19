@@ -1,8 +1,11 @@
 import type { ReactNode } from 'react'
 import type { IconName } from '@/ui'
 import type { InspectorTab } from '@/state/slices/ui'
-import { InterfacePanel } from './InterfacePanel'
+import { CameraPanel } from './CameraPanel'
+import { LightingPanel } from './LightingPanel'
 import { PlaceholderPanel } from './PlaceholderPanel'
+import { RenderPanel } from './RenderPanel'
+import { ScenePanel } from './ScenePanel'
 
 export interface PanelDefinition {
   label: string
@@ -40,17 +43,22 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
   scene: {
     label: 'Scene',
     icon: 'layers',
-    render: () => <InterfacePanel />,
+    render: () => (
+      <>
+        <ScenePanel />
+        <RenderPanel />
+      </>
+    ),
   },
   camera: {
     label: 'Camera',
     icon: 'camera',
-    render: pending('camera', 'Camera', 'Angle presets, field of view and framing.'),
+    render: () => <CameraPanel />,
   },
   lighting: {
     label: 'Light',
     icon: 'light',
-    render: pending('light', 'Lighting', 'Rim lights, glows, reflections and bloom.'),
+    render: () => <LightingPanel />,
   },
   animation: {
     label: 'Animate',
