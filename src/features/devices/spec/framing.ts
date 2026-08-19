@@ -5,6 +5,9 @@ export interface DeviceFraming {
   target: [number, number, number]
   /** A pleasing three-quarter camera position for this device's size. */
   position: [number, number, number]
+  /** Distance that fits the device at the given field of view. Camera presets
+   *  scale this rather than hardcoding distances, so they work for any device. */
+  distance: number
 }
 
 /**
@@ -33,6 +36,7 @@ export function frameDevice(spec: DeviceSpec, fovDegrees: number): DeviceFraming
   return {
     target: [0, centreY, 0],
     position: [distance * 0.4, centreY + distance * 0.3, distance * 0.86],
+    distance,
   }
 }
 

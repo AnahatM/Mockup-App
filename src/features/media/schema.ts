@@ -37,7 +37,12 @@ export type MediaSource =
       name: string
       width: number
       height: number
+      /** Dominant colours, for matching lights and backdrops to the product. */
+      palette: string[]
     }
+
+export const mediaPalette = (source: MediaSource): readonly string[] =>
+  source.kind === 'none' ? [] : source.palette
 
 export const mediaAspect = (source: MediaSource): number =>
   source.kind === 'none' || source.height === 0 ? 1 : source.width / source.height

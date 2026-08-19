@@ -1,7 +1,7 @@
 import { Panel } from '@/ui'
 import { ControlList, color, custom, segmented, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
-import { Dropzone } from '@/features/media'
+import { Dropzone, PalettePicker } from '@/features/media'
 import { FIT_MODES, type FitMode } from '@/lib/media/fit'
 import type { AppState } from '@/state/types'
 import { OverlaysPanel } from './OverlaysPanel'
@@ -57,6 +57,12 @@ const contentControls: readonly Control<AppState>[] = [
     update: (d, v) => {
       d.screen.panY = v
     },
+  }),
+  custom({
+    label: 'Brand colours',
+    bare: true,
+    visible: hasMedia,
+    render: () => <PalettePicker />,
   }),
   color({
     label: 'Background',

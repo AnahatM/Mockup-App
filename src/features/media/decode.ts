@@ -1,4 +1,5 @@
 import { err, ok, type Result } from '@/lib/result'
+import { paletteFromSource } from './palette'
 import type { MediaSource } from './schema'
 
 /**
@@ -33,8 +34,8 @@ export async function loadMediaFile(file: File): Promise<Result<MediaSource>> {
 
   const url = URL.createObjectURL(file)
   try {
-    const size = isImage ? await imageSize(url) : await videoSize(url)
-    if (!size) {
+    const decoded = isImage ? await decodeImage(url) : await decodeVideo(url)
+    if (!decoded) {
       URL.revokeObjectURL(url)
       return err(`${file.name} could not be decoded — it may be corrupt.`)
     }
@@ -42,8 +43,11 @@ export async function loadMediaFile(file: File): Promise<Result<MediaSource>> {
       kind: isImage ? 'image' : 'video',
       url,
       name: file.name,
-      width: size.width,
-      height: size.height,
+      width: decoded.width,
+      height: decoded.height,
+      // Extracted here because the frame is already decoded; doing it later
+      // would mean loading the file a second time.
+      palette: paletteFromSource(decoded.source, decoded.width, decoded.height),
     })
   } catch {
     URL.revokeObjectURL(url)
@@ -51,29 +55,48 @@ export async function loadMediaFile(file: File): Promise<Result<MediaSource>> {
   }
 }
 
-interface Size {
+interface Decoded {
   width: number
   height: number
+  source: CanvasImageSource
 }
 
-function imageSize(url: string): Promise<Size | null> {
+function decodeImage(url: string): Promise<Decoded | null> {
   return new Promise((resolve) => {
     const image = new Image()
     image.onload = () =>
-      resolve({ width: image.naturalWidth, height: image.naturalHeight })
+      resolve({
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        source: image,
+      })
     image.onerror = () => resolve(null)
     image.src = url
   })
 }
 
-function videoSize(url: string): Promise<Size | null> {
+/**
+ * Video needs a frame, not just metadata — a palette cannot be read from
+ * dimensions. Seeking a little way in avoids sampling a black opening frame.
+ */
+function decodeVideo(url: string): Promise<Decoded | null> {
   return new Promise((resolve) => {
     const video = document.createElement('video')
-    video.preload = 'metadata'
+    video.preload = 'auto'
     video.muted = true
-    video.onloadedmetadata = () =>
-      resolve({ width: video.videoWidth, height: video.videoHeight })
-    video.onerror = () => resolve(null)
+    video.playsInline = true
+
+    const done = (value: Decoded | null) => resolve(value)
+
+    video.onloadeddata = () => {
+      video.onseeked = () =>
+        done({ width: video.videoWidth, height: video.videoHeight, source: video })
+      // If seeking is not supported, settle for whatever frame is decoded.
+      video.onerror = () =>
+        done({ width: video.videoWidth, height: video.videoHeight, source: video })
+      video.currentTime = Math.min(0.4, (video.duration || 1) * 0.1)
+    }
+    video.onerror = () => done(null)
     video.src = url
   })
 }

@@ -1,4 +1,9 @@
-import { defaultScreen, type MediaSource, type ScreenConfig } from '@/features/media'
+import {
+  defaultScreen,
+  findBrandTarget,
+  type MediaSource,
+  type ScreenConfig,
+} from '@/features/media'
 import type { SliceCreator } from '../types'
 
 export interface MediaState {
@@ -15,6 +20,8 @@ export interface MediaSlice {
   setMediaError: (error: string | null) => void
   setMediaLoading: (loading: boolean) => void
   clearMedia: () => void
+  /** Applies an extracted brand colour to a named part of the scene. */
+  applyBrandColor: (hex: string, targetId: string) => void
   resetScreen: () => void
 }
 
@@ -58,6 +65,11 @@ export const createMediaSlice: SliceCreator<MediaSlice> = (set, get) => ({
       draft.media.error = null
     })
   },
+
+  applyBrandColor: (hex, targetId) =>
+    set((draft) => {
+      findBrandTarget(targetId)?.apply(draft, hex)
+    }),
 
   resetScreen: () =>
     set((draft) => {
