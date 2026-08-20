@@ -5,6 +5,7 @@ import { BUILTIN_PRESETS } from '@/features/presets'
 import { DOC_SECTIONS, DOC_SECTION_LABELS, docIndex } from '@/content/docs'
 import { ROUTES, SITE_ROUTES, docPath } from '../routes'
 import styles from './SitemapPage.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /**
  * Everything in Mockup Studio, on one page.
@@ -14,6 +15,7 @@ import styles from './SitemapPage.module.css'
  * hand-written sitemap is a sitemap that quietly stops being true.
  */
 export function SitemapPage() {
+  useDocumentTitle('Sitemap')
   const articles = docIndex()
 
   return (

@@ -5,6 +5,7 @@ import { FeatureGrid } from './landing/FeatureGrid'
 import { Hero } from './landing/Hero'
 import { ShowcaseSection } from './landing/ShowcaseSection'
 import styles from './LandingPage.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /**
  * `.page` is full-bleed and clips the backdrop at the viewport edge; the
@@ -12,6 +13,7 @@ import styles from './LandingPage.module.css'
  * never has to escape a `max-width` parent to reach the screen edge.
  */
 export function LandingPage() {
+  useDocumentTitle(undefined)
   return (
     <div className={styles.page}>
       <Backdrop />

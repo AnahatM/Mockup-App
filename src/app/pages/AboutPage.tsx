@@ -6,6 +6,7 @@ import {
   WhyItExists,
 } from './AboutSections'
 import styles from './Prose.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /**
  * About the project.
@@ -16,6 +17,7 @@ import styles from './Prose.module.css'
  * actually wants to know.
  */
 export function AboutPage() {
+  useDocumentTitle('About')
   return (
     <article className={styles.page}>
       <h1 className={styles.title}>About Mockup Studio</h1>

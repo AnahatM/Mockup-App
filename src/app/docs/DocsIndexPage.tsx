@@ -10,6 +10,7 @@ import {
 } from '@/content/docs'
 import { docPath } from '../routes'
 import styles from './Docs.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /** Substring match across the fields a reader would search by. */
 function matches(article: DocSummary, query: string): boolean {
@@ -22,6 +23,7 @@ function matches(article: DocSummary, query: string): boolean {
 }
 
 export function DocsIndexPage() {
+  useDocumentTitle('Documentation')
   const [query, setQuery] = useState('')
   const articles = useMemo(() => docIndex(), [])
   const results = articles.filter((article) => matches(article, query))

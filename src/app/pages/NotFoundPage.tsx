@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { EmptyState, Icon, type IconName } from '@/ui'
 import { ROUTES, SITE_ROUTES } from '../routes'
 import styles from './NotFoundPage.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /** Icon for each route, keyed by path — mirrors the footer's own map. */
 const ROUTE_ICONS: Record<string, IconName> = {
@@ -21,10 +22,12 @@ const ROUTE_ICONS: Record<string, IconName> = {
  * no longer exists.
  */
 export function NotFoundPage() {
+  useDocumentTitle('Page not found')
   return (
     <div className={styles.page}>
       <EmptyState
         icon="map"
+        titleAs="h1"
         title="Page not found"
         description="That page does not exist. It may have moved, or the link may be wrong."
         action={

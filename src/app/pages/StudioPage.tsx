@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Navbar } from '../site/Navbar'
 import { AppShell } from '../layout/AppShell'
 import styles from './StudioPage.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /**
  * The studio, at its own route.
@@ -16,6 +17,7 @@ import styles from './StudioPage.module.css'
  * around it scroll normally.
  */
 export function StudioPage() {
+  useDocumentTitle('Studio')
   useEffect(() => {
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -26,6 +28,10 @@ export function StudioPage() {
 
   return (
     <div className={styles.studio}>
+      {/* The studio is a tool, not a document, so it has no visible heading —
+          but a page with no heading at all is hard to orient in with a screen
+          reader. */}
+      <h1 className="visuallyHidden">Mockup Studio</h1>
       <Navbar />
       <div className={styles.shell}>
         <AppShell />

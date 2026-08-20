@@ -1,5 +1,6 @@
 import { LINKS } from '../routes'
 import styles from './Prose.module.css'
+import { useDocumentTitle } from '../useDocumentTitle'
 
 /**
  * The privacy page.
@@ -10,6 +11,7 @@ import styles from './Prose.module.css'
  * that rather than communicate it.
  */
 export function PrivacyPage() {
+  useDocumentTitle('Privacy')
   return (
     <article className={styles.page}>
       <h1 className={styles.title}>Privacy</h1>

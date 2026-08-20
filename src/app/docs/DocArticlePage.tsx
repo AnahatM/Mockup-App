@@ -5,17 +5,22 @@ import { DOC_ARTICLES, DOC_SECTION_LABELS, findArticle, summarise } from '@/cont
 import { ROUTES, docPath } from '../routes'
 import { DocContentsRail } from './DocContentsRail'
 import { DocMarkdown } from './DocMarkdown'
+import { useDocumentTitle } from '../useDocumentTitle'
 import styles from './Docs.module.css'
 
 export function DocArticlePage() {
   const { slug } = useParams<{ slug: string }>()
   const article = slug ? findArticle(slug) : undefined
 
+  // Before the early return: hooks cannot be called conditionally.
+  useDocumentTitle(article?.title ?? 'Article not found')
+
   if (!article) {
     return (
       <div className={styles.notFound}>
         <EmptyState
           icon="close"
+          titleAs="h1"
           title="No such article"
           description="That documentation page does not exist."
         />
