@@ -55,7 +55,7 @@ adding a whole new device to the catalogue is normally a single small file.
 - **Real 3D, fully orbittable.** Drag to orbit, right- or middle-drag to pan,
   scroll to zoom — plus a free-fly navigation mode. This is a real scene, not a
   flat image with a perspective transform.
-- **14 procedural devices.** Phones, notch-era phones, an Android flagship,
+- **15 procedural devices.** Phones, notch-era phones, an Android flagship,
   folding and flip phones, tablets, laptops, an all-in-one desktop, a monitor
   and two watch shapes — each generated from a millimetre-accurate spec file,
   complete with Dynamic Islands/notches, camera bumps with real lenses, side
