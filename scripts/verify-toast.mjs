@@ -38,7 +38,10 @@ await client.send('Browser.setDownloadBehavior', {
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'light'),
 )
-await page.goto('http://localhost:5173/studio', {
+// Runs against a static preview by default: the dev server's HMR reloads the
+// page whenever anything is edited, which detaches the frame mid-probe.
+const BASE = process.env.BASE_URL ?? 'http://localhost:4173'
+await page.goto(`${BASE}/studio`, {
   waitUntil: 'domcontentloaded',
   timeout: 60_000,
 })
@@ -55,10 +58,14 @@ const readToasts = () =>
       .filter(Boolean),
   )
 
-// The scene overlay must clear before an export can succeed.
+// The scene overlay must clear before an export can succeed. Checked by
+// aria-hidden, not by text: the overlay stays mounted and fades out, so its
+// wording is still in the DOM long after it has gone.
 await page
   .waitForFunction(
-    () => !document.body.textContent?.includes('Preparing studio'),
+    () =>
+      document.querySelector('[class*="overlay"]')?.getAttribute('aria-hidden') ===
+      'true',
     { timeout: 120_000 },
   )
   .catch(() => problems.push('scene overlay never cleared'))
