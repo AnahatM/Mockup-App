@@ -27,6 +27,7 @@ export {
   frameDevice,
   groundOffsetMm,
   pedestalRadiusFor,
+  shadowFarFor,
   shadowScaleFor,
   type DeviceFraming,
 } from './spec/framing'

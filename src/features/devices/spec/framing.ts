@@ -97,6 +97,25 @@ export function pedestalRadiusFor(spec: DeviceSpec): number {
  * straight edge behind a monitor. Scaling it with the device keeps the fade
  * off-frame.
  */
+/**
+ * Depth range of the contact shadow's camera, in scene units.
+ *
+ * The bake is an orthographic depth render looking up from the floor, so
+ * anything further away than this contributes nothing at all. A value sized
+ * for a phone therefore truncates a monitor part-way up, and the shadow loses
+ * the contribution of everything above the cut — which reads as a shadow that
+ * is not the shape of the thing casting it. `shadowScaleFor` has always
+ * adapted the plane's width to the device; this is the same idea for depth,
+ * and the two being out of step was the bug.
+ *
+ * Headroom above the device's own height covers the levitate lift, which the
+ * caller adds on top at render time.
+ */
+export function shadowFarFor(spec: DeviceSpec): number {
+  const height = extentMm(spec).y * MM_TO_UNITS
+  return Number(Math.min(10, Math.max(1.6, height * 1.6)).toFixed(2))
+}
+
 export function shadowScaleFor(spec: DeviceSpec): number {
   const extent = extentMm(spec)
   const footprint = Math.max(extent.x, spec.hinge ? spec.hinge.base.height : extent.z)

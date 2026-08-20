@@ -4,6 +4,7 @@ import { buildSurfaceMaps } from '@/features/textures'
 import { writeInstances } from './instances'
 import { roomTiles } from './room'
 import { tileFootprint } from './field'
+import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
 
 /**
@@ -31,6 +32,7 @@ export function TiledRoom({ config }: { config: StructureConfig }) {
 
   useLayoutEffect(() => {
     if (!mesh.current) return
+    mesh.current.layers.set(BACKDROP_LAYER)
     writeInstances(mesh.current, tiles.length, (i) => tiles[i] ?? EMPTY, {
       color: config.color,
       accent: config.accent,

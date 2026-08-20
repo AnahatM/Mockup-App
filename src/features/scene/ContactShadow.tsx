@@ -6,43 +6,53 @@ import { useAppStore } from '@/state/store'
  * is far cheaper, reads better for a small object on a plinth, and — importantly
  * for transparent PNG export — composites correctly over an empty background.
  *
- * The shadow is baked to a texture, not recomputed per frame, so it has to be
- * told when to re-bake. Without that it renders once on mount and then never
- * again, leaving a stale shadow under a device the user has since turned,
- * lifted or swapped.
+ * Two things about drei's implementation drive the shape of this file, and both
+ * are worth knowing before changing anything here.
+ *
+ * **It re-bakes on every render.** `ContactShadows` keeps its frame counter in
+ * a plain `let` in the component body, so a re-render resets it and `frames={1}`
+ * means "once per render" rather than "once, ever". This component subscribes to
+ * whole store slices, so anything that could move the caster re-renders it and
+ * therefore re-bakes it. That is why there is no `key` here any more: forcing a
+ * remount to trigger a re-bake was redundant, and it was actively harmful —
+ * every remount built two fresh 1024px render targets and left the old pair to
+ * the garbage collector, so dragging the blur or scale slider (both of which fed
+ * the old bake key) churned GPU memory on every pointer move. That churn is what
+ * the flicker was.
+ *
+ * **It bakes the whole scene**, via `scene.overrideMaterial`, from an
+ * orthographic camera at the floor looking up. So the bake is bounded by
+ * `scale` (the plane's width) and `far` (its depth) — anything outside either
+ * is simply absent from the shadow, which reads as a shadow that is not the
+ * shape of the thing casting it. Both now scale with the device: `scale` via
+ * `shadowScaleFor`, `far` via `shadowFarFor`, both applied when a device is
+ * chosen. Backdrop structures stay out of the bake by sitting on their own
+ * layer — see `layers.ts`.
  */
 export function ContactShadow() {
   const shadow = useAppStore((state) => state.scene.shadow)
   const pedestal = useAppStore((state) => state.scene.pedestal)
-  const device = useAppStore((state) => state.device)
+  const levitate = useAppStore((state) => state.device.levitate)
   const animation = useAppStore((state) => state.animation)
 
   if (!shadow.enabled) return null
 
-  // Rest the shadow on the pedestal top when there is one, otherwise on the floor.
+  // Rest the shadow on the pedestal top when there is one, otherwise on the
+  // floor. The offset also keeps the plane off geometry it would z-fight with.
   const y = pedestal.enabled && pedestal.shape !== 'none' ? 0.001 : 0
 
-  // While a clip is playing the product moves every frame, so a single bake
-  // would be wrong immediately; render continuously instead. When it is still,
-  // re-bake only when something that casts the shadow actually changes.
+  // While a clip is playing the product moves every frame, so re-render-driven
+  // baking is not enough — the store does not change between frames.
   const moving = animation.clip !== 'none' && animation.playing
-  const bakeKey = [
-    device.specId,
-    device.rotation.join(','),
-    device.levitate,
-    device.landscape,
-    pedestal.radius,
-    shadow.scale,
-    shadow.blur,
-  ].join('|')
 
   return (
     <ContactShadows
-      key={moving ? 'continuous' : bakeKey}
       position={[0, y, 0]}
       opacity={shadow.opacity}
       blur={shadow.blur}
-      far={shadow.far}
+      // A levitating device is lifted clear of the floor, so the depth range
+      // has to reach past the lift as well as over the device itself.
+      far={shadow.far + levitate}
       scale={shadow.scale}
       resolution={1024}
       frames={moving ? Infinity : 1}

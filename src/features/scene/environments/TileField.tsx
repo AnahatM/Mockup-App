@@ -6,6 +6,7 @@ import { useReducedMotion } from '@/ui'
 import { blockRise, tileFootprint, tileHeight, tileTint } from './field'
 import { writeInstances, type Placement } from './instances'
 import { hexLattice, hexRadius, squareLattice, type Cell } from './lattice'
+import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
 
 /**
@@ -48,6 +49,7 @@ export function TileField({ config }: { config: StructureConfig }) {
   // is never visible for a frame stacked at the origin.
   useLayoutEffect(() => {
     if (mesh.current) {
+      mesh.current.layers.set(BACKDROP_LAYER)
       writeInstances(mesh.current, cells.length, (i) => place(i, 0), {
         color: config.color,
         accent: config.accent,
@@ -75,7 +77,9 @@ export function TileField({ config }: { config: StructureConfig }) {
     <instancedMesh
       ref={mesh}
       args={[undefined, undefined, Math.max(cells.length, 1)]}
-      castShadow
+      // Casting is off, not an oversight: a mesh on the backdrop layer is
+      // invisible to the lights' shadow cameras anyway, and a field of
+      // thousands of tiles shadowing itself costs far more than it shows.
       receiveShadow
     >
       {config.kind === 'hex' ? (

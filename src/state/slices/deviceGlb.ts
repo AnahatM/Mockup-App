@@ -3,6 +3,7 @@ import {
   frameDevice,
   IMPORTED_DEVICE_ID,
   pedestalRadiusFor,
+  shadowFarFor,
   shadowScaleFor,
   type DeviceConfig,
 } from '@/features/devices/state'
@@ -81,6 +82,7 @@ export function createGlbActions(
         draft.camera.preset = 'auto'
         draft.scene.pedestal.radius = pedestalRadiusFor(spec)
         draft.scene.shadow.scale = shadowScaleFor(spec)
+        draft.scene.shadow.far = shadowFarFor(spec)
       }),
 
     setGlbError: (message) =>
