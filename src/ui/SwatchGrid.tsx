@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Icon } from './Icon'
 import { Swatch } from './Swatch'
+import { orderBySelection } from './swatchOrder'
 import styles from './SwatchGrid.module.css'
 
 export interface SwatchOption {
@@ -39,11 +40,10 @@ export function SwatchGrid({
 }: SwatchGridProps) {
   const [expanded, setExpanded] = useState(false)
 
-  const ordered = useMemo(() => {
-    const selected = options.find((option) => option.id === selectedId)
-    if (!selected) return options
-    return [selected, ...options.filter((option) => option.id !== selectedId)]
-  }, [options, selectedId])
+  const ordered = useMemo(
+    () => orderBySelection(options, selectedId),
+    [options, selectedId],
+  )
 
   const shown = expanded ? ordered : ordered.slice(0, visible)
   const hidden = ordered.length - shown.length
