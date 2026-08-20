@@ -2,6 +2,7 @@ import { DRAMATIC_PRESETS } from './dramatic'
 import { FLAT_PRESETS } from './flat'
 import { MOTION_PRESETS } from './motion'
 import { STUDIO_PRESETS } from './studio'
+import { WINDOW_PRESETS } from './window'
 import type { BuiltinPreset } from './types'
 
 export type { BuiltinPreset } from './types'
@@ -11,6 +12,7 @@ export const BUILTIN_PRESETS: readonly BuiltinPreset[] = [
   ...STUDIO_PRESETS,
   ...DRAMATIC_PRESETS,
   ...FLAT_PRESETS,
+  ...WINDOW_PRESETS,
   ...MOTION_PRESETS,
 ]
 

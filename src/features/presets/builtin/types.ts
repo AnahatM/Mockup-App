@@ -1,4 +1,10 @@
-import { applyLightingPreset, findLightingPreset } from '@/features/lighting'
+/*
+ * Deep-imported on purpose. The lighting barrel exports React components that
+ * read the store, and the store loads this module — so importing the barrel
+ * here closes a cycle that leaves the lighting defaults half-initialised
+ * depending on which file happens to be imported first.
+ */
+import { applyLightingPreset, findLightingPreset } from '@/features/lighting/presets'
 import { defaultSceneState, type SceneState } from '../manifest'
 
 /**
@@ -13,7 +19,7 @@ export interface BuiltinPreset {
   name: string
   description: string
   /** Groups the preset list, so a dozen entries stay scannable. */
-  group: 'Studio' | 'Dramatic' | 'Flat' | 'Motion'
+  group: 'Studio' | 'Dramatic' | 'Flat' | 'Window' | 'Motion'
   build: () => SceneState
 }
 

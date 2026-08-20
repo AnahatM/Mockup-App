@@ -43,6 +43,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | DONE |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
+| F15 | Structured backdrop environments — hexagon tiles, square-tile room, real room shading, pulsating blocks oscillating up and down, and more. All parametric and procedural, no bundled assets | TODO |
+| F16 | Procedural surface textures — noise, brushed metal, etc. — applicable to pedestal, walls and devices | TODO |
+| F17 | Update the built-in presets to use the new backdrop environments and textures | TODO |
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
 | F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
