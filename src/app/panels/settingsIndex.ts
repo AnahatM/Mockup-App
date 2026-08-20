@@ -11,6 +11,7 @@ import { imageControls, videoControls } from './exportControls'
 import { rigControls } from './lightingRigControls'
 import { navigationControls as overlayNavControls } from './navigationControls'
 import { pedestalTextureControls } from './pedestalTextureControls'
+import { adaptiveBackdropControls } from './adaptiveBackdropControls'
 import { structureControls } from './structureControls'
 import {
   cycloramaTextureControls,
@@ -60,6 +61,7 @@ export const SETTING_GROUPS: readonly SettingGroup[] = [
   { tab: 'screen', panel: 'Navigation', controls: overlayNavControls },
 
   { tab: 'scene', panel: 'Backdrop', controls: backdropControls },
+  { tab: 'scene', panel: 'Adaptive backdrops', controls: adaptiveBackdropControls },
   { tab: 'scene', panel: 'Backdrop texture', controls: cycloramaTextureControls },
   { tab: 'scene', panel: 'Environment', controls: structureControls },
   { tab: 'scene', panel: 'Environment finish', controls: structureFinishControls },

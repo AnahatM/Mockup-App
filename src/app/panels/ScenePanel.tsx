@@ -2,6 +2,7 @@ import { Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { backdropControls, pedestalControls } from './sceneBackdropControls'
 import { pedestalTextureControls } from './pedestalTextureControls'
+import { adaptiveBackdropControls } from './adaptiveBackdropControls'
 import { structureControls } from './structureControls'
 import {
   cycloramaTextureControls,
@@ -20,6 +21,9 @@ export function ScenePanel() {
     <>
       <Panel title="Backdrop">
         <ControlList controls={backdropControls} />
+      </Panel>
+      <Panel title="Adaptive backdrops">
+        <ControlList controls={adaptiveBackdropControls} />
       </Panel>
       <Panel title="Backdrop texture">
         <ControlList controls={cycloramaTextureControls} />

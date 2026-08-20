@@ -1,4 +1,6 @@
 export { SceneCanvas } from './SceneCanvas'
+export { AdaptiveBackdrops } from './backdrop/AdaptiveBackdrops'
+export { deriveBackdrops, type AdaptiveBackdrop } from './backdrop/adaptive'
 export { hasWebGL } from './hasWebGL'
 export { AxisGizmo } from './gizmo/AxisGizmo'
 export {
