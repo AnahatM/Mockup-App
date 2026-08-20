@@ -5,7 +5,14 @@ import { buildSurfaceMaps } from '@/features/textures'
 import { useReducedMotion } from '@/ui'
 import { blockRise, tileFootprint, tileHeight, tileTint } from './field'
 import { writeInstances, type Placement } from './instances'
-import { hexLattice, hexRadius, squareLattice, type Cell } from './lattice'
+import {
+  HEX_DENSITY,
+  fitPitch,
+  hexLattice,
+  hexRadius,
+  squareLattice,
+  type Cell,
+} from './lattice'
 import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
 
@@ -22,12 +29,24 @@ export function TileField({ config }: { config: StructureConfig }) {
   const mesh = useRef<InstancedMesh>(null)
   const reducedMotion = useReducedMotion()
 
+  // Coarsened if the requested pitch would ask for more tiles than one field
+  // is allowed. See `fitPitch` for why that beats drawing part of the field.
+  const pitch = useMemo(
+    () =>
+      fitPitch(
+        config.pitch,
+        Math.PI * config.extent * config.extent,
+        config.kind === 'hex' ? HEX_DENSITY : 1,
+      ),
+    [config.pitch, config.extent, config.kind],
+  )
+
   const cells = useMemo(
     () =>
       config.kind === 'hex'
-        ? hexLattice(config.extent, config.pitch)
-        : squareLattice(config.extent, config.pitch),
-    [config.kind, config.extent, config.pitch],
+        ? hexLattice(config.extent, pitch)
+        : squareLattice(config.extent, pitch),
+    [config.kind, config.extent, pitch],
   )
 
   const heights = useMemo(
@@ -70,8 +89,8 @@ export function TileField({ config }: { config: StructureConfig }) {
     })
   })
 
-  const footprint = tileFootprint(config)
-  const radius = hexRadius(config.pitch) * (1 - config.gap)
+  const footprint = tileFootprint(pitch, config.gap)
+  const radius = hexRadius(pitch) * (1 - config.gap)
 
   return (
     <instancedMesh

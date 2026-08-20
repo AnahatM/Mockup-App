@@ -31,6 +31,34 @@ export interface Cell {
 export const MAX_CELLS = 4096
 
 /**
+ * The finest pitch that still fits inside `MAX_CELLS` over a given area.
+ *
+ * The cap alone is not enough. Both generators fill row by row and stop the
+ * instant they hit it, so truncation lands as a slice off one edge rather than
+ * a field that thins out evenly — at the extremes of the two sliders that
+ * feed it, most of the field simply is not drawn, and the room spends its
+ * whole budget on the floor and renders no walls at all.
+ *
+ * Coarsening instead of truncating keeps the shape complete. A field asked for
+ * more tiles than it can have gets bigger tiles, which is a change a user can
+ * see and understand, rather than a hole they cannot.
+ *
+ * `area` is the ground the field has to cover and `perCell` the area one cell
+ * occupies at unit pitch — 1 for squares, and sqrt(3)/2 for hexagons, which
+ * tile more densely for the same centre-to-centre spacing.
+ */
+export function fitPitch(pitch: number, area: number, perCell = 1): number {
+  // A little headroom: the loops run edge to edge inclusive, so they overshoot
+  // the area estimate by a row and a column.
+  const budget = MAX_CELLS * 0.85
+  const minimum = Math.sqrt(area / (perCell * budget))
+  return Math.max(pitch, minimum)
+}
+
+/** Area one hexagon covers at unit pitch, relative to a square's. */
+export const HEX_DENSITY = Math.sqrt(3) / 2
+
+/**
  * Circumradius of a hexagon whose centre-to-centre spacing is `pitch`.
  *
  * three.js builds a six-segment cylinder with its first vertex on +Z, so the

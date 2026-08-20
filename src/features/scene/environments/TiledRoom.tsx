@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 import type { InstancedMesh } from 'three'
 import { buildSurfaceMaps } from '@/features/textures'
 import { writeInstances } from './instances'
-import { roomTiles } from './room'
+import { roomPitch, roomTiles } from './room'
 import { tileFootprint } from './field'
 import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
@@ -39,7 +39,7 @@ export function TiledRoom({ config }: { config: StructureConfig }) {
     })
   }, [tiles, config.color, config.accent])
 
-  const footprint = tileFootprint(config)
+  const footprint = tileFootprint(roomPitch(config), config.gap)
 
   return (
     <instancedMesh

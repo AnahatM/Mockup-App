@@ -1,5 +1,5 @@
 import { hash2 } from '@/features/textures'
-import { MAX_CELLS } from './lattice'
+import { MAX_CELLS, fitPitch } from './lattice'
 import type { Placement } from './instances'
 import type { StructureConfig } from './schema'
 
@@ -82,14 +82,46 @@ function surfaces(config: StructureConfig): Surface[] {
 }
 
 /**
- * Every tile in the room, capped at `MAX_CELLS` across all five faces
- * together — the cap has to be global, or the minimum pitch would ask for five
- * times the ceiling one field is allowed.
+ * The pitch the room actually tiles at.
+ *
+ * Sized against the floor *and* all four walls together, because the budget is
+ * shared between them and the floor is laid first. Fitting only the floor
+ * would let it eat the whole allowance and leave the room with no walls, which
+ * is precisely the failure this exists to prevent.
+ */
+export function roomPitch(config: StructureConfig): number {
+  const e = config.extent
+  const area = 4 * e * e + 8 * e * config.wallHeight
+  let pitch = fitPitch(config.pitch, area)
+
+  // The area estimate undercounts, because every surface runs edge to edge
+  // inclusive and so gains a row and a column over its bare area. Counting
+  // exactly and coarsening until it fits beats padding the estimate with a
+  // fudge factor that would have to be re-guessed whenever a loop bound moves.
+  for (let step = 0; step < 32 && tileCount(config, pitch) > MAX_CELLS; step += 1) {
+    pitch *= 1.06
+  }
+  return pitch
+}
+
+/** Exactly what `fillSurface` will produce for all five faces at `pitch`. */
+function tileCount(config: StructureConfig, pitch: number): number {
+  const across = 2 * Math.ceil(config.extent / Math.max(pitch, 0.01)) + 1
+  const floor = (2 * Math.ceil(config.extent / Math.max(pitch, 0.01)) + 1) * across
+  const wall = (Math.ceil(config.wallHeight / Math.max(pitch, 0.01)) + 1) * across
+  return floor + 4 * wall
+}
+
+/**
+ * Every tile in the room. `MAX_CELLS` remains as a hard backstop, but
+ * `roomPitch` should keep the count under it, so the cap no longer decides
+ * which surfaces get drawn.
  */
 export function roomTiles(config: StructureConfig): Placement[] {
   const tiles: Placement[] = []
+  const pitch = roomPitch(config)
   for (const surface of surfaces(config)) {
-    if (!fillSurface(tiles, surface, config)) break
+    if (!fillSurface(tiles, surface, config, pitch)) break
   }
   return tiles
 }
@@ -99,8 +131,9 @@ function fillSurface(
   tiles: Placement[],
   surface: Surface,
   config: StructureConfig,
+  fitted: number,
 ): boolean {
-  const pitch = Math.max(config.pitch, 0.01)
+  const pitch = Math.max(fitted, 0.01)
   const columns = Math.ceil(surface.half / pitch)
   const rows = Math.ceil(surface.height / pitch)
   const first = surface.centred ? -rows : 0

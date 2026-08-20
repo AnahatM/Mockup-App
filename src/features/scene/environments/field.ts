@@ -62,6 +62,8 @@ export function blockRise(cell: Cell, config: StructureConfig, time: number): nu
   return config.pulse * 0.5 * (1 + Math.sin(phase))
 }
 
-/** Footprint of one tile: the pitch, less its share left as a grout line. */
-export const tileFootprint = (config: StructureConfig): number =>
-  config.pitch * (1 - config.gap)
+/** Footprint of one tile: the pitch, less its share left as a grout line.
+ *  Takes the *fitted* pitch rather than reading `config.pitch`, so tiles grow
+ *  with the spacing when a field has been coarsened to fit its budget —
+ *  otherwise the field would come out as small tiles adrift in big gaps. */
+export const tileFootprint = (pitch: number, gap: number): number => pitch * (1 - gap)
