@@ -1,4 +1,7 @@
-import { clearShadow, roundRect, withShadow } from './draw/chrome'
+import { resolveContainerLook } from './containerLooks'
+import { roundRect, type Frame } from './draw/chrome'
+import { drawContainerBorder, drawRecess, drawSheen } from './draw/containerChrome'
+import { drawShadow } from './draw/shadow'
 import { drawBrowserBar, drawMacBar, type BarGeometry } from './draw/titleBar'
 import type { FlatConfig } from './schema'
 
@@ -13,24 +16,22 @@ export interface ComposeOptions {
   contentAspect: number
   /** Chrome colour, already resolved from the palette when colour-matching. */
   chrome: string
+  /** Screenshot's dominant colour, for the "adaptive" shadow preset. */
+  dominant: string | null
 }
 
 /**
- * Draws a framed window: chrome, then the content clipped inside it.
+ * Draws a framed window: shadow, content, chrome, then the container's border
+ * on top. When `hideMockup` is set, skips the frame entirely and draws the
+ * content over the whole canvas, so the screenshot sits directly on the
+ * backdrop with no chrome at all.
  *
- * Content is drawn with a cover fit so a screenshot of any aspect fills the
- * window body without letterboxing or distortion — the window's proportions are
- * chosen by the user, and the screenshot should conform to them.
+ * Content is drawn with a cover fit so a screenshot of any aspect fills its
+ * target area without letterboxing or distortion — the same compose call
+ * produces both the on-device screen texture and the flat PNG export.
  */
-export function composeWindow({
-  ctx,
-  width,
-  height,
-  config,
-  content,
-  contentAspect,
-  chrome,
-}: ComposeOptions): void {
+export function composeWindow(options: ComposeOptions): void {
+  const { ctx, width, height, config, content, contentAspect } = options
   ctx.clearRect(0, 0, width, height)
 
   if (!config.transparentBackground) {
@@ -38,8 +39,27 @@ export function composeWindow({
     ctx.fillRect(0, 0, width, height)
   }
 
+  if (config.hideMockup) {
+    drawCover(ctx, { x: 0, y: 0, width, height }, content, contentAspect)
+    return
+  }
+
+  composeFrame(options)
+}
+
+function composeFrame({
+  ctx,
+  width,
+  height,
+  config,
+  content,
+  contentAspect,
+  chrome,
+  dominant,
+}: ComposeOptions): void {
+  const look = resolveContainerLook(config.containerStyle)
   const margin = width * config.margin
-  const frame = {
+  const frame: Frame = {
     x: margin,
     y: margin,
     width: width - margin * 2,
@@ -55,27 +75,23 @@ export function composeWindow({
     radius,
   }
 
-  // Shadow is cast by a filled silhouette, then cleared, so the chrome and
-  // content drawn afterwards do not each cast their own.
-  if (config.shadow > 0) {
-    ctx.save()
-    withShadow(ctx, width * 0.05, width * 0.014, config.shadow)
-    roundRect(ctx, frame.x, frame.y, frame.width, frame.height, radius)
-    ctx.fillStyle = chrome
-    ctx.fill()
-    ctx.restore()
-    clearShadow(ctx)
-  }
-
+  drawShadow(ctx, width, frame, radius, config, chrome, dominant)
   drawContent(ctx, frame, bar.height, radius, content, contentAspect, config)
+  drawRecess(ctx, frame, frame.y + bar.height, radius, look)
+  drawSheen(ctx, frame, radius, look)
 
+  ctx.save()
+  ctx.globalAlpha = look.chromeOpacity
   if (config.style === 'macos') drawMacBar(ctx, bar, config, chrome)
   if (config.style === 'browser') drawBrowserBar(ctx, bar, config, chrome)
+  ctx.restore()
+
+  drawContainerBorder(ctx, frame, radius, look, chrome)
 }
 
 function drawContent(
   ctx: CanvasRenderingContext2D,
-  frame: { x: number; y: number; width: number; height: number },
+  frame: Frame,
   barHeight: number,
   radius: number,
   content: CanvasImageSource | null,
@@ -93,20 +109,33 @@ function drawContent(
   ctx.fillStyle = config.dark ? '#15171b' : '#ffffff'
   ctx.fillRect(frame.x, bodyY, frame.width, bodyHeight)
 
-  if (content) {
-    // Cover fit: scale up until both axes are covered, then centre the overflow.
-    const aspect = contentAspect > 0 ? contentAspect : 1
-    const bodyAspect = frame.width / bodyHeight
-    const drawWidth = aspect > bodyAspect ? bodyHeight * aspect : frame.width
-    const drawHeight = aspect > bodyAspect ? bodyHeight : frame.width / aspect
-    ctx.drawImage(
-      content,
-      frame.x + (frame.width - drawWidth) / 2,
-      bodyY + (bodyHeight - drawHeight) / 2,
-      drawWidth,
-      drawHeight,
-    )
-  }
+  const body: Frame = { x: frame.x, y: bodyY, width: frame.width, height: bodyHeight }
+  drawCover(ctx, body, content, contentAspect)
 
   ctx.restore()
+}
+
+/**
+ * Draws `content` to cover `area` without distortion: scales up until both
+ * axes are covered, then centres the overflow.
+ */
+function drawCover(
+  ctx: CanvasRenderingContext2D,
+  area: Frame,
+  content: CanvasImageSource | null,
+  contentAspect: number,
+): void {
+  if (!content) return
+
+  const aspect = contentAspect > 0 ? contentAspect : 1
+  const areaAspect = area.width / area.height
+  const drawWidth = aspect > areaAspect ? area.height * aspect : area.width
+  const drawHeight = aspect > areaAspect ? area.height : area.width / aspect
+  ctx.drawImage(
+    content,
+    area.x + (area.width - drawWidth) / 2,
+    area.y + (area.height - drawHeight) / 2,
+    drawWidth,
+    drawHeight,
+  )
 }

@@ -5,6 +5,7 @@ import { exportFlatWindow } from '@/features/flat'
 import { mediaPalette } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { useBusy } from '@/state/useBusy'
+import { windowContainerControls } from './windowContainerControls'
 import { windowContentControls } from './windowControls'
 import { windowStyleControls } from './windowStyleControls'
 import styles from './ExportPanel.module.css'
@@ -24,7 +25,8 @@ export function WindowPanel() {
   const whileBusy = useBusy()
 
   const palette = mediaPalette(source)
-  const chrome = config.colorMatch && palette[0] ? palette[0] : config.chrome
+  const dominant = palette[0] ?? null
+  const chrome = config.colorMatch && dominant ? dominant : config.chrome
 
   const exportFlat = async () => {
     setBusy(true)
@@ -36,6 +38,7 @@ export function WindowPanel() {
         content: image,
         contentAspect: source.kind === 'none' ? 1 : source.width / source.height,
         chrome,
+        dominant,
         width: 2400,
         filename: `${filename}-window`,
       })
@@ -48,11 +51,12 @@ export function WindowPanel() {
     <Panel title="Window mockup">
       <ControlList controls={windowContentControls} />
       <ControlList controls={windowStyleControls} />
+      <ControlList controls={windowContainerControls} />
       <Button
         icon="window"
         size="sm"
         fullWidth
-        disabled={busy || config.style === 'none'}
+        disabled={busy || (config.style === 'none' && !config.hideMockup)}
         onClick={() => void exportFlat()}
       >
         {busy ? 'Exporting…' : 'Export window PNG'}

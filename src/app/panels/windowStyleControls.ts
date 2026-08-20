@@ -2,9 +2,11 @@ import { color, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
 import type { AppState } from '@/state/types'
 
-const framed = (state: AppState) => state.flat.style !== 'none'
+const hasChrome = (state: AppState) => !state.flat.hideMockup
+const framed = (state: AppState) => hasChrome(state) && state.flat.style !== 'none'
 
-/** How the window looks: colour, proportions, shadow. */
+/** How the window's chrome colour and proportions look. Container appearance
+ * (style preset, border shape, shadow) lives in `windowContainerControls.ts`. */
 export const windowStyleControls: readonly Control<AppState>[] = [
   toggle({
     label: 'Dark window',
@@ -40,28 +42,6 @@ export const windowStyleControls: readonly Control<AppState>[] = [
     select: (s) => s.flat.barHeight,
     update: (d, v) => {
       d.flat.barHeight = v
-    },
-  }),
-  slider({
-    label: 'Corner radius',
-    min: 0,
-    max: 0.1,
-    step: 0.001,
-    visible: framed,
-    select: (s) => s.flat.cornerRadius,
-    update: (d, v) => {
-      d.flat.cornerRadius = v
-    },
-  }),
-  slider({
-    label: 'Shadow',
-    min: 0,
-    max: 1,
-    step: 0.01,
-    visible: framed,
-    select: (s) => s.flat.shadow,
-    update: (d, v) => {
-      d.flat.shadow = v
     },
   }),
   slider({

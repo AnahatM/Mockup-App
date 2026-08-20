@@ -8,6 +8,8 @@ export interface ExportFlatOptions {
   content: CanvasImageSource | null
   contentAspect: number
   chrome: string
+  /** Screenshot's dominant colour, for the "adaptive" shadow preset. */
+  dominant: string | null
   width: number
   filename: string
 }
@@ -24,6 +26,7 @@ export async function exportFlatWindow({
   content,
   contentAspect,
   chrome,
+  dominant,
   width,
   filename,
 }: ExportFlatOptions): Promise<Result<null>> {
@@ -42,6 +45,7 @@ export async function exportFlatWindow({
     content,
     contentAspect,
     chrome,
+    dominant,
   })
 
   const blob = await new Promise<Blob | null>((resolve) =>

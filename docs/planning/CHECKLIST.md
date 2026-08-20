@@ -93,9 +93,9 @@ things paid products do that we should match or beat.
 
 | # | Task | Status |
 |---|---|---|
-| C1 | Container style presets: glass light/dark, inset light/dark, outline, border, liquid | TODO |
-| C2 | Border shape control: sharp / curved / round, plus a radius slider | TODO |
-| C3 | Shadow presets: none / spread / hug / adaptive, with an opacity slider | TODO |
+| C1 | Container style presets: glass light/dark, inset light/dark, outline, border, liquid | DONE |
+| C2 | Border shape control: sharp / curved / round, plus a radius slider | DONE |
+| C3 | Shadow presets: none / spread / hug / adaptive, with an opacity slider | DONE |
 | C4 | Layout preset gallery with live thumbnails, not just a names list | TODO |
 | C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | TODO |
 | C6 | Separate Zoom and Tilt controls with a live preview | TODO |
@@ -103,7 +103,7 @@ things paid products do that we should match or beat.
 | C8 | "Start over" — reset the whole scene, behind a confirmation | DONE |
 | C9 | Copy the export straight to the clipboard | DONE |
 | C10 | Export scale selector shown inline on the export button (1x/2x/4x) | DONE |
-| C11 | "Hide mockup" — render the screenshot on the backdrop with no device | TODO |
+| C11 | "Hide mockup" — render the screenshot on the backdrop with no device | DONE |
 | C12 | Gradient backdrop presets that adapt to the uploaded media | TODO |
 | C13 | Research pass: what else comparable tools offer that we lack | TODO |
 

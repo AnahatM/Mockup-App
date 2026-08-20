@@ -37,25 +37,27 @@ export function useFramedTexture(
   const config = useAppStore((state) => state.flat)
   const source = useAppStore((state) => state.media.source)
   const palette = mediaPalette(source)
-  const chrome = config.colorMatch && palette[0] ? palette[0] : config.chrome
+  const dominant = palette[0] ?? null
+  const chrome = config.colorMatch && dominant ? dominant : config.chrome
   const contentAspect = mediaAspect(source) || aspectOverride
 
   // The canvas is part of the memoised value rather than held in a ref, so
-  // nothing is written during render.
+  // nothing is written during render. A surface is still needed when the
+  // mockup is hidden, since the compositor draws the bare content instead.
   const surface = useMemo<Surface | null>(
-    () => (config.style === 'none' ? null : createSurface()),
-    [config.style],
+    () => (config.style === 'none' && !config.hideMockup ? null : createSurface()),
+    [config.style, config.hideMockup],
   )
 
   useEffect(() => {
     if (!surface) return
-    paint(surface, config, media, contentAspect, chrome)
-  }, [surface, config, media, contentAspect, chrome])
+    paint(surface, config, media, contentAspect, chrome, dominant)
+  }, [surface, config, media, contentAspect, chrome, dominant])
 
   // Video needs recomposing every frame; a still does not.
   useFrame(() => {
     if (!surface || !(media instanceof VideoTexture)) return
-    paint(surface, config, media, contentAspect, chrome)
+    paint(surface, config, media, contentAspect, chrome, dominant)
   })
 
   useEffect(() => () => surface?.texture.dispose(), [surface])
@@ -83,6 +85,7 @@ function paint(
   media: Texture | null,
   contentAspect: number,
   chrome: string,
+  dominant: string | null,
 ): void {
   composeWindow({
     ctx: surface.ctx,
@@ -92,6 +95,7 @@ function paint(
     content: imageSource(media),
     contentAspect,
     chrome,
+    dominant,
   })
   surface.texture.needsUpdate = true
 }

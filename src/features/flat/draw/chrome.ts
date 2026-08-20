@@ -1,5 +1,12 @@
 /** Shared canvas helpers for window chrome. */
 
+export interface Frame {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export function roundRect(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -65,13 +72,14 @@ export function drawTrafficLights(
   return gap * 2 + radius
 }
 
+/** `color` is a full CSS colour (rgba/hex), so callers control the shadow tint. */
 export const withShadow = (
   ctx: CanvasRenderingContext2D,
   blur: number,
   offsetY: number,
-  alpha: number,
+  color: string,
 ): void => {
-  ctx.shadowColor = `rgba(0, 0, 0, ${alpha})`
+  ctx.shadowColor = color
   ctx.shadowBlur = blur
   ctx.shadowOffsetY = offsetY
 }

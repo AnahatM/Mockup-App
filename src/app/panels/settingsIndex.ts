@@ -15,6 +15,7 @@ import { backdropControls, pedestalControls } from './sceneBackdropControls'
 import { contentControls, playbackControls } from './screenContentControls'
 import { shadowControls } from './shadowControls'
 import { statusBarControls } from './statusBarControls'
+import { windowContainerControls } from './windowContainerControls'
 import { windowContentControls } from './windowControls'
 import { windowStyleControls } from './windowStyleControls'
 
@@ -43,6 +44,7 @@ export const SETTING_GROUPS: readonly SettingGroup[] = [
   { tab: 'screen', panel: 'Playback', controls: playbackControls },
   { tab: 'screen', panel: 'Window mockup', controls: windowContentControls },
   { tab: 'screen', panel: 'Window mockup', controls: windowStyleControls },
+  { tab: 'screen', panel: 'Window mockup', controls: windowContainerControls },
   { tab: 'screen', panel: 'Status bar', controls: statusBarControls },
   { tab: 'screen', panel: 'Navigation', controls: overlayNavControls },
 
