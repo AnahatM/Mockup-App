@@ -24,7 +24,13 @@ page.on('console', (m) => m.type() === 'error' && problems.push(`[error] ${m.tex
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'light'),
 )
-await page.goto('http://localhost:5173/studio', { waitUntil: 'networkidle0' })
+await page.goto('http://localhost:5173/studio', {
+  waitUntil: 'domcontentloaded',
+  timeout: 60_000,
+})
+// `domcontentloaded`, not `networkidle0`: the dev server holds an HMR socket
+// open, so the network is never idle and the wait always times out.
+await page.waitForSelector('canvas', { timeout: 60_000 })
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 await wait(3500)
 
@@ -69,7 +75,17 @@ await wait(500)
 // A native <dialog> has an implicit role, so match the element, not [role].
 const dialog = await page.evaluate(() => {
   const el = document.querySelector('dialog[open]')
-  return el ? { text: el.textContent?.slice(0, 90), modal: el.matches(':modal') } : null
+  if (!el) return null
+  const r = el.getBoundingClientRect()
+  return {
+    text: el.textContent?.slice(0, 90),
+    modal: el.matches(':modal'),
+    // A modal <dialog> is centred by the UA's margin:auto, which a global
+    // `* { margin: 0 }` reset silently cancels — so check, do not assume.
+    centred:
+      Math.abs(r.left + r.width / 2 - innerWidth / 2) < 4 &&
+      Math.abs(r.top + r.height / 2 - innerHeight / 2) < 4,
+  }
 })
 const stillThereWhileAsking = await countPresets(page)
 

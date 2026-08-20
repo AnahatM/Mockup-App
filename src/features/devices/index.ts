@@ -2,7 +2,14 @@ export { Device } from './components/Device'
 export { DeviceRail } from './components/DeviceRail'
 export { ColorwayPicker } from './components/ColorwayPicker'
 export { PaintPicker } from './components/PaintPicker'
+export { GlbImportPicker } from './components/GlbImportPicker'
+export { MeshPicker } from './components/MeshPicker'
 export { PAINT_COLORS, railColorFor, type PaintColor } from './paint'
+export {
+  buildImportedDeviceSpec,
+  IMPORTED_DEVICE_ID,
+  type ImportedGlbSource,
+} from './glb/spec'
 export {
   FINISHES,
   FINISH_KINDS,
@@ -11,7 +18,7 @@ export {
   SCREEN_FINISH_LABELS,
   type ScreenFinish,
 } from './materials/finishes'
-export { deviceConfigSchema, type DeviceConfig } from './schema'
+export { deviceConfigSchema, type DeviceConfig, type GlbSource } from './schema'
 export { configForDevice, defaultDeviceConfig } from './spec/defaults'
 export {
   frameDevice,

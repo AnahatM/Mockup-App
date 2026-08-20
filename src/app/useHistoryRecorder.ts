@@ -40,24 +40,3 @@ export function useHistoryRecorder(): void {
     }
   }, [])
 }
-
-/** Undo/redo keyboard chords. Kept out of the general shortcut table because
- * these must fire even while a text field has focus, like every other editor. */
-export function useHistoryShortcuts(): void {
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (!(event.metaKey || event.ctrlKey)) return
-      const key = event.key.toLowerCase()
-      if (key !== 'z' && key !== 'y') return
-
-      event.preventDefault()
-      const store = useAppStore.getState()
-      const redoing = key === 'y' || event.shiftKey
-      if (redoing) store.redoScene()
-      else store.undoScene()
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
-}

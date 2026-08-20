@@ -1,0 +1,74 @@
+.dialog {
+  /* The project's global reset zeroes every element's margin, which also
+     zeroes the `margin: auto` the platform uses to centre a modal `<dialog>`
+     — so it has to be restated here to keep the overlay from sticking to the
+     top-left corner. */
+  width: 22rem;
+  max-width: calc(100vw - var(--space-6));
+  margin: auto;
+  padding: 0;
+  color: var(--text-primary);
+  background: var(--surface-overlay);
+  border: var(--hairline) solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
+}
+
+.dialog::backdrop {
+  background: var(--scrim);
+  backdrop-filter: blur(2px);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-top: var(--hairline) solid var(--border-subtle);
+}
+
+.row:first-child {
+  border-top: none;
+}
+
+.description {
+  font-size: var(--text-md);
+  color: var(--text-secondary);
+}
+
+.kbd {
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-primary);
+  white-space: nowrap;
+  background: var(--surface-sunken);
+  border: var(--hairline) solid var(--border-default);
+  border-radius: var(--radius-xs);
+}

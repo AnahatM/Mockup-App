@@ -26,7 +26,13 @@ page.on('console', (m) => m.type() === 'error' && problems.push(`[error] ${m.tex
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'light'),
 )
-await page.goto('http://localhost:5173/studio', { waitUntil: 'networkidle0' })
+await page.goto('http://localhost:5173/studio', {
+  waitUntil: 'domcontentloaded',
+  timeout: 60_000,
+})
+// `domcontentloaded`, not `networkidle0`: the dev server holds an HMR socket
+// open, so the network is never idle and the wait always times out.
+await page.waitForSelector('canvas', { timeout: 60_000 })
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 await wait(4000)
 

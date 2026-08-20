@@ -1,16 +1,26 @@
 import { color, custom, segmented, slider, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
 import { Dropzone, PalettePicker } from '@/features/media'
+import { CropEditor } from '@/features/crop'
 import { FIT_MODES, type FitMode } from '@/lib/media/fit'
 import type { AppState } from '@/state/types'
 
 const hasMedia = (state: AppState) => state.media.source.kind !== 'none'
 const hasVideo = (state: AppState) => state.media.source.kind === 'video'
+// Crop is a still-image-only tool — see `features/crop/bake.ts` for why
+// applying it to a playing video is explicitly out of scope.
+const hasCroppableImage = (state: AppState) => state.media.source.kind === 'image'
 
 export { hasVideo }
 
 export const contentControls: readonly Control<AppState>[] = [
   custom({ label: 'Media', bare: true, render: () => <Dropzone /> }),
+  custom({
+    label: 'Crop',
+    bare: true,
+    visible: hasCroppableImage,
+    render: () => <CropEditor />,
+  }),
   segmented<AppState, FitMode>({
     label: 'Fit',
     options: FIT_MODES.map((value) => ({

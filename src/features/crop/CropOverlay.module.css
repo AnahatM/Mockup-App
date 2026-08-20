@@ -1,0 +1,59 @@
+.body {
+  position: absolute;
+  cursor: move;
+  border: var(--hairline) solid var(--accent);
+  border-radius: var(--radius-xs);
+
+  /* The huge spread is the classic "spotlight" trick: it darkens everything
+     outside this element without a second, separately positioned mask. The
+     image wrapper (`CropEditor.module.css` `.frame`) clips it at its edges. */
+  box-shadow: 0 0 0 999px var(--scrim);
+  touch-action: none;
+}
+
+.body:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.handle {
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+  cursor: pointer;
+  background: var(--surface-panel);
+  border: var(--hairline) solid var(--accent);
+  border-radius: var(--radius-full);
+  touch-action: none;
+  transform: translate(-50%, -50%);
+}
+
+.handle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.nw {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.se {
+  top: 100%;
+  left: 100%;
+  cursor: nwse-resize;
+}
+
+.ne {
+  top: 0;
+  left: 100%;
+  cursor: nesw-resize;
+}
+
+.sw {
+  top: 100%;
+  left: 0;
+  cursor: nesw-resize;
+}

@@ -38,7 +38,10 @@ await client.send('Browser.setDownloadBehavior', {
 await page.evaluateOnNewDocument(() =>
   localStorage.setItem('mockup-studio:theme', 'light'),
 )
-await page.goto('http://localhost:5173/studio', { waitUntil: 'domcontentloaded' })
+await page.goto('http://localhost:5173/studio', {
+  waitUntil: 'domcontentloaded',
+  timeout: 60_000,
+})
 await page.waitForSelector('canvas', { timeout: 60_000 })
 const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 await wait(4000)

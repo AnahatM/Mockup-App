@@ -3,7 +3,7 @@ import { CameraRig } from '@/features/camera'
 import { AnimatedProduct } from '@/features/animation'
 import { CaptureBridge } from '@/features/capture'
 import { Device } from '@/features/devices'
-import { LightHelpers, LightRig } from '@/features/lighting'
+import { LightGizmos, LightRig } from '@/features/lighting'
 import { Backdrop } from './backdrop/Backdrop'
 import { ContactShadow } from './ContactShadow'
 import { Pedestal } from './Pedestal'
@@ -21,7 +21,7 @@ export function Stage() {
       <RendererSettings />
       <CaptureBridge />
       <LightRig />
-      <LightHelpers />
+      <LightGizmos />
       <Backdrop />
       <Pedestal />
       <AnimatedProduct>

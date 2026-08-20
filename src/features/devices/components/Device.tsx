@@ -4,6 +4,8 @@ import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'
 import { groundOffsetMm } from '../spec/framing'
 import { resolveDevice } from '../spec/registry'
+import { buildImportedDeviceSpec } from '../glb/spec'
+import { GlbDevice } from './GlbDevice'
 import { ProceduralDevice } from './ProceduralDevice'
 
 /**
@@ -15,7 +17,9 @@ import { ProceduralDevice } from './ProceduralDevice'
 export function Device() {
   const config = useAppStore((state) => state.device)
   const source = useAppStore((state) => state.media.source)
-  const spec = resolveDevice(config.specId)
+  // An import bypasses the catalogue entirely: its "spec" is synthesised from
+  // the model's own bounding box rather than looked up. See glb/spec.ts.
+  const spec = config.glb ? buildImportedDeviceSpec(config.glb) : resolveDevice(config.specId)
   const media = useScreenTexture()
 
   // When a window frame is active the screen shows the composed window rather
@@ -30,6 +34,13 @@ export function Device() {
   // below that centre — half the body, plus any stand or watch strap.
   const restingHeight = groundOffsetMm(spec) * MM_TO_UNITS
 
+  // The mesh source on the resolved spec is the single switch between the two
+  // render paths — see `DeviceMeshSource` in spec/types.ts. `config.glb` is
+  // re-derived here (rather than trusted alone) only so TypeScript can narrow
+  // it to non-null without a cast; the two are always in lockstep because
+  // `spec` above is built from `config.glb` in the first place.
+  const glbSource = spec.mesh.kind === 'glb' ? config.glb : null
+
   return (
     <group
       position={[0, restingHeight + config.levitate, 0]}
@@ -40,12 +51,20 @@ export function Device() {
       ]}
       scale={MM_TO_UNITS}
     >
-      <ProceduralDevice
-        spec={spec}
-        config={config}
-        screenTexture={texture}
-        mediaAspect={screenAspect}
-      />
+      {glbSource ? (
+        <GlbDevice
+          source={glbSource}
+          screenTexture={texture}
+          brightness={config.screenBrightness}
+        />
+      ) : (
+        <ProceduralDevice
+          spec={spec}
+          config={config}
+          screenTexture={texture}
+          mediaAspect={screenAspect}
+        />
+      )}
     </group>
   )
 }

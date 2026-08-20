@@ -2,7 +2,7 @@ import { ControlBindingProvider, HighlightContext } from '@/ui/controls'
 import { CommandPalette } from '@/features/search'
 import { appControlBinding } from '@/state/binding'
 import { useHighlightFade } from '../useHighlightFade'
-import { useHistoryRecorder, useHistoryShortcuts } from '../useHistoryRecorder'
+import { useHistoryRecorder } from '../useHistoryRecorder'
 import { useShortcuts } from '../useShortcuts'
 import { Toolbar } from './Toolbar'
 import { Sidebar } from './Sidebar'
@@ -17,7 +17,6 @@ import styles from './AppShell.module.css'
 export function AppShell() {
   useShortcuts()
   useHistoryRecorder()
-  useHistoryShortcuts()
   const highlight = useHighlightFade()
 
   return (

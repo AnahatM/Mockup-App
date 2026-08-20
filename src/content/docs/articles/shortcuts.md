@@ -8,6 +8,22 @@ Keyboard shortcuts work anywhere in the studio, except while you are typing in a
 | **Space** | Play or pause the animation |
 | **[** | Show or hide the device rail |
 | **]** | Show or hide the inspector |
+| **/** or **Ctrl / Cmd + K** | Search every setting, device, preset and article |
+| **?** | Show the shortcut reference |
+
+## Editing
+
+| Key | Action |
+| --- | --- |
+| **Ctrl / Cmd + Z** | Undo the last scene change |
+| **Ctrl / Cmd + Shift + Z** | Redo |
+| **Ctrl / Cmd + Y** | Redo |
+
+Undo works a gesture at a time, not a value at a time: dragging a slider from
+one end to the other is a single step back, not a hundred. It covers the scene —
+the device, the lighting, the camera, the backdrop — and deliberately not your
+uploaded screenshot or the layout of the panels, which are not things you mean
+to undo.
 
 ## Viewport navigation
 
@@ -20,4 +36,7 @@ Keyboard shortcuts work anywhere in the studio, except while you are typing in a
 | **R** / **F** | — | Up / down |
 
 > [!NOTE]
-> Modifier combinations are deliberately left alone, so your browser's own shortcuts keep working.
+> Plain-key shortcuts are ignored while you are typing, so naming a preset never
+> triggers an action. Search and undo are the exceptions — they work from
+> anywhere, because a shortcut you have to click away from a field to use is not
+> worth having.
