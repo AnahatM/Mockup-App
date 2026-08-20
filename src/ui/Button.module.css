@@ -58,7 +58,7 @@
 
 .primary {
   color: var(--accent-contrast);
-  background: var(--accent);
+  background: var(--gradient-primary);
 }
 
 .primary:hover:not(:disabled) {

@@ -16,10 +16,15 @@ export { NumberInput, type NumberInputProps } from './NumberInput'
 export { Panel, type PanelProps } from './Panel'
 export { ResizeHandle, type ResizeHandleProps } from './ResizeHandle'
 export { ScreenshotSlot, type ScreenshotSlotProps } from './ScreenshotSlot'
+export { Swatch, type SwatchProps } from './Swatch'
 export { SegmentedControl, type Segment } from './SegmentedControl'
+export {
+  SwatchGrid,
+  type SwatchGridProps,
+  type SwatchOption,
+} from './SwatchGrid'
 export { Select, type SelectOption } from './Select'
 export { Spinner, type SpinnerProps } from './Spinner'
-export { Swatch, type SwatchProps } from './Swatch'
 export { Slider, type SliderProps } from './Slider'
 export { Tabs, type Tab } from './Tabs'
 export { TextInput, type TextInputProps } from './TextInput'

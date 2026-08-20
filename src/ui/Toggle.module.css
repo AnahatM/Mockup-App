@@ -24,6 +24,20 @@
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
+/*
+ * `.track` is the real `<label>` (see Toggle.tsx), so this is what needs the
+ * bigger hit area, not the wrapping span — a `<label>` forwards a click
+ * anywhere inside its rendered box, including an overflowing pseudo-element,
+ * to the checkbox it is bound to.
+ */
+@media (pointer: coarse) {
+  .track::before {
+    position: absolute;
+    inset: -0.75rem;
+    content: '';
+  }
+}
+
 .thumb {
   position: absolute;
   top: 2px;
@@ -37,7 +51,7 @@
 }
 
 .input:checked + .track {
-  background: var(--track-fill);
+  background: var(--gradient-primary);
 }
 
 .input:checked + .track .thumb {

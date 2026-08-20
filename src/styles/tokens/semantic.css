@@ -26,9 +26,9 @@
 
   /* Text */
   --text-primary: var(--ink-900);
-  --text-secondary: var(--ink-500);
-  --text-muted: var(--ink-400);
-  --text-disabled: var(--ink-200);
+  --text-secondary: var(--ink-600);
+  --text-muted: var(--ink-500);
+  --text-disabled: var(--ink-300);
   --text-inverse: var(--chalk-50);
   --text-accent: var(--accent-600);
 
@@ -42,6 +42,9 @@
   --accent-hover: var(--accent-600);
   --accent-soft: var(--accent-200);
   --accent-contrast: var(--chalk-50);
+
+  /* Gradient — the Horizon sunset ramp, shared by primary buttons/toggles/cards. */
+  --gradient-primary: linear-gradient(135deg, var(--accent-500), var(--sunset-ember));
 
   /* Controls */
   --control-bg: var(--paper-200);
@@ -72,12 +75,7 @@
   /* Dimming behind a modal */
   --scrim: rgb(26 26 24 / 32%);
 
-  /*
-   * Marks drawn on top of an arbitrary user colour — the tick on a colour
-   * swatch. Deliberately identical in both themes: the surface underneath is
-   * the colour the user picked, not one of ours, so flipping these with the
-   * theme would make the tick vanish on half the palette.
-   */
+  /* Marks on an arbitrary user colour (e.g. swatch ticks) — identical in both themes. */
   --on-color-mark: var(--chalk-50);
   --on-color-shade: var(--ink-950);
 }
@@ -113,6 +111,8 @@
   --accent-soft: var(--accent-700);
   --accent-contrast: var(--ink-950);
 
+  --gradient-primary: linear-gradient(135deg, var(--accent-400), var(--sunset-peach));
+
   /* Controls */
   --control-bg: var(--ink-800);
   --control-bg-hover: var(--ink-700);
@@ -139,12 +139,7 @@
 
   --scrim: rgb(0 0 0 / 55%);
 
-  /*
-   * Marks drawn on top of an arbitrary user colour — the tick on a colour
-   * swatch. Deliberately identical in both themes: the surface underneath is
-   * the colour the user picked, not one of ours, so flipping these with the
-   * theme would make the tick vanish on half the palette.
-   */
+  /* Marks on an arbitrary user colour (e.g. swatch ticks) — identical in both themes. */
   --on-color-mark: var(--chalk-50);
   --on-color-shade: var(--ink-950);
 }

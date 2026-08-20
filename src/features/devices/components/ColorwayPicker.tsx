@@ -1,7 +1,6 @@
-import { Swatch } from '@/ui'
+import { SwatchGrid, type SwatchOption } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { resolveDevice } from '../spec/registry'
-import styles from './ColorwayPicker.module.css'
 
 /**
  * The selected device's factory colours.
@@ -17,17 +16,17 @@ export function ColorwayPicker() {
   const selectColorway = useAppStore((state) => state.selectColorway)
   const spec = resolveDevice(specId)
 
+  const options: SwatchOption[] = spec.colorways.map((colorway) => ({
+    id: colorway.id,
+    color: `linear-gradient(135deg, ${colorway.frame ?? colorway.body} 0%, ${colorway.body} 55%)`,
+    label: colorway.label,
+  }))
+
   return (
-    <div className={styles.grid}>
-      {spec.colorways.map((colorway) => (
-        <Swatch
-          key={colorway.id}
-          color={`linear-gradient(135deg, ${colorway.frame ?? colorway.body} 0%, ${colorway.body} 55%)`}
-          label={colorway.label}
-          selected={colorway.id === selected}
-          onSelect={() => selectColorway(colorway.id)}
-        />
-      ))}
-    </div>
+    <SwatchGrid
+      options={options}
+      selectedId={selected}
+      onSelect={(option) => selectColorway(option.id)}
+    />
   )
 }

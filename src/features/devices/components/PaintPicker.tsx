@@ -1,8 +1,15 @@
-import { Swatch } from '@/ui'
+import { SwatchGrid, type SwatchOption } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { deviceFinishPalette } from '../finishPalette'
-import { PAINT_COLORS } from '../paint'
+import { PAINT_COLORS, type PaintColor } from '../paint'
 import styles from './PaintPicker.module.css'
+
+const toOption = (paint: PaintColor): SwatchOption => ({
+  id: paint.body.toLowerCase(),
+  color: paint.body,
+  label: paint.label,
+  detail: paint.body.toUpperCase(),
+})
 
 /*
  * Two groups rather than one long grid. A spectrum and a set of real product
@@ -10,8 +17,8 @@ import styles from './PaintPicker.module.css'
  * "match a shipping product" — and interleaving them makes both harder to scan.
  */
 const GROUPS = [
-  { label: 'Spectrum', colors: PAINT_COLORS },
-  { label: 'Product finishes', colors: deviceFinishPalette() },
+  { label: 'Spectrum', options: PAINT_COLORS.map(toOption) },
+  { label: 'Product finishes', options: deviceFinishPalette().map(toOption) },
 ] as const
 
 /**
@@ -23,25 +30,17 @@ const GROUPS = [
 export function PaintPicker() {
   const bodyColor = useAppStore((state) => state.device.bodyColor)
   const paintDevice = useAppStore((state) => state.paintDevice)
-  const current = bodyColor.toLowerCase()
 
   return (
     <div className={styles.groups}>
       {GROUPS.map((group) => (
         <section key={group.label}>
           <p className={styles.groupLabel}>{group.label}</p>
-          <div className={styles.grid}>
-            {group.colors.map((paint) => (
-              <Swatch
-                key={paint.id}
-                color={paint.body}
-                label={paint.label}
-                detail={paint.body.toUpperCase()}
-                selected={paint.body.toLowerCase() === current}
-                onSelect={() => paintDevice(paint.body)}
-              />
-            ))}
-          </div>
+          <SwatchGrid
+            options={group.options}
+            selectedId={bodyColor.toLowerCase()}
+            onSelect={(option) => paintDevice(option.color)}
+          />
         </section>
       ))}
     </div>

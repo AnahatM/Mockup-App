@@ -8,16 +8,16 @@
 .prose h2 {
   margin: var(--space-8) 0 var(--space-3);
   font-size: var(--text-xl);
-  font-weight: var(--weight-medium);
-  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  color: var(--text-accent);
   letter-spacing: -0.01em;
 }
 
 .prose h3 {
   margin: var(--space-6) 0 var(--space-2);
   font-size: var(--text-lg);
-  font-weight: var(--weight-medium);
-  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  color: var(--text-accent);
 }
 
 .prose p {

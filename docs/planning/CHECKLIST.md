@@ -43,6 +43,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | TODO |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
+| F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
+| F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
+| F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
 | F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | TODO |
 | F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
 
@@ -70,11 +73,11 @@ for contrast rather than eyeballed.
 
 | # | Task | Status |
 |---|---|---|
-| T1 | Adopt the Horizon palette across primitives and semantics, light and dark | TODO |
-| T2 | Give the primary colour an accompanying shade for gradients | TODO |
-| T3 | Use that gradient on primary buttons, toggle switches, cards, landing design | TODO |
-| T4 | Reading pages: headings distinguished from body by colour and/or weight | TODO |
-| T5 | Re-measure every contrast pair after the palette change | TODO |
+| T1 | Adopt the Horizon palette across primitives and semantics, light and dark | DONE |
+| T2 | Give the primary colour an accompanying shade for gradients | DONE |
+| T3 | Use that gradient on primary buttons, toggle switches, cards, landing design | DONE |
+| T4 | Reading pages: headings distinguished from body by colour and/or weight | DONE |
+| T5 | Re-measure every contrast pair after the palette change | DONE |
 
 ## Deployment
 
