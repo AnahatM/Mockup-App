@@ -3,10 +3,12 @@
      zeroes the `margin: auto` the platform uses to centre a modal `<dialog>`
      — so it has to be restated here to keep the overlay from sticking to the
      top-left corner. */
-  width: 22rem;
+  width: 26rem;
   max-width: calc(100vw - var(--space-6));
+  max-height: calc(100vh - var(--space-6));
   margin: auto;
   padding: 0;
+  overflow-y: auto;
   color: var(--text-primary);
   background: var(--surface-overlay);
   border: var(--hairline) solid var(--border-default);
@@ -36,6 +38,15 @@
   font-size: var(--text-lg);
   font-weight: var(--weight-medium);
   color: var(--text-primary);
+}
+
+.sectionTitle {
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .list {

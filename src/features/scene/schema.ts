@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { hexSchema, unitSchema } from '@/lib/schema/primitives'
+import { surfaceTextureSchema } from '@/features/textures/schema'
 
 /**
  * Scene configuration: everything behind and beneath the product.
@@ -52,6 +53,9 @@ export const pedestalSchema = z.object({
   color: hexSchema.default('#d7d4cd'),
   roughness: unitSchema.default(0.86),
   metalness: unitSchema.default(0.04),
+  /** Procedural surface texture. Defaults to `kind: 'none'`, so a preset
+   *  saved before this existed renders exactly as it did before. */
+  texture: surfaceTextureSchema.prefault({}),
 })
 
 export const shadowSchema = z.object({

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { dolly, orbitDistance } from './navigate'
+import { dolly, orbitDistance, wheelZoomFactor } from './navigate'
 import type { Vec3Tuple } from '@/lib/schema/primitives'
 
 const target: Vec3Tuple = [0, 0, 0]
@@ -49,5 +49,31 @@ describe('dolly', () => {
     const inward = dolly(position, target, 0.8, 0.1, 100)
     const back = dolly(inward, target, 1 / 0.8, 0.1, 100)
     expect(orbitDistance(back, target)).toBeCloseTo(10)
+  })
+})
+
+describe('wheelZoomFactor', () => {
+  it('zooms out (factor above 1) for a positive deltaY', () => {
+    expect(wheelZoomFactor(100, 0, 1)).toBeGreaterThan(1)
+  })
+
+  it('zooms in (factor below 1) for a negative deltaY', () => {
+    expect(wheelZoomFactor(-100, 0, 1)).toBeLessThan(1)
+  })
+
+  it('a stationary wheel produces no zoom', () => {
+    expect(wheelZoomFactor(0, 0, 1)).toBeCloseTo(1)
+  })
+
+  it('scales with the configured zoom speed', () => {
+    const slow = wheelZoomFactor(100, 0, 0.5)
+    const fast = wheelZoomFactor(100, 0, 2)
+    expect(fast).toBeGreaterThan(slow)
+  })
+
+  it('is symmetric: scrolling in then out by the same amount returns to 1', () => {
+    const out = wheelZoomFactor(100, 0, 1)
+    const back = wheelZoomFactor(-100, 0, 1)
+    expect(out * back).toBeCloseTo(1)
   })
 })

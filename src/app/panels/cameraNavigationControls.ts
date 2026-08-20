@@ -10,7 +10,7 @@ const isFly = (state: AppState) => state.camera.mode === 'fly'
 export const navigationControls: readonly Control<AppState>[] = [
   segmented<AppState, CameraMode>({
     label: 'Mode',
-    hint: 'Orbit circles the product. Fly goes anywhere: WASD, R/F, drag to look.',
+    hint: 'Orbit circles the product. Fly goes anywhere: WASD, Q/E, drag to look.',
     options: CAMERA_MODES.map((value) => ({
       value,
       label: value === 'orbit' ? 'Orbit' : 'Fly',

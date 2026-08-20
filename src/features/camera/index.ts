@@ -1,6 +1,9 @@
 export { CameraRig } from './CameraRig'
 export { FlyCamera } from './FlyCamera'
-export { dolly, orbitDistance } from './navigate'
+export { NavigationHint } from './NavigationHint'
+export { FLY_NAV_KEYS } from './useFlyKeyboard'
+export { wasSpacePanDrag } from './spacePan'
+export { dolly, orbitDistance, wheelZoomFactor } from './navigate'
 export {
   CAMERA_PRESETS,
   applyCameraPreset,

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
+import { NavigationHint } from '@/features/camera'
 import { useAppStore } from '@/state/store'
 import { FramePainted } from './FramePainted'
 import { SceneLoading } from './SceneLoading'
@@ -53,6 +54,7 @@ export function SceneCanvas() {
         <FramePainted onPainted={() => setFramePainted(true)} />
       </Canvas>
       <SceneLoading framePainted={framePainted} />
+      <NavigationHint />
     </>
   )
 }

@@ -5,6 +5,8 @@ import { MOUSE, PerspectiveCamera, TOUCH } from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { useAppStore } from '@/state/store'
 import { FlyCamera } from './FlyCamera'
+import { wheelZoomFactor } from './navigate'
+import { useSpacePan } from './useSpacePan'
 
 /** Editor-style bindings: orbit with left, pan with middle or right, wheel zooms. */
 const MOUSE_BUTTONS = {
@@ -25,6 +27,7 @@ const TOUCHES = { ONE: TOUCH.ROTATE, TWO: TOUCH.DOLLY_PAN } as const
  */
 export function CameraRig() {
   const camera = useAppStore((state) => state.camera)
+  const dollyCamera = useAppStore((state) => state.dollyCamera)
   const controls = useRef<OrbitControlsImpl>(null)
   const live = useThree((state) => state.camera)
   const canvas = useThree((state) => state.gl.domElement)
@@ -48,6 +51,25 @@ export function CameraRig() {
     return () => canvas.removeEventListener('contextmenu', suppress)
   }, [canvas])
 
+  // Replaces `OrbitControls`' own wheel handling (disabled below via
+  // `enableZoom={false}`) with one implementation shared with the toolbar's
+  // zoom buttons — see `wheelZoomFactor` for why a trackpad needs this to
+  // feel proportional, not just to match the buttons.
+  useEffect(() => {
+    if (camera.mode !== 'orbit' || !camera.enableZoom) return
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault()
+      dollyCamera(wheelZoomFactor(event.deltaY, event.deltaMode, camera.zoomSpeed))
+    }
+    canvas.addEventListener('wheel', onWheel, { passive: false })
+    return () => canvas.removeEventListener('wheel', onWheel)
+  }, [canvas, camera.mode, camera.enableZoom, camera.zoomSpeed, dollyCamera])
+
+  // Hold Space or Shift and drag to pan — see `useSpacePan`. Called
+  // unconditionally (hooks cannot be conditional); it is inert of its own
+  // accord once `controls.current` is null, which is exactly the fly-mode case.
+  useSpacePan(canvas, controls)
+
   // Fly mode replaces the orbit rig entirely; two sets of controls fighting over the
   // same camera produces jitter rather than a blend.
   if (camera.mode === 'fly') return <FlyCamera />
@@ -59,7 +81,9 @@ export function CameraRig() {
       enableDamping
       dampingFactor={camera.damping}
       enablePan={camera.enablePan}
-      enableZoom={camera.enableZoom}
+      // Zoom is handled by the wheel effect above instead, which is the
+      // "Zoom" toggle's real gate now — see that effect.
+      enableZoom={false}
       enableRotate={camera.enableRotate}
       rotateSpeed={camera.rotateSpeed}
       panSpeed={camera.panSpeed}

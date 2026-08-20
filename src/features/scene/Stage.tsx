@@ -6,6 +6,7 @@ import { Device } from '@/features/devices'
 import { LightGizmos, LightRig } from '@/features/lighting'
 import { Backdrop } from './backdrop/Backdrop'
 import { ContactShadow } from './ContactShadow'
+import { AxisGizmo } from './gizmo/AxisGizmo'
 import { Pedestal } from './Pedestal'
 import { PostFx } from './PostFx'
 import { RendererSettings } from './RendererSettings'
@@ -29,6 +30,7 @@ export function Stage() {
       </AnimatedProduct>
       <ContactShadow />
       <CameraRig />
+      <AxisGizmo />
       <PostFx />
     </Suspense>
   )

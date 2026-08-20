@@ -1,12 +1,15 @@
 import type { Vec3Tuple } from '@/lib/schema/primitives'
+import { normalizeWheelDelta } from './wheel'
 
 /**
  * Viewport navigation, as pure maths.
  *
- * The toolbar's zoom buttons have to do exactly what the scroll wheel does, and
- * the wheel is handled by OrbitControls inside the canvas. Rather than reach
- * into the controls instance from the toolbar, both paths change the same store
- * value — so a zoom is a state change like any other and survives a preset save.
+ * The toolbar's zoom buttons have to do exactly what the scroll wheel does.
+ * Both paths change the same store value through `dollyCamera` — the wheel
+ * via `wheelZoomFactor` below, feeding `CameraRig`'s own wheel listener
+ * rather than three-stdlib's `OrbitControls` (whose built-in wheel handling
+ * is disabled here; see `CameraRig` for why) — so a zoom is a state change
+ * like any other and survives a preset save.
  */
 
 const subtract = (a: Vec3Tuple, b: Vec3Tuple): Vec3Tuple => [
@@ -50,3 +53,17 @@ export function dolly(
 /** Distance between the camera and what it is looking at. */
 export const orbitDistance = (position: Vec3Tuple, target: Vec3Tuple): number =>
   length(subtract(position, target))
+
+/**
+ * Converts a wheel event into the same multiplicative `dolly`/`dollyCamera`
+ * factor the toolbar's zoom buttons use — see `wheel.ts` for why this scales
+ * by the event's actual magnitude rather than counting events, which is what
+ * makes a trackpad's two-finger scroll feel like the same *speed* of zoom as
+ * a mouse wheel, not many times faster.
+ */
+export function wheelZoomFactor(deltaY: number, deltaMode: number, zoomSpeed: number): number {
+  const step = normalizeWheelDelta(deltaY, deltaMode)
+  // >1 zooms out, matching `dolly`'s convention — and a positive deltaY
+  // (scrolling "down") is the universal convention for zooming out.
+  return Math.pow(1.0008, step * zoomSpeed)
+}

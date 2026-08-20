@@ -48,13 +48,13 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F17 | Update the built-in presets to use the new backdrop environments and textures | TODO |
 | F18 | Live 2D preview driven by the same compositor as the export, working with no WebGL | TODO |
 | F19 | **Decided:** split the 2D tools onto their own route and page, separate from the 3D studio. Not a modal bolted onto the studio — a genuinely separate tool that loads without the 3D scene | TODO |
-| F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
-| F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
-| F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
-| F20 | **Bug:** desktop devices are invisible — the cyclorama is a filled solid whose implicit closing face occludes them, because camera distance scales with device size but the cove does not. Diagnosed and handed to the viewport workstream; `scripts/verify-desktop.mjs` is the regression test | TODO |
-| F12 | Fly mode: Q/E for up and down alongside WASD | TODO |
-| F13 | Show every viewport control and keybinding in the UI, not just the docs | TODO |
-| F14 | More bindings for trackpad users — e.g. Space to pan, easier dragging without a mouse | TODO |
+| F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | DONE |
+| F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | DONE |
+| F11 | Unity-style axis gizmo showing current 3D orientation | DONE |
+| F20 | **Bug:** desktop devices are invisible — the cyclorama is a filled solid whose implicit closing face occludes them, because camera distance scales with device size but the cove does not. Diagnosed and handed to the viewport workstream; `scripts/verify-desktop.mjs` is the regression test | DONE |
+| F12 | Fly mode: Q/E for up and down alongside WASD | DONE |
+| F13 | Show every viewport control and keybinding in the UI, not just the docs | DONE |
+| F14 | More bindings for trackpad users — e.g. Space to pan, easier dragging without a mouse | DONE |
 | F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | DONE |
 | F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
 
@@ -107,7 +107,7 @@ things paid products do that we should match or beat.
 | C3 | Shadow presets: none / spread / hug / adaptive, with an opacity slider | DONE |
 | C4 | Layout preset gallery with live thumbnails, not just a names list | DONE |
 | C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | DONE |
-| C6 | Separate Zoom and Tilt controls with a live preview | TODO |
+| C6 | Separate Zoom and Tilt controls with a live preview | DONE |
 | C7 | Undo / redo | DONE |
 | C8 | "Start over" — reset the whole scene, behind a confirmation | DONE |
 | C9 | Copy the export straight to the clipboard | DONE |
@@ -124,7 +124,7 @@ things paid products do that we should match or beat.
 | P2 | Organise `docs/` into folders | DONE |
 | P3 | Maintain this checklist as tasks arrive | ONGOING |
 | P4 | Commit in stages as work lands | ONGOING |
-| P6 | Reference AnahatM/sparkfile's info pages (fetch from GitHub — not present locally) | TODO |
+| P6 | Reference AnahatM/sparkfile's info pages (fetch from GitHub — not present locally) | DONE |
 | P5 | **FINAL PASS** — capture real screenshots for every placeholder slot across the whole site (landing hero, landing showcase ×3, About) and the README's image slots, then wire them in and delete the "coming soon" states. Do this last, once the UI has settled. `scripts/capture-shots.mjs` is the harness. | TODO |
 
 ## Standing constraints

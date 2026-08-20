@@ -1,24 +1,10 @@
+import { wasSpacePanDrag } from '@/features/camera'
 import { useAppStore } from '@/state/store'
 import { openShortcutsHelp } from './help'
+import type { KeyShortcut } from './types'
 
-export interface ShortcutEntry {
-  id: string
-  /** What pressing it does, shown in the help overlay. */
-  description: string
-  /** How the combo reads on screen, e.g. "F" or "Ctrl / Cmd + K". */
-  display: string
-  /** The bare `event.key`, lower-cased, this fires on. */
-  key: string
-  /** Requires Ctrl/Cmd, fires even while typing, and ignores other modifiers. */
-  chord?: true
-  /**
-   * Requires Shift as well.
-   *
-   * Needed because undo and redo share a key: without matching Shift exactly,
-   * Ctrl+Shift+Z would also satisfy Ctrl+Z and undo instead of redoing.
-   */
-  shift?: true
-}
+export type { GestureEntry, KeyShortcut, RegistryEntry, ShortcutGroup } from './types'
+export { GESTURES } from './gestures'
 
 const togglePlaying = () =>
   useAppStore.setState((draft) => {
@@ -31,15 +17,21 @@ const togglePanel = (key: 'sidebarOpen' | 'inspectorOpen') => () =>
   })
 
 /**
- * The single source of truth for every studio keyboard shortcut: what key
+ * The single source of truth for every studio KEYBOARD shortcut: what key
  * fires it, how it reads in the help overlay, and what it does. `useShortcuts`
  * dispatches from this list instead of a hand-written `switch`, and
  * `ShortcutsOverlay` renders it directly — so the reference the user sees can
  * never drift from what actually happens on a keypress.
+ *
+ * Mouse/trackpad gestures and held-key navigation live in `gestures.ts`
+ * instead — they are documented, not dispatched, since none of them fit
+ * "one keydown, one action". See `GestureEntry`.
  */
-export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
+export const SHORTCUTS: readonly KeyShortcut[] = [
   {
     id: 'palette-chord',
+    kind: 'key',
+    group: 'Studio',
     description: 'Open the command palette',
     display: 'Ctrl / Cmd + K',
     key: 'k',
@@ -48,6 +40,8 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'palette',
+    kind: 'key',
+    group: 'Studio',
     description: 'Open the command palette',
     display: '/',
     key: '/',
@@ -55,6 +49,8 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'frame',
+    kind: 'key',
+    group: 'Studio',
     description: 'Frame the current device',
     display: 'F',
     key: 'f',
@@ -62,13 +58,24 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'play',
+    kind: 'key',
+    group: 'Studio',
     description: 'Play or pause the animation',
     display: 'Space',
     key: ' ',
-    run: togglePlaying,
+    // Deferred to release: see `useSpacePan` for the full reasoning. A tap
+    // (no drag in between) toggles playback; a hold-and-drag pans instead
+    // and does not also toggle it.
+    fireOn: 'keyup',
+    run: () => {
+      if (wasSpacePanDrag()) return
+      togglePlaying()
+    },
   },
   {
     id: 'sidebar',
+    kind: 'key',
+    group: 'Studio',
     description: 'Show or hide the device sidebar',
     display: '[',
     key: '[',
@@ -76,13 +83,26 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'inspector',
+    kind: 'key',
+    group: 'Studio',
     description: 'Show or hide the inspector panel',
     display: ']',
     key: ']',
     run: togglePanel('inspectorOpen'),
   },
   {
+    id: 'help',
+    kind: 'key',
+    group: 'Studio',
+    description: 'Show this shortcut reference',
+    display: '?',
+    key: '?',
+    run: openShortcutsHelp,
+  },
+  {
     id: 'undo',
+    kind: 'key',
+    group: 'Editing',
     description: 'Undo the last scene change',
     display: 'Ctrl / Cmd + Z',
     key: 'z',
@@ -91,6 +111,8 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'redo-shift',
+    kind: 'key',
+    group: 'Editing',
     description: 'Redo',
     display: 'Ctrl / Cmd + Shift + Z',
     key: 'z',
@@ -100,17 +122,12 @@ export const SHORTCUTS: ReadonlyArray<ShortcutEntry & { run: () => void }> = [
   },
   {
     id: 'redo',
+    kind: 'key',
+    group: 'Editing',
     description: 'Redo',
     display: 'Ctrl / Cmd + Y',
     key: 'y',
     chord: true,
     run: () => useAppStore.getState().redoScene(),
-  },
-  {
-    id: 'help',
-    description: 'Show this shortcut reference',
-    display: '?',
-    key: '?',
-    run: openShortcutsHelp,
   },
 ]
