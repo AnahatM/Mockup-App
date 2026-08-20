@@ -22,6 +22,7 @@ export function captureScene(state: AppState): SceneState {
     scene: state.scene,
     animation: state.animation,
     exportConfig: state.exportConfig,
+    showcase: state.showcase,
   }
 }
 
@@ -35,6 +36,7 @@ export function applyScene(draft: Draft<AppState>, scene: SceneState): void {
   draft.scene = scene.scene
   draft.animation = scene.animation
   draft.exportConfig = scene.exportConfig
+  draft.showcase = scene.showcase
 }
 
 /**
@@ -55,6 +57,7 @@ export function sameScene(a: SceneState, b: SceneState): boolean {
     a.lighting === b.lighting &&
     a.scene === b.scene &&
     a.animation === b.animation &&
-    a.exportConfig === b.exportConfig
+    a.exportConfig === b.exportConfig &&
+    a.showcase === b.showcase
   )
 }

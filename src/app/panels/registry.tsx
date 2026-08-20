@@ -10,6 +10,7 @@ import { PresetsPanel } from './PresetsPanel'
 import { RenderPanel } from './RenderPanel'
 import { ScenePanel } from './ScenePanel'
 import { ScreenPanel } from './ScreenPanel'
+import { ShowcasePanel } from './ShowcasePanel'
 
 export interface PanelDefinition {
   label: string
@@ -61,6 +62,11 @@ export const PANELS: Record<InspectorTab, PanelDefinition> = {
     label: 'Export',
     icon: 'download',
     render: () => <ExportPanel />,
+  },
+  showcase: {
+    label: 'Showcase',
+    icon: 'layout',
+    render: () => <ShowcasePanel />,
   },
   presets: {
     label: 'Presets',

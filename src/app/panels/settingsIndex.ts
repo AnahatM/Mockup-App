@@ -5,15 +5,18 @@ import { animationControls } from './motionControls'
 import { framingControls } from './cameraFramingControls'
 import { navigationControls } from './cameraNavigationControls'
 import { finishControls, materialControls } from './deviceFinishControls'
+import { bodyTextureControls, frameTextureControls } from './deviceTextureControls'
 import { detailControls, placementControls } from './devicePlacementControls'
 import { imageControls, videoControls } from './exportControls'
 import { rigControls } from './lightingRigControls'
 import { navigationControls as overlayNavControls } from './navigationControls'
+import { pedestalTextureControls } from './pedestalTextureControls'
 import { renderControls } from './renderControls'
 import { roomControls } from './roomControls'
 import { backdropControls, pedestalControls } from './sceneBackdropControls'
 import { contentControls, playbackControls } from './screenContentControls'
 import { shadowControls } from './shadowControls'
+import { modeControls, textControls } from './showcaseControls'
 import { statusBarControls } from './statusBarControls'
 import { windowContainerControls } from './windowContainerControls'
 import { windowContentControls } from './windowControls'
@@ -37,6 +40,8 @@ export interface SettingGroup {
 export const SETTING_GROUPS: readonly SettingGroup[] = [
   { tab: 'device', panel: 'Finish', controls: finishControls },
   { tab: 'device', panel: 'Materials', controls: materialControls },
+  { tab: 'device', panel: 'Body texture', controls: bodyTextureControls },
+  { tab: 'device', panel: 'Frame texture', controls: frameTextureControls },
   { tab: 'device', panel: 'Details', controls: detailControls },
   { tab: 'device', panel: 'Placement', controls: placementControls },
 
@@ -50,6 +55,7 @@ export const SETTING_GROUPS: readonly SettingGroup[] = [
 
   { tab: 'scene', panel: 'Backdrop', controls: backdropControls },
   { tab: 'scene', panel: 'Pedestal', controls: pedestalControls },
+  { tab: 'scene', panel: 'Pedestal texture', controls: pedestalTextureControls },
   { tab: 'scene', panel: 'Shadow', controls: shadowControls },
   { tab: 'scene', panel: 'Render', controls: renderControls },
 
@@ -63,6 +69,9 @@ export const SETTING_GROUPS: readonly SettingGroup[] = [
 
   { tab: 'export', panel: 'Image', controls: imageControls },
   { tab: 'export', panel: 'Video', controls: videoControls },
+
+  { tab: 'showcase', panel: 'Mode', controls: modeControls },
+  { tab: 'showcase', panel: 'Headline', controls: textControls },
 ]
 
 export interface SettingEntry {

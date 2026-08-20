@@ -57,7 +57,7 @@ Root is the landing page; the studio moves to `/studio`.
 
 | # | Item | Status |
 |---|---|---|
-| 25 | App Store screenshot mode — panoramic multi-device layouts with headline text | TODO |
+| 25 | App Store screenshot mode — panoramic multi-device layouts with headline text | DONE |
 | 26 | Image cropping before the screenshot reaches the device | TODO |
 | 27 | Standalone window/flat mockup mode, no device required | DONE |
 

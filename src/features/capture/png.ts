@@ -1,6 +1,7 @@
 import { PerspectiveCamera, Vector2 } from 'three'
 import type { Camera, Scene, WebGLRenderer } from 'three'
 import { hideGizmosForCapture } from '@/features/lighting'
+import { hideAxisGizmoForCapture } from './axisGizmoGuard'
 
 export interface CapturePngOptions {
   renderer: WebGLRenderer
@@ -43,9 +44,10 @@ export async function capturePng({
   // whole capture window — including the async `toBlob` wait, since the
   // canvas is a continuous render loop and could otherwise repaint before the
   // pixels are read back — and only restored once the blob is in hand. See
-  // gizmoCaptureGuard for why this is a direct three.js mutation rather than
-  // a store flag.
+  // gizmoCaptureGuard (lights) and axisGizmoGuard (orientation gizmo) for why
+  // this is a direct three.js mutation rather than a store flag.
   const restoreGizmos = hideGizmosForCapture()
+  const restoreAxisGizmo = hideAxisGizmoForCapture()
 
   try {
     if (transparent) scene.background = null
@@ -65,6 +67,7 @@ export async function capturePng({
     return await toBlob(renderer.domElement)
   } finally {
     restoreGizmos()
+    restoreAxisGizmo()
     scene.background = previousBackground
     renderer.setPixelRatio(previousPixelRatio)
     renderer.setSize(previousSize.x, previousSize.y, false)

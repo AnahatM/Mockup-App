@@ -1,5 +1,6 @@
 import { err, ok, type Result } from '@/lib/result'
 import { hideGizmosForCapture } from '@/features/lighting'
+import { hideAxisGizmoForCapture } from './axisGizmoGuard'
 
 /**
  * Records the live canvas to a WebM video.
@@ -76,8 +77,10 @@ export async function recordWebm({
   // `captureStream` records whatever the canvas actually shows, live, for the
   // whole window below — unlike the PNG path there is no single render call
   // to guard, so gizmos are hidden for the entire recording and only
-  // restored once the last frame has been captured. See gizmoCaptureGuard.
+  // restored once the last frame has been captured. See gizmoCaptureGuard
+  // (lights) and axisGizmoGuard (orientation gizmo).
   const restoreGizmos = hideGizmosForCapture()
+  const restoreAxisGizmo = hideAxisGizmoForCapture()
   try {
     // A timeslice means chunks arrive during the recording rather than all at
     // the end, so a long capture cannot be lost wholesale if something fails.
@@ -91,6 +94,7 @@ export async function recordWebm({
     await Promise.race([stopped, delay(FLUSH_TIMEOUT_MS)])
   } finally {
     restoreGizmos()
+    restoreAxisGizmo()
     for (const track of stream.getTracks()) track.stop()
   }
 

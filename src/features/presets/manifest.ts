@@ -8,6 +8,7 @@ import { lightingSchema } from '@/features/lighting/schema'
 import { screenSchema } from '@/features/media/schema'
 import { sceneSchema } from '@/features/scene/schema'
 import { overlaysSchema } from '@/features/screen/schema'
+import { showcaseSchema } from '@/features/showcase/schema'
 
 /**
  * The shareable mockup file.
@@ -65,6 +66,7 @@ export const sceneStateSchema = z.object({
   scene: sceneSchema.prefault({}),
   animation: animationSchema.prefault({}),
   exportConfig: exportSchema.prefault({}),
+  showcase: showcaseSchema.prefault({}),
 })
 
 export type SceneState = z.infer<typeof sceneStateSchema>

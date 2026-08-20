@@ -1,5 +1,7 @@
 export { CaptureBridge } from './CaptureBridge'
 export { getCaptureHandle, type CaptureHandle } from './handle'
+export { registerAxisGizmoGroup } from './axisGizmoGuard'
+export { capturePng, type CapturePngOptions } from './png'
 export { renderStill } from './renderStill'
 export { useCapture } from './useCapture'
 export { isRecordingSupported } from './webm'

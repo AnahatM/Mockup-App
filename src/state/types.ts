@@ -10,6 +10,7 @@ import type { MediaSlice } from './slices/media'
 import type { OverlaysSlice } from './slices/overlays'
 import type { PresetsSlice } from './slices/presets'
 import type { SceneSlice } from './slices/scene'
+import type { ShowcaseSlice } from './slices/showcase'
 import type { ToastSlice } from './slices/toasts'
 import type { UiSlice } from './slices/ui'
 
@@ -30,6 +31,7 @@ export type AppState = UiSlice &
   AnimationSlice &
   ExportSlice &
   FlatSlice &
+  ShowcaseSlice &
   PresetsSlice &
   HistorySlice &
   ToastSlice

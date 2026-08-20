@@ -9,6 +9,7 @@ export const INSPECTOR_TABS = [
   'lighting',
   'animation',
   'export',
+  'showcase',
   'presets',
 ] as const
 
