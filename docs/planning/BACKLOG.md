@@ -24,10 +24,10 @@ Status: `TODO` · `WIP` · `DONE`
 
 | # | Item | Status |
 |---|---|---|
-| 10 | Material system: brushed vs polished metal, glossy vs matte back, glossy vs matte screen, plastic vs metal body — each colourable | TODO |
-| 11 | GLB/GLTF import with its own materials, screen-mesh picker | TODO |
-| 12 | Mirror real iPhone finish names in the colour palette | TODO |
-| 29 | Background should read as a real 3D space, not a flat gradient | TODO |
+| 10 | Material system: brushed vs polished metal, glossy vs matte back, glossy vs matte screen, plastic vs metal body — each colourable | DONE |
+| 11 | GLB/GLTF import with its own materials, screen-mesh picker | DONE |
+| 12 | Mirror real iPhone finish names in the colour palette | DONE |
+| 29 | Background should read as a real 3D space, not a flat gradient | DONE |
 
 ## Interface
 
@@ -58,18 +58,18 @@ Root is the landing page; the studio moves to `/studio`.
 | # | Item | Status |
 |---|---|---|
 | 25 | App Store screenshot mode — panoramic multi-device layouts with headline text | DONE |
-| 26 | Image cropping before the screenshot reaches the device | TODO |
+| 26 | Image cropping before the screenshot reaches the device | DONE |
 | 27 | Standalone window/flat mockup mode, no device required | DONE |
 
 ## Presets
 
 | # | Item | Status |
 |---|---|---|
-| 30 | Update existing presets to use the new room, materials and tuning | TODO |
-| 31 | Add more commonly-used presets | TODO |
+| 30 | Update existing presets to use the new room, materials and tuning | DONE |
+| 31 | Add more commonly-used presets | DONE |
 
 ## Project
 
 | # | Item | Status |
 |---|---|---|
-| 28 | README in the `anahat-readme` house style | TODO |
+| 28 | README in the `anahat-readme` house style | DONE |

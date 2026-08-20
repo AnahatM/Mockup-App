@@ -45,14 +45,15 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | C1  | Full 3D space                                                         | `features/scene` R3F canvas                                                                          | P2    | DONE   |
 | C2  | **Fully orbittable**                                                  | `OrbitControls` with damping, bound to the camera store                                              | P2    | DONE   |
 | C3  | Central pedestal highlighting the product                             | `Pedestal` (toggleable) plus `ContactShadows`                                                        | P2    | DONE   |
-| C4  | Parametric 3D background, customizable                                | `Backdrop`: transparent, solid, gradient, radial glow, cyclorama, grid                               | P2    | DONE   |
+| C4  | Parametric 3D background, customizable                                | `Backdrop`: transparent, solid, gradient, radial glow, environment, cyclorama, grid, plus structured environments (hex/tiled floor, tiled room, pulsating blocks) layered in front — see ADR 0007 | P2    | DONE   |
 | C5  | Mostly blank and minimal by default                                   | default backdrop is a quiet studio sweep; chrome-free viewport                                       | P2    | DONE   |
 | C6  | **Shiny lighting, rim lights, glows**                                 | `LightformerRig` parametric area lights plus bloom post-processing                                   | P2/P6 | DONE   |
-| C7  | Color-match app theme colors to backdrop, lighting, glows, rim lights | `lib/color/extract.ts` median-cut palette from the upload, one-click bind to any color channel       | P4/P6 | DONE   |
+| C7  | Color-match app theme colors to backdrop, lighting, glows, rim lights | `lib/color/extract.ts` median-cut palette from the upload, one-click bind to any color channel, plus `backdrop/adaptive.ts` whole-backdrop recipes derived from it | P4/P6 | DONE   |
 | C8  | Lighting presets                                                      | `features/lighting/presets.ts`: studio, soft-box, rim-glow, dramatic, neon, product-white, moody     | P6    | DONE   |
 | C9  | Camera presets                                                        | `features/camera/presets.ts`: front, hero, three-quarter, top-down, low-hero, floating, dutch, macro | P6    | DONE   |
 | C10 | Animation presets                                                     | `features/animation/clips/`: orbit, float, hero-spin, tilt-in, parallax-reveal, pop-in, breathe      | P7    | DONE   |
 | C11 | Full manual control over all of the above                             | schema-driven control panels for every parameter                                                     | P1-P7 | DONE   |
+| C12 | Procedural surface textures on every surface                          | `features/textures`: noise, grain, brushed, scratches, weave — generated at runtime, applied to device body and frame, pedestal, cyclorama sweep and environments | P2/P6 | DONE   |
 
 ## D. Devices
 
