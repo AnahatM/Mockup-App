@@ -1,6 +1,6 @@
 import { downloadBlob, safeFilename, withExtension } from '@/lib/download'
 import { err, ok, type Result } from '@/lib/result'
-import { composeWindow } from './compose'
+import { composeWindow, WINDOW_ASPECT } from './compose'
 import type { FlatConfig } from './schema'
 
 export interface ExportFlatOptions {
@@ -32,7 +32,7 @@ export async function exportFlatWindow({
 }: ExportFlatOptions): Promise<Result<null>> {
   const canvas = document.createElement('canvas')
   canvas.width = Math.max(64, Math.round(width))
-  canvas.height = Math.round(canvas.width / (16 / 10))
+  canvas.height = Math.round(canvas.width / WINDOW_ASPECT)
 
   const ctx = canvas.getContext('2d')
   if (!ctx) return err('Could not create a drawing surface.')

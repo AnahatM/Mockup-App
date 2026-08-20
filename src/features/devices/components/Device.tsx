@@ -1,4 +1,4 @@
-import { useFramedTexture } from '@/features/flat'
+import { useFramedTexture } from '@/features/screen'
 import { mediaAspect, useScreenTexture } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'

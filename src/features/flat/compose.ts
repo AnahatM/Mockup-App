@@ -5,6 +5,13 @@ import { drawShadow } from './draw/shadow'
 import { drawBrowserBar, drawMacBar, type BarGeometry } from './draw/titleBar'
 import type { FlatConfig } from './schema'
 
+/**
+ * Window proportion — 16:10 reads as a desktop window. Shared by the device
+ * screen texture, the flat export, and the live preview so all three ever
+ * agree on the canvas shape they hand to `composeWindow`.
+ */
+export const WINDOW_ASPECT = 16 / 10
+
 export interface ComposeOptions {
   ctx: CanvasRenderingContext2D
   width: number

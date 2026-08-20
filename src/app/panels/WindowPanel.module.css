@@ -1,0 +1,10 @@
+/*
+ * Fixed-aspect box for the compact preview, matching the window mockup's own
+ * 16:10 proportion — see `WINDOW_ASPECT` in `features/flat/compose.ts` — so
+ * `FlatPreview` fills it exactly with no letterboxing inside its own box.
+ */
+.preview {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin-bottom: var(--space-3);
+}

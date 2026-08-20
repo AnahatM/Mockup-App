@@ -8,7 +8,7 @@ import {
   shadowScaleFor,
   resolveDevice,
   type DeviceConfig,
-} from '@/features/devices'
+} from '@/features/devices/state'
 import type { SliceCreator } from '../types'
 import { createGlbActions, revokeGlb, type DeviceGlbSlice } from './deviceGlb'
 

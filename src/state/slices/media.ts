@@ -7,7 +7,7 @@ import {
   type MediaSource,
   type RecentUpload,
   type ScreenConfig,
-} from '@/features/media'
+} from '@/features/media/state'
 // Deep import, not the `@/features/crop` barrel: the barrel re-exports the
 // crop UI, which reaches into `@/features/devices` and `@/state/store` and
 // would cycle straight back to this file. `<feature>/schema` is the one deep

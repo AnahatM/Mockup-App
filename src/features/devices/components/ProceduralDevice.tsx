@@ -57,6 +57,8 @@ export function ProceduralDevice({
         showRails={config.showRails}
         frameFinish={frameFinish}
         backFinish={backFinish}
+        bodyTexture={config.bodyTexture}
+        frameTexture={config.frameTexture}
       />
 
       <DeviceScreen
@@ -73,7 +75,12 @@ export function ProceduralDevice({
       )}
 
       {config.showButtons && (
-        <SideButtons spec={spec} frameColor={config.frameColor} finish={frameFinish} />
+        <SideButtons
+          spec={spec}
+          frameColor={config.frameColor}
+          finish={frameFinish}
+          texture={config.frameTexture}
+        />
       )}
 
       {spec.stand && (
@@ -82,6 +89,7 @@ export function ProceduralDevice({
           stand={spec.stand}
           frameColor={config.frameColor}
           finish={frameFinish}
+          texture={config.frameTexture}
         />
       )}
 
@@ -93,6 +101,7 @@ export function ProceduralDevice({
           bump={spec.cameraBump}
           bodyColor={config.bodyColor}
           frameColor={config.frameColor}
+          bodyTexture={config.bodyTexture}
         />
       )}
     </group>

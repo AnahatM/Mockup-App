@@ -1,4 +1,4 @@
-import { defaultFlat, type FlatConfig } from '@/features/flat'
+import { defaultFlat, type FlatConfig } from '@/features/flat/schema'
 import type { SliceCreator } from '../types'
 
 export interface FlatSlice {

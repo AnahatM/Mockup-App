@@ -1,4 +1,4 @@
-import { defaultExport, type ExportConfig } from '@/features/capture'
+import { defaultExport, type ExportConfig } from '@/features/capture/schema'
 import type { SliceCreator } from '../types'
 
 export interface ExportSlice {

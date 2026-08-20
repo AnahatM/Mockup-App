@@ -1,4 +1,4 @@
-import { defaultShowcase, type ShowcaseConfig } from '@/features/showcase'
+import { defaultShowcase, type ShowcaseConfig } from '@/features/showcase/schema'
 import type { SliceCreator } from '../types'
 
 export interface ShowcaseSlice {

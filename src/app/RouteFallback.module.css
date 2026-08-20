@@ -1,0 +1,7 @@
+.fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 60vh;
+  color: var(--text-muted);
+}

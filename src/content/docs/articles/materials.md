@@ -31,6 +31,29 @@ Matte is worth trying when the screen is picking up a distracting reflection, or
 
 Any finish takes any colour. A brushed metal in your brand colour is a legitimate thing to make — physically it is what an anodised part is.
 
+## Procedural surface textures
+
+Underneath a finish you can layer a second, independent pattern: noise, fine grain, brushed metal, scratches or a woven weave. Every pixel is generated on a canvas at load time from a handful of numbers — nothing is ever downloaded or shipped as an image, which is what keeps the app fully local.
+
+The pattern is available in three places, each with its own settings:
+
+- **Body texture** — the device's back/body surface.
+- **Frame texture** — the device's side band, buttons and stand.
+- **Pedestal texture** — the plinth the product stands on.
+
+Each has the same six controls:
+
+| Control | What it does |
+| --- | --- |
+| Pattern | Which generator: noise, fine grain, brushed metal, scratches, or woven fabric. `None` leaves the finish exactly as built. |
+| Scale | Tile frequency — higher reads as finer grain. |
+| Strength | How strongly the pattern bumps the surface under light (drives the normal map). |
+| Contrast | How much the pattern varies the roughness around the finish's own value. |
+| Direction | Horizontal or vertical — only meaningful for the directional patterns, brushed and scratches. |
+| Seed | Reproducibility. The same seed always regenerates the exact same look. |
+
+A texture generates a roughness map and a normal map together, so it actually reads as a bumped surface rather than only tinting the reflection — a scratch, for instance, should catch a highlight, not just look like a grey line. Setting a strength or contrast of 0 leaves the surface visually identical to the finish alone, and `Pattern: None` (the default) means every preset saved before this feature existed keeps rendering exactly as it did before.
+
 ## Imported models
 
 A 3D model you import brings its own materials, which are used as authored. See [Importing 3D models](/docs/importing-models).

@@ -21,6 +21,7 @@ export interface RouteMeta {
 export const ROUTES = {
   home: '/',
   studio: '/studio',
+  window: '/window',
   docs: '/docs',
   docsArticle: '/docs/:slug',
   about: '/about',
@@ -41,6 +42,14 @@ export const SITE_ROUTES: readonly RouteMeta[] = [
     path: ROUTES.studio,
     label: 'Studio',
     summary: 'The mockup tool itself — devices, lighting, export.',
+    inNav: true,
+    inFooter: true,
+    sitemapPriority: 0.9,
+  },
+  {
+    path: ROUTES.window,
+    label: 'Window mockups',
+    summary: 'Browser and macOS window frames around a screenshot — no 3D needed.',
     inNav: true,
     inFooter: true,
     sitemapPriority: 0.9,

@@ -1,11 +1,16 @@
 import { choice, number, segmented, text, toggle } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
+// From the pure schema module, not the feature barrel: the barrel also
+// exports `FlatStudio`, which imports this very file, and these constants
+// are read at module top level (in the `.map()` calls below) — reading a
+// barrel export while that import cycle is still resolving throws "before
+// initialization". See the same note in `windowContainerControls.ts`.
 import {
   TITLE_ALIGNMENTS,
   WINDOW_STYLES,
   type TitleAlignment,
   type WindowStyle,
-} from '@/features/flat'
+} from '@/features/flat/schema'
 import type { AppState } from '@/state/types'
 
 const STYLE_LABELS: Record<WindowStyle, string> = {

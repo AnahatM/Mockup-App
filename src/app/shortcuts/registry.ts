@@ -1,4 +1,4 @@
-import { wasSpacePanDrag } from '@/features/camera'
+import { wasSpacePanDrag } from '@/features/camera/state'
 import { useAppStore } from '@/state/store'
 import { openShortcutsHelp } from './help'
 import type { KeyShortcut } from './types'

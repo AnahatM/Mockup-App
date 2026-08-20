@@ -1,6 +1,7 @@
 import { Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { backdropControls, pedestalControls } from './sceneBackdropControls'
+import { pedestalTextureControls } from './pedestalTextureControls'
 
 /**
  * Backdrop and plinth.
@@ -16,6 +17,9 @@ export function ScenePanel() {
       </Panel>
       <Panel title="Pedestal">
         <ControlList controls={pedestalControls} />
+      </Panel>
+      <Panel title="Pedestal texture">
+        <ControlList controls={pedestalTextureControls} />
       </Panel>
     </>
   )

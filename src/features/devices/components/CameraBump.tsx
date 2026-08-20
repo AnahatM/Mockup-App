@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import type { SurfaceTextureConfig } from '@/features/textures'
 import { buildBumpPlateau } from '../builders/cameraBump'
 import { FinishMaterial } from '../materials/FinishMaterial'
 import type { CameraBumpSpec, DeviceSpec } from '../spec/types'
@@ -8,6 +9,7 @@ export interface CameraBumpProps {
   bump: CameraBumpSpec
   bodyColor: string
   frameColor: string
+  bodyTexture: SurfaceTextureConfig
 }
 
 /**
@@ -17,14 +19,14 @@ export interface CameraBumpProps {
  * produces the small bright catchlight that makes a camera read as a camera
  * rather than as a printed circle.
  */
-export function CameraBump({ spec, bump, bodyColor, frameColor }: CameraBumpProps) {
+export function CameraBump({ spec, bump, bodyColor, frameColor, bodyTexture }: CameraBumpProps) {
   const plateau = useMemo(() => buildBumpPlateau(bump), [bump])
   const backZ = -(spec.body.depth / 2)
 
   return (
     <group position={[bump.x, bump.y, backZ - bump.depth / 2]}>
       <mesh geometry={plateau} castShadow>
-        <FinishMaterial finish={spec.materials.back} color={bodyColor} />
+        <FinishMaterial finish={spec.materials.back} color={bodyColor} texture={bodyTexture} />
       </mesh>
 
       {bump.lenses.map((lens, index) => (

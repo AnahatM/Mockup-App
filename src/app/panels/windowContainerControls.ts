@@ -1,14 +1,21 @@
 import { segmented, slider } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
+import { seedRadius } from '@/features/flat'
+// These three are read at module top level (inside the `.map()` calls
+// below), so they must come from the pure schema module rather than the
+// feature barrel: the barrel also exports FlatStudio, which imports this
+// very file back, and reading a barrel export while that cycle is still
+// resolving throws "before initialization". `seedRadius` above is only
+// called from an `update` closure, long after startup, so the barrel is
+// safe for it.
 import {
   BORDER_SHAPES,
   CONTAINER_STYLES,
   SHADOW_STYLES,
-  seedRadius,
   type BorderShape,
   type ContainerStyle,
   type ShadowStyle,
-} from '@/features/flat'
+} from '@/features/flat/schema'
 import type { AppState } from '@/state/types'
 
 const hasChrome = (state: AppState) => !state.flat.hideMockup

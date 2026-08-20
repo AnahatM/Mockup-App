@@ -1,5 +1,5 @@
 import { degToRad } from '@/lib/math/number'
-import { frameDevice, type DeviceSpec } from '@/features/devices'
+import { frameDevice, type DeviceSpec } from '@/features/devices/state'
 import type { CameraConfig } from './schema'
 
 /**

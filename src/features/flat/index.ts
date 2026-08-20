@@ -1,6 +1,9 @@
-export { composeWindow } from './compose'
+export { composeWindow, WINDOW_ASPECT, type ComposeOptions } from './compose'
 export { exportFlatWindow } from './exportFlat'
-export { useFramedTexture } from './useFramedTexture'
+export { FlatPreview, type FlatPreviewProps } from './FlatPreview'
+export { FlatStudio } from './FlatStudio'
+export { useFlatExport, type FlatExport } from './useFlatExport'
+export { resolveChrome, type ResolvedChrome } from './resolveChrome'
 export {
   defaultFlat,
   flatSchema,

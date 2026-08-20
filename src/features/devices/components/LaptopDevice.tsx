@@ -49,11 +49,13 @@ export function LaptopDevice({
               attach="material-0"
               finish={spec.materials.back}
               color={config.bodyColor}
+              texture={config.bodyTexture}
             />
             <FinishMaterial
               attach="material-1"
               finish={config.showRails ? spec.materials.frame : spec.materials.back}
               color={config.showRails ? config.frameColor : config.bodyColor}
+              texture={config.showRails ? config.frameTexture : config.bodyTexture}
             />
           </mesh>
 

@@ -11,6 +11,7 @@ import { ROUTES } from '../routes'
 const ICONS: Record<string, IconName> = {
   [ROUTES.home]: 'home',
   [ROUTES.studio]: 'camera',
+  [ROUTES.window]: 'window',
   [ROUTES.docs]: 'book',
   [ROUTES.about]: 'info',
   [ROUTES.privacy]: 'shield',

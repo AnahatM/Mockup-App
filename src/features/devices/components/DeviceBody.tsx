@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import type { SurfaceTextureConfig } from '@/features/textures'
 import { buildBody } from '../builders/body'
 import { FinishMaterial } from '../materials/FinishMaterial'
 import type { DeviceSpec, FinishKind } from '../spec/types'
@@ -11,6 +12,8 @@ export interface DeviceBodyProps {
   showRails: boolean
   frameFinish: FinishKind
   backFinish: FinishKind
+  bodyTexture: SurfaceTextureConfig
+  frameTexture: SurfaceTextureConfig
 }
 
 /**
@@ -32,16 +35,24 @@ export function DeviceBody({
   showRails,
   frameFinish,
   backFinish,
+  bodyTexture,
+  frameTexture,
 }: DeviceBodyProps) {
   const geometry = useMemo(() => buildBody(spec.body), [spec.body])
 
   return (
     <mesh geometry={geometry} castShadow receiveShadow>
-      <FinishMaterial attach="material-0" finish={backFinish} color={bodyColor} />
+      <FinishMaterial
+        attach="material-0"
+        finish={backFinish}
+        color={bodyColor}
+        texture={bodyTexture}
+      />
       <FinishMaterial
         attach="material-1"
         finish={showRails ? frameFinish : backFinish}
         color={showRails ? frameColor : bodyColor}
+        texture={showRails ? frameTexture : bodyTexture}
       />
     </mesh>
   )

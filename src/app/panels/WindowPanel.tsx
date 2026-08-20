@@ -1,20 +1,26 @@
 import { useState } from 'react'
 import { Button, Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
-import { exportFlatWindow } from '@/features/flat'
+import { exportFlatWindow, FlatPreview } from '@/features/flat'
 import { mediaPalette } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { useBusy } from '@/state/useBusy'
 import { windowContainerControls } from './windowContainerControls'
 import { windowContentControls } from './windowControls'
 import { windowStyleControls } from './windowStyleControls'
-import styles from './ExportPanel.module.css'
+import exportStyles from './ExportPanel.module.css'
+import styles from './WindowPanel.module.css'
 
 /**
  * 2D window mockups.
  *
- * The same chrome appears on the device screen in the 3D scene and in the flat
- * export, because both come from one canvas composer.
+ * The same chrome appears on the device screen in the 3D scene, in the flat
+ * export, and here, in the compact live preview above the controls — because
+ * all three come from one canvas composer (`composeWindow`), reached through
+ * one `FlatPreview` component. This is the same component the standalone 2D
+ * tool page (`FlatStudio`) mounts, just given a smaller box: neither the
+ * preview nor the export needs the 3D scene at all, which is what keeps this
+ * panel fully usable even where WebGL is unavailable.
  */
 export function WindowPanel() {
   const config = useAppStore((state) => state.flat)
@@ -49,6 +55,7 @@ export function WindowPanel() {
 
   return (
     <Panel title="Window mockup">
+      <FlatPreview config={config} source={source} className={styles.preview} />
       <ControlList controls={windowContentControls} />
       <ControlList controls={windowStyleControls} />
       <ControlList controls={windowContainerControls} />
@@ -62,7 +69,7 @@ export function WindowPanel() {
         {busy ? 'Exporting…' : 'Export window PNG'}
       </Button>
       {error && (
-        <p className={styles.error} role="alert">
+        <p className={exportStyles.error} role="alert">
           {error}
         </p>
       )}

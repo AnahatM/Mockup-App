@@ -1,6 +1,7 @@
 import { Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { useAppStore } from '@/state/store'
+import { bodyTextureControls, frameTextureControls } from './deviceTextureControls'
 import { finishControls, materialControls } from './deviceFinishControls'
 import { detailControls, placementControls } from './devicePlacementControls'
 import { importControls, importedScreenControls } from './deviceImportControls'
@@ -25,6 +26,12 @@ export function DevicePanel() {
           </Panel>
           <Panel title="Materials">
             <ControlList controls={materialControls} />
+          </Panel>
+          <Panel title="Body texture">
+            <ControlList controls={bodyTextureControls} />
+          </Panel>
+          <Panel title="Frame texture">
+            <ControlList controls={frameTextureControls} />
           </Panel>
           <Panel title="Details">
             <ControlList controls={detailControls} />

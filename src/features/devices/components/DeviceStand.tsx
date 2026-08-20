@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import type { SurfaceTextureConfig } from '@/features/textures'
 import { buildStand } from '../builders/stand'
 import { FinishMaterial } from '../materials/FinishMaterial'
 import type { DeviceSpec, FinishKind, StandSpec } from '../spec/types'
@@ -8,6 +9,7 @@ export interface DeviceStandProps {
   stand: StandSpec
   frameColor: string
   finish: FinishKind
+  texture: SurfaceTextureConfig
 }
 
 /**
@@ -16,7 +18,7 @@ export interface DeviceStandProps {
  * Positioned in the device's own local frame, below the display, so the whole
  * assembly rotates together when the user turns the product.
  */
-export function DeviceStand({ spec, stand, frameColor, finish }: DeviceStandProps) {
+export function DeviceStand({ spec, stand, frameColor, finish, texture }: DeviceStandProps) {
   const parts = useMemo(() => buildStand(stand), [stand])
 
   // The display is centred on the origin, so the stand hangs below it.
@@ -29,7 +31,7 @@ export function DeviceStand({ spec, stand, frameColor, finish }: DeviceStandProp
         position={[0, displayBottom - stand.neckHeight / 2, -stand.neckDepth * 0.2]}
         castShadow
       >
-        <FinishMaterial finish={finish} color={frameColor} />
+        <FinishMaterial finish={finish} color={frameColor} texture={texture} />
       </mesh>
 
       <mesh
@@ -42,7 +44,7 @@ export function DeviceStand({ spec, stand, frameColor, finish }: DeviceStandProp
         castShadow
         receiveShadow
       >
-        <FinishMaterial finish={finish} color={frameColor} />
+        <FinishMaterial finish={finish} color={frameColor} texture={texture} />
       </mesh>
     </group>
   )

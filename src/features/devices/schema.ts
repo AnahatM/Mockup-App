@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { hexSchema, vec3Schema } from '@/lib/schema/primitives'
+import { surfaceTextureSchema } from '@/features/textures/schema'
 
 /**
  * A user-imported GLB/GLTF, the escape hatch described in
@@ -43,6 +44,13 @@ export const deviceConfigSchema = z.object({
   frameFinish: z.string().nullable().default(null),
   backFinish: z.string().nullable().default(null),
   screenFinish: z.enum(['glossy', 'matte']).default('glossy'),
+  /**
+   * Procedural surface texture, layered over the back/body finish and the
+   * frame finish independently. Defaults to `kind: 'none'`, so a preset
+   * saved before this existed renders exactly as it did before.
+   */
+  bodyTexture: surfaceTextureSchema.prefault({}),
+  frameTexture: surfaceTextureSchema.prefault({}),
 
   /** Per-device detail toggles. */
   showCutout: z.boolean().default(true),

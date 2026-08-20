@@ -52,6 +52,47 @@ through the 3D one.
   landing page all have to say so. The route table is the single source those
   read from, and a test holds it against the router.
 
+## Measured outcome
+
+Transferred JavaScript per route, gzipped, before and after:
+
+| Route | Before | After |
+| --- | --- | --- |
+| `/` | ~630 kB | 213 kB |
+| `/docs` | ~630 kB | 213 kB |
+| `/window` | ~630 kB | 320 kB |
+| `/studio` | ~630 kB | 638 kB |
+
+Getting there took two distinct fixes, and only the first was the one this ADR
+predicted.
+
+**Source coupling.** Store slices imported feature *barrels*, and those barrels
+re-export react-three-fiber components — so every component, by touching the
+store, pulled in three.js. Fixed with a `state.ts` convention: each feature may
+expose its pure data-and-maths half, which the store imports instead. The worst
+single instance was `camera/presets.ts` importing `frameDevice` from the devices
+barrel, which put the entire 3D engine on the landing page for the sake of one
+function.
+
+**Chunking.** A hand-written `manualChunks` predated the lazy routes and fought
+them: React's own files were being assigned into the `r3f` vendor chunk, so the
+React chunk imported the 3D chunk and every route downloaded three.js purely to
+get React. Removing it entirely — letting the bundler split on the router's own
+dynamic-import boundaries — was the fix.
+
+Both are guarded: `scripts/verify-eager-graph.mjs` walks static imports from the
+entry and fails if anything reachable before a lazy boundary imports three.js;
+`scripts/verify-bundle.mjs` measures bytes actually transferred per route.
+
+Two guards rather than one because each caught the other lying. The bundle probe
+originally matched on chunk *filenames*, which produced a false positive for
+five rounds (the flagged chunk was mostly React) and then a false negative (after
+the rename there was no such filename, so it passed while the studio still
+loaded three.js). The graph walker's first version excluded newlines from its
+import pattern, so it missed every multi-line `import { … } from 'three'` and
+declared a graph clean that plainly was not. Neither error was visible from
+inside the check that made it.
+
 ## Alternatives considered
 
 - **A modal inside the studio.** The first plan, and the user's initial

@@ -5,8 +5,8 @@ import {
   findCameraPreset,
   type CameraConfig,
   type CameraMode,
-} from '@/features/camera'
-import { frameDevice, resolveDevice } from '@/features/devices'
+} from '@/features/camera/state'
+import { frameDevice, resolveDevice } from '@/features/devices/state'
 import type { SliceCreator } from '../types'
 
 export interface CameraSlice {

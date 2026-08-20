@@ -1,4 +1,4 @@
-import { defaultAnimation, type AnimationConfig } from '@/features/animation'
+import { defaultAnimation, type AnimationConfig } from '@/features/animation/schema'
 import type { SliceCreator } from '../types'
 
 export interface AnimationSlice {

@@ -3,7 +3,7 @@ import {
   defaultLighting,
   type LightConfig,
   type LightingConfig,
-} from '@/features/lighting'
+} from '@/features/lighting/state'
 import type { SliceCreator } from '../types'
 
 export interface LightingSlice {

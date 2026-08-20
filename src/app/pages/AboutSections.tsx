@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { cx } from '@/lib/cx'
-import { DEVICES } from '@/features/devices'
+import { DEVICES } from '@/features/devices/state'
 import { ScreenshotSlot } from '@/ui'
 import { LINKS, ROUTES } from '../routes'
 import styles from './Prose.module.css'

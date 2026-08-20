@@ -1,4 +1,4 @@
-import { defaultOverlays, type OverlaysConfig } from '@/features/screen'
+import { defaultOverlays, type OverlaysConfig } from '@/features/screen/schema'
 import type { SliceCreator } from '../types'
 
 export interface OverlaysSlice {

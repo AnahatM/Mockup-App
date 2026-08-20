@@ -38,11 +38,13 @@ export function LaptopBase({ spec, hinge, config }: LaptopBaseProps) {
           attach="material-0"
           finish={spec.materials.back}
           color={config.bodyColor}
+          texture={config.bodyTexture}
         />
         <FinishMaterial
           attach="material-1"
           finish={spec.materials.frame}
           color={config.frameColor}
+          texture={config.frameTexture}
         />
       </mesh>
 

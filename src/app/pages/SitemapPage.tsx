@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { cx } from '@/lib/cx'
-import { DEVICES } from '@/features/devices'
+import { DEVICES } from '@/features/devices/state'
 import { BUILTIN_PRESETS } from '@/features/presets'
 import { DOC_SECTIONS, DOC_SECTION_LABELS, docIndex } from '@/content/docs'
 import { ROUTES, SITE_ROUTES, docPath } from '../routes'

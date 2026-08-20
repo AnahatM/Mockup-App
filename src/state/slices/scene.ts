@@ -1,4 +1,4 @@
-import { defaultScene, type SceneConfig } from '@/features/scene'
+import { defaultScene, type SceneConfig } from '@/features/scene/schema'
 import type { SliceCreator } from '../types'
 
 export interface SceneSlice {

@@ -1,16 +1,23 @@
+/*
+ * Lives here, on the 3D side of the seam, rather than in `features/flat`.
+ *
+ * It is the bridge that puts the 2D window composite onto a device's screen in
+ * the 3D scene, so it imports three.js and react-three-fiber. While it sat in
+ * the flat feature, the flat barrel carried three.js — which meant the 2D
+ * window tool downloaded a 3D engine it never runs, defeating the separation
+ * ADR 0006 exists to create. The 2D tool does not use this hook; only
+ * `Device.tsx` does.
+ */
 import { useEffect, useMemo } from 'react'
 import { CanvasTexture, SRGBColorSpace, VideoTexture, type Texture } from 'three'
 import { useFrame } from '@react-three/fiber'
 import { mediaAspect, mediaPalette } from '@/features/media'
 import { useAppStore } from '@/state/store'
-import { composeWindow } from './compose'
-import type { FlatConfig } from './schema'
+import { WINDOW_ASPECT, composeWindow } from '@/features/flat'
+import type { FlatConfig } from '@/features/flat/schema'
 
 /** Enough for crisp title text at export scale. */
 const RESOLUTION = 2200
-
-/** Window proportion. 16:10 reads as a desktop window; the chrome sits on top. */
-const WINDOW_ASPECT = 16 / 10
 
 export interface FramedResult {
   texture: Texture | null

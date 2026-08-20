@@ -1,5 +1,5 @@
 import type { IconName } from '@/ui'
-import { DEVICES } from '@/features/devices'
+import { DEVICES } from '@/features/devices/state'
 
 export interface Highlight {
   icon: IconName

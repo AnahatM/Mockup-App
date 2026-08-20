@@ -1,0 +1,53 @@
+/*
+ * Two panes: a flexible preview and a fixed-width control rail. Wraps to a
+ * single column below the breakpoint, same as the inspector does in the 3D
+ * studio, so this is just as usable on a narrow window.
+ */
+.studio {
+  display: flex;
+  gap: var(--space-6);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: var(--space-6);
+  overflow: auto;
+}
+
+.previewColumn {
+  flex: 1 1 60%;
+  min-width: 0;
+  min-height: 24rem;
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+}
+
+.controlsColumn {
+  display: flex;
+  flex: 0 0 22rem;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 18rem;
+  max-width: 24rem;
+  overflow-y: auto;
+}
+
+.error {
+  padding: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--status-danger);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}
+
+@media (width <= 720px) {
+  .studio {
+    flex-direction: column;
+  }
+
+  .controlsColumn {
+    max-width: none;
+  }
+}

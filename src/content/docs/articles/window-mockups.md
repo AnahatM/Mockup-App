@@ -1,12 +1,16 @@
 Window mockups wrap your screenshot in application chrome — a macOS window with traffic lights, or a browser with tabs and a URL bar.
 
-They work two ways from the same drawing, so what you see on the device is exactly what a flat export gives you.
+They work three ways from the same drawing — the live preview, the flat export, and the texture on a device's screen — so what you see in any one of them is exactly what the others give you.
+
+Window mockups are a 2D tool: nothing about them needs the 3D studio, WebGL, or a device at all. A live preview sits above the controls in the **Screen → Window mockup** panel, drawn by the exact same code that produces the flat export and the on-device texture — so it stays usable, and shows exactly what you'll get, even in a browser that cannot start WebGL.
 
 ## Turning it on
 
 **Screen → Window mockup → Frame.** Choose **macOS** or **Browser**.
 
-Once on, the device's screen shows the window instead of the bare screenshot. A laptop displaying a browser window containing your site is the classic use.
+Once on, the preview and the device's screen both show the window instead of
+the bare screenshot. A laptop displaying a browser window containing your
+site is the classic use.
 
 ## What you can change
 

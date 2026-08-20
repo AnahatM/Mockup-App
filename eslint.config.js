@@ -42,17 +42,24 @@ export default defineConfig([
         {
           patterns: [
             {
-              // Two deep paths are allowed, both pure data modules with no
-              // React and no store: `<feature>/schema` and
-              // `<feature>/presets`. Importing them directly is what keeps
+              // Three deep paths are allowed, all pure modules with no React
+              // and no store: `<feature>/schema`, `<feature>/presets` and
+              // `<feature>/state` — the last being a feature's data-and-maths
+              // half, which the store imports so that touching the store does
+              // not drag that feature's 3D components in behind it. Importing them directly is what keeps
               // config and preset data out of the
               // barrel -> component -> store -> feature import cycle. A
               // barrel exports components, and this app's components read the
               // store, so any pure module reached through a barrel drags the
               // entire store graph in behind it.
-              group: ['@/features/*/*', '!@/features/*/schema', '!@/features/*/presets'],
+              group: [
+                '@/features/*/*',
+                '!@/features/*/schema',
+                '!@/features/*/presets',
+                '!@/features/*/state',
+              ],
               message:
-                'Import a feature through its public barrel (@/features/<name>), not its internals. The exceptions are @/features/<name>/schema and @/features/<name>/presets, which are pure data.',
+                'Import a feature through its public barrel (@/features/<name>), not its internals. The exceptions are @/features/<name>/schema, /presets and /state, which are pure data.',
             },
           ],
         },

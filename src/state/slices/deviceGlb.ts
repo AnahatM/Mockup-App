@@ -5,7 +5,7 @@ import {
   pedestalRadiusFor,
   shadowScaleFor,
   type DeviceConfig,
-} from '@/features/devices'
+} from '@/features/devices/state'
 import type { SliceCreator } from '../types'
 
 /** The import-only slice of `DeviceSlice`, split into its own module purely
