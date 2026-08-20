@@ -1,4 +1,10 @@
-import { BufferGeometry, Float32BufferAttribute, MeshStandardMaterial, Uint16BufferAttribute } from 'three'
+import {
+  BufferGeometry,
+  Float32BufferAttribute,
+  MeshStandardMaterial,
+  Uint16BufferAttribute,
+} from 'three'
+import { buildSurfaceMaps, type SurfaceTextureConfig } from '@/features/textures'
 
 /**
  * Pure geometry/material builders for `Cyclorama`, kept in their own module
@@ -35,7 +41,10 @@ interface ProfilePoint {
 }
 
 function buildProfile(): ProfilePoint[] {
-  const points: ProfilePoint[] = [{ z: FLOOR, y: 0 }, { z: -CURVE, y: 0 }]
+  const points: ProfilePoint[] = [
+    { z: FLOOR, y: 0 },
+    { z: -CURVE, y: 0 },
+  ]
 
   // The fillet: a quadratic Bézier from the floor's inner edge up into the
   // wall, sampled by hand rather than via `THREE.Shape` so nothing ever
@@ -96,15 +105,31 @@ export function buildSweep(): BufferGeometry {
   return geometry
 }
 
+/** The sweep's own roughness. Named because the procedural texture below is
+ *  layered *around* it rather than replacing it — see `buildSurfaceMaps`. */
+const ROUGHNESS = 0.78
+
 /** Slightly glossy rather than pure matte: a real cove sweep picks up a soft
  *  sheen from the key light, and that gradient across the floor is most of
  *  what makes the space read as three-dimensional. Single-sided (the
- *  default `FrontSide`) is deliberate — see `buildSweep`. */
-export function buildMaterial(color: string): MeshStandardMaterial {
+ *  default `FrontSide`) is deliberate — see `buildSweep`.
+ *
+ *  `texture` is the same procedural surface config the device body and the
+ *  pedestal take. A backdrop is the largest surface in frame, so it is also
+ *  where a plain flat colour gives the render away fastest. */
+export function buildMaterial(
+  color: string,
+  texture?: SurfaceTextureConfig | undefined,
+): MeshStandardMaterial {
+  const overlay =
+    texture && texture.kind !== 'none' ? buildSurfaceMaps(texture, ROUGHNESS) : null
+
   return new MeshStandardMaterial({
     color,
-    roughness: 0.78,
+    roughness: ROUGHNESS,
     metalness: 0,
     envMapIntensity: 0.85,
+    roughnessMap: overlay?.roughnessMap ?? null,
+    normalMap: overlay?.normalMap ?? null,
   })
 }

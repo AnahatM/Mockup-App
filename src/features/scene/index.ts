@@ -14,3 +14,13 @@ export {
   type SceneConfig,
   type ShadowConfig,
 } from './schema'
+export {
+  Structures,
+  LATTICE_KINDS,
+  STRUCTURE_KINDS,
+  STRUCTURE_LABELS,
+  defaultStructure,
+  structureSchema,
+  type StructureConfig,
+  type StructureKind,
+} from './environments'

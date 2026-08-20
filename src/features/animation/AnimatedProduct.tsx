@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import type { Group } from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
+import { useReducedMotion } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { findClip } from './clips'
 
@@ -27,7 +28,7 @@ export function AnimatedProduct({ children }: { children: ReactNode }) {
   // Someone who has asked the system for less motion should not be handed a
   // spinning product. The clip still applies, held at its resting frame, so
   // exports and recordings are unaffected.
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useFrame((_, delta) => {
     const node = group.current
@@ -79,20 +80,4 @@ export function AnimatedProduct({ children }: { children: ReactNode }) {
   })
 
   return <group ref={group}>{children}</group>
-}
-
-/** Tracks the OS "reduce motion" setting, and follows it if it changes. */
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const sync = () => setReduced(media.matches)
-    media.addEventListener('change', sync)
-    return () => media.removeEventListener('change', sync)
-  }, [])
-
-  return reduced
 }

@@ -14,9 +14,14 @@ import { buildMaterial, buildSweep } from './cycloramaGeometry'
  */
 export function Cyclorama({ config }: { config: BackdropConfig }) {
   const geometry = useMemo(() => buildSweep(), [])
-  const material = useMemo(() => buildMaterial(config.color), [config.color])
+  const material = useMemo(
+    () => buildMaterial(config.color, config.texture),
+    [config.color, config.texture],
+  )
 
   useEffect(() => () => material.dispose(), [material])
 
-  return <mesh geometry={geometry} material={material} position={[0, 0, 0]} receiveShadow />
+  return (
+    <mesh geometry={geometry} material={material} position={[0, 0, 0]} receiveShadow />
+  )
 }

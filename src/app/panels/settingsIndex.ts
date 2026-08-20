@@ -11,6 +11,12 @@ import { imageControls, videoControls } from './exportControls'
 import { rigControls } from './lightingRigControls'
 import { navigationControls as overlayNavControls } from './navigationControls'
 import { pedestalTextureControls } from './pedestalTextureControls'
+import { structureControls } from './structureControls'
+import {
+  cycloramaTextureControls,
+  structureFinishControls,
+  structureTextureControls,
+} from './structureSurfaceControls'
 import { renderControls } from './renderControls'
 import { roomControls } from './roomControls'
 import { backdropControls, pedestalControls } from './sceneBackdropControls'
@@ -54,6 +60,10 @@ export const SETTING_GROUPS: readonly SettingGroup[] = [
   { tab: 'screen', panel: 'Navigation', controls: overlayNavControls },
 
   { tab: 'scene', panel: 'Backdrop', controls: backdropControls },
+  { tab: 'scene', panel: 'Backdrop texture', controls: cycloramaTextureControls },
+  { tab: 'scene', panel: 'Environment', controls: structureControls },
+  { tab: 'scene', panel: 'Environment finish', controls: structureFinishControls },
+  { tab: 'scene', panel: 'Environment texture', controls: structureTextureControls },
   { tab: 'scene', panel: 'Pedestal', controls: pedestalControls },
   { tab: 'scene', panel: 'Pedestal texture', controls: pedestalTextureControls },
   { tab: 'scene', panel: 'Shadow', controls: shadowControls },

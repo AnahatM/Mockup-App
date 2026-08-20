@@ -11,3 +11,4 @@ export {
   type SurfaceTextureKind,
 } from './schema'
 export { buildSurfaceMaps, disposeSurfaceMaps, type SurfaceMaps } from './maps'
+export { fractalNoise, hash2, latticeNoise } from './noise'

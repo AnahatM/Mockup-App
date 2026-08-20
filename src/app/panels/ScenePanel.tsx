@@ -2,6 +2,12 @@ import { Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { backdropControls, pedestalControls } from './sceneBackdropControls'
 import { pedestalTextureControls } from './pedestalTextureControls'
+import { structureControls } from './structureControls'
+import {
+  cycloramaTextureControls,
+  structureFinishControls,
+  structureTextureControls,
+} from './structureSurfaceControls'
 
 /**
  * Backdrop and plinth.
@@ -14,6 +20,18 @@ export function ScenePanel() {
     <>
       <Panel title="Backdrop">
         <ControlList controls={backdropControls} />
+      </Panel>
+      <Panel title="Backdrop texture">
+        <ControlList controls={cycloramaTextureControls} />
+      </Panel>
+      <Panel title="Environment">
+        <ControlList controls={structureControls} />
+      </Panel>
+      <Panel title="Environment finish">
+        <ControlList controls={structureFinishControls} />
+      </Panel>
+      <Panel title="Environment texture">
+        <ControlList controls={structureTextureControls} />
       </Panel>
       <Panel title="Pedestal">
         <ControlList controls={pedestalControls} />

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { hexSchema, unitSchema } from '@/lib/schema/primitives'
 import { surfaceTextureSchema } from '@/features/textures/schema'
+import { structureSchema } from './environments/schema'
 
 /**
  * Scene configuration: everything behind and beneath the product.
@@ -39,6 +40,15 @@ export const backdropSchema = z.object({
   glowStrength: unitSchema.default(0.9),
   gridSize: z.number().min(0.05).max(4).default(0.5),
   gridOpacity: unitSchema.default(0.12),
+  /** Procedural finish for the cyclorama's sweep — the same six knobs the
+   *  device body and the pedestal use. This is what carries F16 to the walls. */
+  texture: surfaceTextureSchema.prefault({}),
+  /**
+   * Geometry standing in front of whatever the mode paints. A separate axis
+   * from `mode` on purpose: a gradient supplies distance, a structure supplies
+   * parallax, and a backdrop only reads as real space with both. See ADR 0007.
+   */
+  structure: structureSchema.prefault({}),
 })
 
 export const PEDESTAL_SHAPES = ['disc', 'square', 'none'] as const
