@@ -2,6 +2,7 @@ import { Button, Icon, IconButton } from '@/ui'
 import { useAppStore } from '@/state/store'
 import { HistoryControls } from './HistoryControls'
 import { PlaybackControls } from './PlaybackControls'
+import { useCompactStudio } from './useCompactStudio'
 import { ViewportControls } from './ViewportControls'
 import styles from './Toolbar.module.css'
 
@@ -20,6 +21,22 @@ export function Toolbar() {
   const toggleInspector = useAppStore((state) => state.toggleInspector)
   const openPalette = useAppStore((state) => state.setPaletteOpen)
   const setTab = useAppStore((state) => state.setInspectorTab)
+  const scale = useAppStore((state) => state.exportConfig.scale)
+  const transparent = useAppStore((state) => state.exportConfig.transparent)
+  const compact = useCompactStudio()
+
+  // On a compact viewport the rail and inspector are full-height overlays, so
+  // showing both at once just stacks one over the other. Opening either one
+  // there closes the other first; on a wide viewport both stay independent,
+  // exactly as before.
+  const openSidebar = () => {
+    if (compact && !sidebarOpen && inspectorOpen) toggleInspector()
+    toggleSidebar()
+  }
+  const openInspector = () => {
+    if (compact && !inspectorOpen && sidebarOpen) toggleSidebar()
+    toggleInspector()
+  }
 
   return (
     <div className={styles.toolbar}>
@@ -29,14 +46,14 @@ export function Toolbar() {
           label={sidebarOpen ? 'Hide device rail' : 'Show device rail'}
           size="sm"
           active={sidebarOpen}
-          onClick={toggleSidebar}
+          onClick={openSidebar}
         />
         <IconButton
           icon="sliders"
           label={inspectorOpen ? 'Hide inspector' : 'Show inspector'}
           size="sm"
           active={inspectorOpen}
-          onClick={toggleInspector}
+          onClick={openInspector}
         />
       </div>
 
@@ -66,6 +83,9 @@ export function Toolbar() {
           onClick={() => setTab('export')}
         >
           Export
+          <span className={styles.exportMeta}>
+            {scale}× · PNG{transparent ? ' · alpha' : ''}
+          </span>
         </Button>
       </div>
     </div>

@@ -60,7 +60,7 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | U5 | Focus-visible styling audit across every interactive control | TODO |
 | U6 | `prefers-reduced-motion` honoured by every animation | DONE |
 | U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | DONE |
-| U8 | Offline/local reassurance surfaced in the UI, not only in the docs | TODO |
+| U8 | Offline/local reassurance surfaced in the UI, not only in the docs | DONE |
 
 ## Theme — Horizon
 
@@ -102,7 +102,7 @@ things paid products do that we should match or beat.
 | C7 | Undo / redo | DONE |
 | C8 | "Start over" — reset the whole scene, behind a confirmation | DONE |
 | C9 | Copy the export straight to the clipboard | DONE |
-| C10 | Export scale selector shown inline on the export button (1x/2x/4x) | TODO |
+| C10 | Export scale selector shown inline on the export button (1x/2x/4x) | DONE |
 | C11 | "Hide mockup" — render the screenshot on the backdrop with no device | TODO |
 | C12 | Gradient backdrop presets that adapt to the uploaded media | TODO |
 | C13 | Research pass: what else comparable tools offer that we lack | TODO |

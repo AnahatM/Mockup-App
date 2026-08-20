@@ -95,3 +95,43 @@
     display: none;
   }
 }
+
+/*
+ * Below `mobile` (640px, see design-tokens.md) the toolbar's ~16 controls no
+ * longer fit on one line. Wrapping — rather than hiding controls into an
+ * overflow menu — keeps every one of them where a search or a keyboard
+ * shortcut would expect to find it, just spread over more than one row. The
+ * shell's toolbar grid row is `minmax(toolbar-height, auto)` (see
+ * AppShell.module.css) specifically so it can grow to fit the wrapped rows.
+ */
+@media (width <= 640px) {
+  .toolbar {
+    flex-wrap: wrap;
+    row-gap: var(--space-1);
+    padding-block: var(--space-1);
+  }
+
+  /* With no single-row width left to fill, the spacer would either collapse
+     to nothing or force an empty row of its own — neither is useful. */
+  .spacer {
+    display: none;
+  }
+}
+
+/*
+ * The export settings, on the button that opens them. Someone about to export
+ * wants to know what they are about to get without opening a panel to find out
+ * — and seeing "1×" when they meant 4× is the mistake worth preventing.
+ */
+.exportMeta {
+  padding-inline-start: var(--space-2);
+  font-size: var(--text-2xs);
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (width <= 900px) {
+  .exportMeta {
+    display: none;
+  }
+}
