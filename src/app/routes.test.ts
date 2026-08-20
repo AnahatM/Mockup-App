@@ -14,9 +14,13 @@ import { ROUTES, SITE_ROUTES, footerRoutes, navRoutes } from './routes'
 const routerSource = readFileSync('src/app/AppRouter.tsx', 'utf8')
 
 /** Route keys the router actually registers, e.g. 'home', 'studio'. */
-const registered = [...routerSource.matchAll(/path:\s*ROUTES\.(\w+)/g)].map(
-  ([, key]) => key,
-)
+const registered = [...routerSource.matchAll(/path:\s*ROUTES\.(\w+)/g)]
+  .map(([, key]) => key)
+  .filter((key): key is string => key !== undefined)
+
+/** The path a route key maps to, or undefined if the key is not in the table. */
+const pathFor = (key: string): string | undefined =>
+  (ROUTES as Record<string, string>)[key]
 
 /**
  * Routes deliberately absent from the site index.
@@ -35,16 +39,14 @@ describe('the route table', () => {
     const listed = new Set(SITE_ROUTES.map((route) => route.path))
     const missing = registered
       .filter((key) => !NOT_INDEXED.has(key))
-      .map((key) => ROUTES[key as keyof typeof ROUTES])
-      .filter((path) => !listed.has(path))
+      .map(pathFor)
+      .filter((path) => path !== undefined && !listed.has(path))
 
     expect(missing, 'registered in the router but absent from SITE_ROUTES').toEqual([])
   })
 
   it('does not list a route the router never registers', () => {
-    const registeredPaths = new Set(
-      registered.map((key) => ROUTES[key as keyof typeof ROUTES]),
-    )
+    const registeredPaths = new Set(registered.map(pathFor))
     const orphans = SITE_ROUTES.map((route) => route.path).filter(
       (path) => !registeredPaths.has(path),
     )

@@ -51,6 +51,7 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
 | F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
+| F20 | **Bug:** desktop devices are invisible — the cyclorama is a filled solid whose implicit closing face occludes them, because camera distance scales with device size but the cove does not. Diagnosed and handed to the viewport workstream; `scripts/verify-desktop.mjs` is the regression test | TODO |
 | F12 | Fly mode: Q/E for up and down alongside WASD | TODO |
 | F13 | Show every viewport control and keybinding in the UI, not just the docs | TODO |
 | F14 | More bindings for trackpad users — e.g. Space to pan, easier dragging without a mouse | TODO |
