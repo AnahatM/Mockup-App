@@ -41,7 +41,7 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F2 | Mirror real iPhone finish names in the colour palette (backlog #12) | DONE |
 | F3 | App Store screenshot mode — panoramic multi-device layouts + headline text (#25) | TODO |
 | F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
-| F5 | Standalone window/flat mockup mode, no device required (#27) | TODO |
+| F5 | Standalone window/flat mockup mode, no device required (#27) | DONE |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
@@ -99,7 +99,7 @@ things paid products do that we should match or beat.
 | C1 | Container style presets: glass light/dark, inset light/dark, outline, border, liquid | DONE |
 | C2 | Border shape control: sharp / curved / round, plus a radius slider | DONE |
 | C3 | Shadow presets: none / spread / hug / adaptive, with an opacity slider | DONE |
-| C4 | Layout preset gallery with live thumbnails, not just a names list | TODO |
+| C4 | Layout preset gallery with live thumbnails, not just a names list | DONE |
 | C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | TODO |
 | C6 | Separate Zoom and Tilt controls with a live preview | TODO |
 | C7 | Undo / redo | DONE |

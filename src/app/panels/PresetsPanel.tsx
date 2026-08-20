@@ -1,5 +1,5 @@
 import { Panel } from '@/ui'
-import { builtinPresetGroups } from '@/features/presets'
+import { PresetThumbnail, builtinPresetGroups } from '@/features/presets'
 import { useAppStore } from '@/state/store'
 import { SavedPresets } from './SavedPresets'
 import styles from './PresetsPanel.module.css'
@@ -20,8 +20,11 @@ export function PresetsPanel() {
                 className={styles.builtin}
                 onClick={() => applyBuiltin(preset.id)}
               >
-                <span className={styles.name}>{preset.name}</span>
-                <span className={styles.description}>{preset.description}</span>
+                <PresetThumbnail preset={preset} />
+                <span className={styles.text}>
+                  <span className={styles.name}>{preset.name}</span>
+                  <span className={styles.description}>{preset.description}</span>
+                </span>
               </button>
             ))}
           </div>
