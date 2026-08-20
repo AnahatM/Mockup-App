@@ -58,9 +58,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 |---|---|---|
 | U1 | React error boundary with a well-designed error screen, not the router's default | DONE |
 | U2 | A proper 404 page | DONE |
-| U3 | Empty states everywhere something can be empty | TODO |
+| U3 | Empty states everywhere something can be empty | DONE |
 | U4 | Keyboard shortcut reference / help overlay | DONE |
-| U5 | Focus-visible styling audit across every interactive control | TODO |
+| U5 | Focus-visible styling audit across every interactive control | DONE |
 | U6 | `prefers-reduced-motion` honoured by every animation | DONE |
 | U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | DONE |
 | U8 | Offline/local reassurance surfaced in the UI, not only in the docs | DONE |
@@ -108,7 +108,7 @@ things paid products do that we should match or beat.
 | C10 | Export scale selector shown inline on the export button (1x/2x/4x) | DONE |
 | C11 | "Hide mockup" — render the screenshot on the backdrop with no device | DONE |
 | C12 | Gradient backdrop presets that adapt to the uploaded media | TODO |
-| C13 | Research pass: what else comparable tools offer that we lack | TODO |
+| C13 | Research pass: what else comparable tools offer that we lack | DONE |
 
 ## Project
 

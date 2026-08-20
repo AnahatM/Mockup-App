@@ -1,4 +1,4 @@
-import { Button, IconButton, Panel } from '@/ui'
+import { Button, EmptyState, IconButton, Panel } from '@/ui'
 import { ControlList } from '@/ui/controls'
 import { useAppStore } from '@/state/store'
 import { lightControls } from './lightControls'
@@ -6,7 +6,7 @@ import { rigControls } from './lightingRigControls'
 import { roomControls } from './roomControls'
 import styles from './LightingPanel.module.css'
 
-
+/** The lighting rig: the room, and each light as its own collapsible section. */
 export function LightingPanel() {
   const lights = useAppStore((state) => state.lighting.lights)
   const addLight = useAppStore((state) => state.addLight)
@@ -23,6 +23,14 @@ export function LightingPanel() {
       <Panel title="Room">
         <ControlList controls={roomControls} />
       </Panel>
+
+      {lights.length === 0 && (
+        <EmptyState
+          icon="light"
+          title="No lights"
+          description="The scene is lit only by the room. Add a light to shape highlights, rim edges and reflections."
+        />
+      )}
 
       {lights.map((light, index) => (
         <Panel
