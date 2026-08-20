@@ -18,10 +18,44 @@ body,
   height: 100%;
 }
 
+html {
+  /*
+   * Stops iOS Safari inflating text when the device is rotated to landscape,
+   * which silently breaks any layout that was sized against the text.
+   */
+  text-size-adjust: 100%;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizelegibility;
+
+  /*
+   * The grey flash on tap. The app has its own hover and active states, so the
+   * platform's is a second, uglier answer to a question already answered.
+   */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * Native form controls that survive the design system: the range inputs behind
+ * the sliders, and any checkbox. Without this they render in the OS accent
+ * rather than the app's, which is jarring next to everything else.
+ */
+input,
+progress {
+  accent-color: var(--accent);
+}
+
+/*
+ * Numbers in the UI are read as values to compare, not as prose. Tabular
+ * figures stop a slider's readout jittering horizontally as digits change.
+ */
+input[type='number'],
+kbd,
+output {
+  font-variant-numeric: tabular-nums;
 }
 
 img,
