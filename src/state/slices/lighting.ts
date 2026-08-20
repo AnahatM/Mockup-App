@@ -8,9 +8,12 @@ import type { SliceCreator } from '../types'
 
 export interface LightingSlice {
   lighting: LightingConfig
+  /** Light last picked via a gizmo click, so the inspector can highlight it. */
+  selectedLightId: string | null
   addLight: () => void
   removeLight: (id: string) => void
   duplicateLight: (id: string) => void
+  selectLight: (id: string | null) => void
   setHdri: (url: string, name: string) => void
   clearHdri: () => void
   resetLighting: () => void
@@ -24,6 +27,11 @@ function cloneLight(light: LightConfig): LightConfig {
 
 export const createLightingSlice: SliceCreator<LightingSlice> = (set) => ({
   lighting: defaultLighting(),
+  selectedLightId: null,
+  selectLight: (id) =>
+    set((draft) => {
+      draft.selectedLightId = id
+    }),
   addLight: () =>
     set((draft) => {
       if (draft.lighting.lights.length >= MAX_LIGHTS) return
@@ -45,6 +53,7 @@ export const createLightingSlice: SliceCreator<LightingSlice> = (set) => ({
     set((draft) => {
       draft.lighting.lights = draft.lighting.lights.filter((l) => l.id !== id)
       draft.lighting.preset = 'custom'
+      if (draft.selectedLightId === id) draft.selectedLightId = null
     }),
   duplicateLight: (id) =>
     set((draft) => {
@@ -69,5 +78,6 @@ export const createLightingSlice: SliceCreator<LightingSlice> = (set) => ({
   resetLighting: () =>
     set((draft) => {
       draft.lighting = defaultLighting()
+      draft.selectedLightId = null
     }),
 })

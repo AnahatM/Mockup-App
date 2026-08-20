@@ -142,22 +142,18 @@ export function findLightingPreset(id: string): LightingPreset | undefined {
 /**
  * Materialises a preset into store-ready config, assigning fresh light ids.
  *
- * Rig-wide render settings (resolution, helper visibility) are deliberately not
+ * Rig-wide render settings (resolution) are deliberately not
  * part of a preset: they are how the user prefers to work, not part of the look.
  */
 export function applyLightingPreset(
   preset: LightingPreset,
-  current?: Pick<
-    LightingConfig,
-    'resolution' | 'showHelpers' | 'hdri' | 'hdriRotation'
-  >,
+  current?: Pick<LightingConfig, 'resolution' | 'hdri' | 'hdriRotation'>,
 ): LightingConfig {
   return {
     preset: preset.id,
     ambient: preset.ambient,
     environmentIntensity: preset.environmentIntensity,
     resolution: current?.resolution ?? 512,
-    showHelpers: current?.showHelpers ?? false,
     room: roomSchema.parse(preset.room ?? {}),
     // An environment map is a loaded file, not part of a look.
     hdri: current?.hdri ?? null,

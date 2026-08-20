@@ -23,9 +23,14 @@ export function LightRig() {
     (state) => state.scene.backdrop.mode === 'environment',
   )
   const active = lighting.lights.filter((light) => light.enabled)
+  const visibleLights = active.filter((light) => light.visibleInBackground)
   const bakeKey = useMemo(
     () => `${hashRig(active)}#${JSON.stringify(lighting.room)}`,
     [active, lighting.room],
+  )
+  const backgroundKey = useMemo(
+    () => `${hashRig(visibleLights)}#${JSON.stringify(lighting.room)}`,
+    [visibleLights, lighting.room],
   )
 
   return (
@@ -42,20 +47,47 @@ export function LightRig() {
           environmentRotation={[0, lighting.hdriRotation, 0]}
         />
       ) : (
-        <Environment
-          key={`${bakeKey}#${String(asBackground)}`}
-          frames={1}
-          background={asBackground}
-          resolution={lighting.resolution}
-          environmentIntensity={lighting.environmentIntensity}
-        >
-          {/* The room first: it sets the base luminance every other reflection
-              sits on top of. */}
-          <EnvironmentDome room={lighting.room} />
-          {active.map((light) => (
-            <StudioLight key={light.id} light={light} />
-          ))}
-        </Environment>
+        <>
+          {/*
+            Two separate bakes, deliberately not one.
+            `Environment` renders the same texture as both `scene.environment`
+            (reflections) and `scene.background` (the visible backdrop) when
+            `background` is truthy — so a single bake containing the light
+            panels would show those bright rectangles directly in the render,
+            not just their reflections. `background="only"` (below) writes
+            *only* `scene.background`, so the panels can light the product
+            without ever being literally visible. A light opts back in with
+            `visibleInBackground` (e.g. a softbox meant to be seen in shot).
+          */}
+          {asBackground && (
+            <Environment
+              key={`${backgroundKey}#bg`}
+              frames={1}
+              background="only"
+              resolution={lighting.resolution}
+              environmentIntensity={lighting.environmentIntensity}
+            >
+              <EnvironmentDome room={lighting.room} />
+              {visibleLights.map((light) => (
+                <StudioLight key={light.id} light={light} />
+              ))}
+            </Environment>
+          )}
+          <Environment
+            key={bakeKey}
+            frames={1}
+            background={false}
+            resolution={lighting.resolution}
+            environmentIntensity={lighting.environmentIntensity}
+          >
+            {/* The room first: it sets the base luminance every other
+                reflection sits on top of. */}
+            <EnvironmentDome room={lighting.room} />
+            {active.map((light) => (
+              <StudioLight key={light.id} light={light} />
+            ))}
+          </Environment>
+        </>
       )}
     </>
   )

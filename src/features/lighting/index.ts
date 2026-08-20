@@ -1,5 +1,5 @@
 export { LightRig } from './LightRig'
-export { LightHelpers } from './LightHelpers'
+export { LightGizmos } from './gizmo/LightGizmos'
 export { EnvironmentDome } from './EnvironmentDome'
 export { HdriPicker } from './HdriPicker'
 export {
@@ -9,6 +9,7 @@ export {
   type LightingPreset,
 } from './presets'
 export { defaultLighting } from './defaults'
+export { hideGizmosForCapture } from './gizmo/gizmoCaptureGuard'
 export {
   lightingSchema,
   lightSchema,

@@ -98,12 +98,4 @@ export const roomControls: readonly Control<AppState>[] = [
       d.lighting.resolution = Math.round(v)
     },
   }),
-  toggle({
-    label: 'Show light markers',
-    hint: 'Wireframe markers in the scene. Never appear in an export.',
-    select: (s) => s.lighting.showHelpers,
-    update: (d, v) => {
-      d.lighting.showHelpers = v
-    },
-  }),
 ]

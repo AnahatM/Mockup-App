@@ -1,5 +1,5 @@
 import type { Draft } from 'immer'
-import { color, segmented, slider, toggle, vec3 } from '@/ui/controls'
+import { color, segmented, slider, text, toggle, vec3 } from '@/ui/controls'
 import type { Control } from '@/ui/controls'
 import { LIGHT_FORMS, type LightConfig, type LightForm } from '@/features/lighting'
 import type { AppState } from '@/state/types'
@@ -29,11 +29,20 @@ const FORM_OPTIONS = LIGHT_FORMS.map((value) => ({
   label: value === 'rect' ? 'Panel' : value === 'circle' ? 'Disc' : 'Ring',
 }))
 
-export function lightControls(index: number): readonly Control<AppState>[] {
-  const light = (state: AppState): LightConfig | undefined =>
-    state.lighting.lights[index]
-
+/** Name, on/off, look and strength — everything but the transform. */
+function identityControls(
+  index: number,
+  light: (state: AppState) => LightConfig | undefined,
+): readonly Control<AppState>[] {
   return [
+    text({
+      label: 'Name',
+      maxLength: 48,
+      select: (s) => light(s)?.name ?? '',
+      update: edit<string>(index, (l, v) => {
+        l.name = v
+      }),
+    }),
     toggle({
       label: 'Enabled',
       select: (s) => light(s)?.enabled ?? false,
@@ -66,6 +75,23 @@ export function lightControls(index: number): readonly Control<AppState>[] {
         l.intensity = v
       }),
     }),
+    toggle({
+      label: 'Visible in background',
+      hint: 'Show this panel itself where the environment is the backdrop, not just its reflections.',
+      select: (s) => light(s)?.visibleInBackground ?? false,
+      update: edit<boolean>(index, (l, v) => {
+        l.visibleInBackground = v
+      }),
+    }),
+  ]
+}
+
+/** Where the light is, how big it is, and which way it points. */
+function transformControls(
+  index: number,
+  light: (state: AppState) => LightConfig | undefined,
+): readonly Control<AppState>[] {
+  return [
     vec3({
       label: 'Position',
       min: -12,
@@ -100,4 +126,11 @@ export function lightControls(index: number): readonly Control<AppState>[] {
       }),
     }),
   ]
+}
+
+export function lightControls(index: number): readonly Control<AppState>[] {
+  const light = (state: AppState): LightConfig | undefined =>
+    state.lighting.lights[index]
+
+  return [...identityControls(index, light), ...transformControls(index, light)]
 }

@@ -12,6 +12,7 @@ export function LightingPanel() {
   const addLight = useAppStore((state) => state.addLight)
   const removeLight = useAppStore((state) => state.removeLight)
   const duplicateLight = useAppStore((state) => state.duplicateLight)
+  const selectedLightId = useAppStore((state) => state.selectedLightId)
 
   return (
     <>
@@ -28,6 +29,7 @@ export function LightingPanel() {
           key={light.id}
           title={light.name}
           defaultOpen={false}
+          className={light.id === selectedLightId ? styles.selected : undefined}
           actions={
             <>
               <IconButton

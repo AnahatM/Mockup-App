@@ -79,8 +79,6 @@ export const lightingSchema = z.object({
    * crawls across texels while the camera moves.
    */
   resolution: z.number().int().min(128).max(1024).default(512),
-  /** Draw a wireframe marker at each light, so the rig can be seen. */
-  showHelpers: z.boolean().default(false),
 })
 
 export type LightingConfig = z.infer<typeof lightingSchema>

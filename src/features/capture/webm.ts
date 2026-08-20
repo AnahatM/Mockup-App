@@ -1,4 +1,5 @@
 import { err, ok, type Result } from '@/lib/result'
+import { hideGizmosForCapture } from '@/features/lighting'
 
 /**
  * Records the live canvas to a WebM video.
@@ -72,18 +73,26 @@ export async function recordWebm({
     recorder.onstop = () => resolve()
   })
 
-  // A timeslice means chunks arrive during the recording rather than all at the
-  // end, so a long capture cannot be lost wholesale if something goes wrong.
-  recorder.start(250)
-  await waitForDuration(duration, onProgress, signal)
+  // `captureStream` records whatever the canvas actually shows, live, for the
+  // whole window below — unlike the PNG path there is no single render call
+  // to guard, so gizmos are hidden for the entire recording and only
+  // restored once the last frame has been captured. See gizmoCaptureGuard.
+  const restoreGizmos = hideGizmosForCapture()
+  try {
+    // A timeslice means chunks arrive during the recording rather than all at
+    // the end, so a long capture cannot be lost wholesale if something fails.
+    recorder.start(250)
+    await waitForDuration(duration, onProgress, signal)
 
-  // Flush anything the encoder is still holding before stopping. Without this,
-  // a short capture on a slow encoder can end with nothing written at all.
-  if (recorder.state === 'recording') recorder.requestData()
-  if (recorder.state !== 'inactive') recorder.stop()
-  await Promise.race([stopped, delay(FLUSH_TIMEOUT_MS)])
-
-  for (const track of stream.getTracks()) track.stop()
+    // Flush anything the encoder is still holding before stopping. Without
+    // this, a short capture on a slow encoder can end with nothing written.
+    if (recorder.state === 'recording') recorder.requestData()
+    if (recorder.state !== 'inactive') recorder.stop()
+    await Promise.race([stopped, delay(FLUSH_TIMEOUT_MS)])
+  } finally {
+    restoreGizmos()
+    for (const track of stream.getTracks()) track.stop()
+  }
 
   if (chunks.length === 0) {
     console.warn(

@@ -1,3 +1,8 @@
 .footer {
   padding: var(--space-3);
 }
+
+.selected {
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 1px var(--accent);
+}

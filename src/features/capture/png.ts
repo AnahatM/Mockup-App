@@ -1,5 +1,6 @@
 import { PerspectiveCamera, Vector2 } from 'three'
 import type { Camera, Scene, WebGLRenderer } from 'three'
+import { hideGizmosForCapture } from '@/features/lighting'
 
 export interface CapturePngOptions {
   renderer: WebGLRenderer
@@ -38,6 +39,14 @@ export async function capturePng({
   const previousBackground = scene.background
   const previousAspect = camera instanceof PerspectiveCamera ? camera.aspect : null
 
+  // Gizmos are an editing aid and must never reach an export. Hidden for the
+  // whole capture window — including the async `toBlob` wait, since the
+  // canvas is a continuous render loop and could otherwise repaint before the
+  // pixels are read back — and only restored once the blob is in hand. See
+  // gizmoCaptureGuard for why this is a direct three.js mutation rather than
+  // a store flag.
+  const restoreGizmos = hideGizmosForCapture()
+
   try {
     if (transparent) scene.background = null
 
@@ -55,6 +64,7 @@ export async function capturePng({
     render()
     return await toBlob(renderer.domElement)
   } finally {
+    restoreGizmos()
     scene.background = previousBackground
     renderer.setPixelRatio(previousPixelRatio)
     renderer.setSize(previousSize.x, previousSize.y, false)
