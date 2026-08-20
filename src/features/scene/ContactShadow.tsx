@@ -32,7 +32,11 @@ import { useAppStore } from '@/state/store'
 export function ContactShadow() {
   const shadow = useAppStore((state) => state.scene.shadow)
   const pedestal = useAppStore((state) => state.scene.pedestal)
-  const levitate = useAppStore((state) => state.device.levitate)
+  // The whole device slice, not just the fields read below: a re-render is
+  // what triggers a re-bake, so anything that can move or reshape the caster
+  // — its spec, rotation, orientation, an imported GLB — has to reach this
+  // component. Narrowing this selector would bring back the stale shadow.
+  const device = useAppStore((state) => state.device)
   const animation = useAppStore((state) => state.animation)
 
   if (!shadow.enabled) return null
@@ -52,7 +56,7 @@ export function ContactShadow() {
       blur={shadow.blur}
       // A levitating device is lifted clear of the floor, so the depth range
       // has to reach past the lift as well as over the device itself.
-      far={shadow.far + levitate}
+      far={shadow.far + device.levitate}
       scale={shadow.scale}
       resolution={1024}
       frames={moving ? Infinity : 1}

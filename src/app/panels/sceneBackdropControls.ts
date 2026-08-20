@@ -98,9 +98,10 @@ export const pedestalControls: readonly Control<AppState>[] = [
   }),
   slider({
     label: 'Height',
+    hint: 'Extends downward. Tall enough and the plinth reads as a column, not a disc.',
     min: 0.01,
-    max: 1,
-    step: 0.01,
+    max: 24,
+    step: 0.05,
     disabled: (s) => !s.scene.pedestal.enabled,
     select: (s) => s.scene.pedestal.height,
     update: (d, v) => {

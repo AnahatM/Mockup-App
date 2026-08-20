@@ -42,10 +42,10 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F3 | App Store screenshot mode — panoramic multi-device layouts + headline text (#25) | DONE |
 | F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | DONE |
-| F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
-| F15 | Structured backdrop environments — hexagon tiles, square-tile room, real room shading, pulsating blocks oscillating up and down, and more. All parametric and procedural, no bundled assets | TODO |
-| F16 | Procedural surface textures — noise, brushed metal, etc. — applicable to pedestal, walls and devices | TODO |
-| F17 | Update the built-in presets to use the new backdrop environments and textures | TODO |
+| F6 | Background should read as a real 3D space, not a flat gradient (#29) | DONE |
+| F15 | Structured backdrop environments — hexagon tiles, square-tile room, real room shading, pulsating blocks oscillating up and down, and more. All parametric and procedural, no bundled assets | DONE |
+| F16 | Procedural surface textures — noise, brushed metal, etc. — applicable to pedestal, walls and devices | DONE |
+| F17 | Update the built-in presets to use the new backdrop environments and textures | DONE |
 | F18 | Live 2D preview driven by the same compositor as the export, working with no WebGL | DONE |
 | F19 | **Decided:** split the 2D tools onto their own route and page, separate from the 3D studio. Not a modal bolted onto the studio — a genuinely separate tool that loads without the 3D scene | DONE |
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | DONE |
@@ -57,6 +57,8 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F14 | More bindings for trackpad users — e.g. Space to pan, easier dragging without a mouse | DONE |
 | F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | DONE |
 | F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
+| F21 | **Bug:** zoom in/out resets the camera orientation — zooming must keep the current view direction and target, whatever angle you are looking from | DONE |
+| F22 | **Bug:** device contact shadows on the ground/pedestal are broken up rather than continuous, and flicker | DONE |
 
 ## UX and robustness
 
@@ -113,7 +115,7 @@ things paid products do that we should match or beat.
 | C9 | Copy the export straight to the clipboard | DONE |
 | C10 | Export scale selector shown inline on the export button (1x/2x/4x) | DONE |
 | C11 | "Hide mockup" — render the screenshot on the backdrop with no device | DONE |
-| C12 | Gradient backdrop presets that adapt to the uploaded media | TODO |
+| C12 | Gradient backdrop presets that adapt to the uploaded media | DONE |
 | C13 | Research pass: what else comparable tools offer that we lack | DONE |
 
 ## Project
