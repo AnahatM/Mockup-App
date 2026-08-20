@@ -1,3 +1,13 @@
+/*
+ * Wraps rather than crushes.
+ *
+ * The control is meant for "a small set", but schemas grow — the window
+ * container styles are seven segments, and in a 19rem inspector that was
+ * rendering as "Default Glass lighGlass darinset lighnset dark Outline Border":
+ * every label ellipsed to the point of being unreadable, on a control whose
+ * entire job is to show you the options. Wrapping trades one tidy row for
+ * labels you can actually read.
+ */
 .group {
   display: inline-flex;
   gap: 1px;
@@ -8,6 +18,19 @@
   border-radius: var(--radius-sm);
 }
 
+/*
+ * Wrapping is opt-in, and `SegmentedControl` opts a group in only when at least
+ * one of its segments carries words.
+ *
+ * An icon-only group must never wrap: its segments are `<Tooltip>`-wrapped, so
+ * the flex children are the wrappers rather than the buttons, and their
+ * automatic minimum size is their icon's — the three-icon theme switch inside a
+ * fixed 5.5rem is a few pixels over and would break onto two rows.
+ */
+.wrapping {
+  flex-wrap: wrap;
+}
+
 .segment {
   display: inline-flex;
   flex: 1 1 0;
@@ -15,6 +38,7 @@
   align-items: center;
   justify-content: center;
   min-width: 0;
+  max-width: 100%;
   height: 1.375rem;
   padding: 0 var(--space-2);
   overflow: hidden;
@@ -26,6 +50,19 @@
   transition:
     background-color var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out);
+}
+
+/*
+ * A segment carrying words, as opposed to an icon-only one.
+ *
+ * Only these refuse to shrink: text below its natural width is text you cannot
+ * read, so the group wraps instead. An icon-only segment has nothing to crush
+ * — and the theme switch is three icons inside a fixed 5.5rem, which would wrap
+ * onto two rows if it were held to `max-content` as well.
+ */
+.labelled {
+  flex: 1 1 auto;
+  min-width: max-content;
 }
 
 .segment:hover:not(.selected) {

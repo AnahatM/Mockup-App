@@ -29,7 +29,11 @@ export function SegmentedControl<T extends string>({
   className,
 }: SegmentedControlProps<T>) {
   return (
-    <div className={cx(styles.group, className)} role="radiogroup" aria-label={label}>
+    <div
+      className={cx(styles.group, segments.some((s) => s.label) && styles.wrapping, className)}
+      role="radiogroup"
+      aria-label={label}
+    >
       {segments.map((segment) => {
         const selected = segment.value === value
         const name = segment.title ?? segment.label ?? segment.value
@@ -40,7 +44,11 @@ export function SegmentedControl<T extends string>({
             role="radio"
             aria-checked={selected}
             aria-label={segment.label ? undefined : name}
-            className={cx(styles.segment, selected && styles.selected)}
+            className={cx(
+              styles.segment,
+              segment.label && styles.labelled,
+              selected && styles.selected,
+            )}
             onClick={() => onChange(segment.value)}
           >
             {segment.icon && <Icon name={segment.icon} size={13} />}
