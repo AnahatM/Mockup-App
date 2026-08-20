@@ -7,6 +7,15 @@ export interface Frame {
   height: number
 }
 
+/** A title bar's box, and the corner radius of the window it caps. */
+export interface BarGeometry {
+  x: number
+  y: number
+  width: number
+  height: number
+  radius: number
+}
+
 export function roundRect(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -46,30 +55,73 @@ export function topRoundedRect(
 }
 
 /**
- * The three window controls.
+ * macOS chrome metrics, in macOS points.
+ *
+ * Authoring in points rather than in fractions-of-whatever-box is what lets one
+ * set of numbers describe both bars honestly: a standard title bar is 28pt tall
+ * and a Safari toolbar is 52pt, but both carry the same 12pt window buttons at
+ * the same 20pt pitch, 20pt in from the window's edge. Each bar converts once —
+ * `pt = itsHeight / itsReferenceHeight` — and every measurement below is then a
+ * literal reading off the real thing.
+ *
+ * The previous code expressed these as fractions of the bar height, which
+ * silently meant "12pt buttons" on the title bar and "22pt buttons" on the
+ * browser toolbar, and the browser controls came out cartoonishly large.
+ */
+export const TITLE_BAR_PT = 28
+export const TOOLBAR_PT = 52
+export const LIGHT_DIAMETER_PT = 12
+export const LIGHT_PITCH_PT = 20
+export const LIGHT_INSET_PT = 20
+
+/**
+ * The three window controls, with the faint darker rim macOS gives them.
  *
  * These colours are the one place literal colours are legitimate outside the
  * token layer: they are a rendering of another operating system's UI, not this
- * application's styling, so they must not shift with the app's theme.
+ * application's styling, so they must not shift with the app's theme. An
+ * unfocused macOS window greys all three out and drops the rim, which is what
+ * `muted` reproduces.
  */
-const LIGHTS = ['#ff5f57', '#febc2e', '#28c840'] as const
-const MUTED = '#c8c6c2'
+const LIGHTS = [
+  { fill: '#ff5f57', rim: '#e0443e' },
+  { fill: '#febc2e', rim: '#dea123' },
+  { fill: '#28c840', rim: '#1aab29' },
+] as const
 
+const MUTED = { fill: '#d5d3cf', rim: '#c2c0bc' } as const
+
+/** Returns the width consumed, so the caller can lay the title out beside it. */
 export function drawTrafficLights(
   ctx: CanvasRenderingContext2D,
   x: number,
   midY: number,
   radius: number,
   muted: boolean,
+  pitch: number,
 ): number {
-  const gap = radius * 3.2
-  LIGHTS.forEach((color, index) => {
+  ctx.save()
+  ctx.lineWidth = Math.max(radius * 0.09, 0.5)
+
+  LIGHTS.forEach((light, index) => {
+    const { fill, rim } = muted ? MUTED : light
+    const cx = x + index * pitch
+
     ctx.beginPath()
-    ctx.arc(x + index * gap, midY, radius, 0, Math.PI * 2)
-    ctx.fillStyle = muted ? MUTED : color
+    ctx.arc(cx, midY, radius, 0, Math.PI * 2)
+    ctx.fillStyle = fill
     ctx.fill()
+
+    // Inset by half the line width so the stroke lands inside the disc rather
+    // than straddling its edge, which would fatten every button by a pixel.
+    ctx.beginPath()
+    ctx.arc(cx, midY, radius - ctx.lineWidth / 2, 0, Math.PI * 2)
+    ctx.strokeStyle = rim
+    ctx.stroke()
   })
-  return gap * 2 + radius
+
+  ctx.restore()
+  return pitch * 2 + radius
 }
 
 /** `color` is a full CSS colour (rgba/hex), so callers control the shadow tint. */

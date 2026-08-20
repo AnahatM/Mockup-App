@@ -1,8 +1,9 @@
 import { resolveContainerLook } from './containerLooks'
-import { roundRect, type Frame } from './draw/chrome'
+import { roundRect, type BarGeometry, type Frame } from './draw/chrome'
 import { drawContainerBorder, drawRecess, drawSheen } from './draw/containerChrome'
 import { drawShadow } from './draw/shadow'
-import { drawBrowserBar, drawMacBar, type BarGeometry } from './draw/titleBar'
+import { drawBrowserBar } from './draw/browserBar'
+import { drawMacBar } from './draw/macBar'
 import type { FlatConfig } from './schema'
 
 /**

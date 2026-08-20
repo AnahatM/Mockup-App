@@ -81,18 +81,18 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | E3  | Screenshot maps correctly onto the device screen         | aspect fit, fill, stretch, offset, zoom                                              | P4    | DONE   |
 | E4  | **Enable/disable the iPhone gesture bar**                | `overlays/GestureBar`                                                                | P5    | DONE   |
 | E5  | **Enable/disable the time, wifi, and battery icons**     | `overlays/StatusBar`, iOS and Android styling, light/dark, editable time and carrier | P5    | DONE   |
-| E6  | **Enable/disable the MacBook dock**                      | `overlays/Dock` plus `overlays/MenuBar`                                              | P5    | DONE   |
+| E6  | **Enable/disable the MacBook dock**                      | `overlays/dock` plus `overlays/menuBar`: translucent slab, gradient app icons, running dots, Trash past a divider; menu bar draws the fruit, Finder's menus and a clock | P5    | DONE   |
 | E7  | Per-device toggles offer only what makes sense           | `spec.supportedOverlays` drives the panel                                            | P5    | DONE   |
 
 ## F. Digital (2D) mockups
 
 | #   | Requirement                              | Delivered by                                                                   | Phase | Status |
 | --- | ---------------------------------------- | ------------------------------------------------------------------------------ | ----- | ------ |
-| F1  | Screenshot inside a **macOS window**     | `flat/MacWindow`                                                               | P9    | DONE   |
-| F2  | **Traffic-light window controls**        | `flat/TrafficLights`                                                           | P9    | DONE   |
-| F3  | **Customizable title bar**               | `flat/TitleBar`: text, alignment, height, style (inline, unified, transparent) | P9    | DONE   |
+| F1  | Screenshot inside a **macOS window**     | `flat/draw/macBar`, measured in macOS points — see ADR 0008                    | P9    | DONE   |
+| F2  | **Traffic-light window controls**        | `flat/draw/chrome`: 12pt buttons on a 20pt pitch, with macOS's rims and its grey unfocused state | P9    | DONE   |
+| F3  | **Customizable title bar**               | `flat/draw/macBar`: text, alignment, height, style (inline, unified, transparent) | P9    | DONE   |
 | F4  | **Color-matched** to the screenshot      | extracted palette auto-applied to the window chrome                            | P9    | DONE   |
-| F5  | Browser window variant                   | `flat/BrowserWindow`: tabs, URL bar, light/dark                                | P9    | DONE   |
+| F5  | Browser window variant                   | `flat/draw/browserBar` + `browserTabs`, on Safari's layout: toolbar over tab strip, sidebar/back/forward, padlocked address field with reload, share and tab overview, favicons | P9    | DONE   |
 | F6  | Usable both flat and inside the 3D scene | flat PNG export, and usable as a screen source for any 3D device               | P9    | DONE   |
 
 ## G. Output

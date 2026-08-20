@@ -1,5 +1,6 @@
 import type { OverlayKind } from '@/features/devices'
-import { drawDock, drawMenuBar } from './desktop'
+import { drawDock } from './dock'
+import { drawMenuBar } from './menuBar'
 import { drawGestureBar, drawNavBar } from './navigation'
 import { drawStatusBar } from './statusBar'
 import type { OverlayCanvas } from './context'
