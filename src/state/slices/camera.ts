@@ -7,6 +7,7 @@ import {
   type CameraMode,
 } from '@/features/camera/state'
 import { frameDevice, resolveDevice } from '@/features/devices/state'
+import type { Vec3Tuple } from '@/lib/schema/primitives'
 import type { SliceCreator } from '../types'
 
 export interface CameraSlice {
@@ -17,6 +18,15 @@ export interface CameraSlice {
   resetCamera: () => void
   /** Below 1 zooms in, above 1 zooms out. Mirrors the scroll wheel. */
   dollyCamera: (factor: number) => void
+  /**
+   * Commits wherever OrbitControls has left the live camera into the
+   * authored one. Orbiting and panning are otherwise transient (see
+   * `CameraRig`) — but that leaves the authored position stale, so a
+   * `dollyCamera` right after an orbit dollies from before the orbit and
+   * the view snaps back to it. Called once per drag, on `end`, not per
+   * frame: that would defeat the point of orbiting being transient at all.
+   */
+  syncCameraView: (position: Vec3Tuple, target: Vec3Tuple) => void
   setCameraMode: (mode: CameraMode) => void
 }
 
@@ -60,6 +70,13 @@ export const createCameraSlice: SliceCreator<CameraSlice> = (set) => ({
         draft.camera.minDistance,
         draft.camera.maxDistance,
       )
+      draft.camera.preset = 'custom'
+    }),
+
+  syncCameraView: (position, target) =>
+    set((draft) => {
+      draft.camera.position = position
+      draft.camera.target = target
       draft.camera.preset = 'custom'
     }),
 

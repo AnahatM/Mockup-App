@@ -55,6 +55,21 @@ export const orbitDistance = (position: Vec3Tuple, target: Vec3Tuple): number =>
   length(subtract(position, target))
 
 /**
+ * Whether two points are close enough to treat as the same camera view.
+ *
+ * Loose on purpose: this exists for `CameraRig` to recognise its own
+ * `syncCameraView` echo coming back from the store and skip re-applying it.
+ * A drag's `end` event fires the instant the pointer lifts, but orbit damping
+ * keeps coasting for a few more frames — by the time the echo reaches the
+ * live-camera effect, the camera may have drifted a hair past what was
+ * captured. The tolerance below swallows that drift so the write-back does
+ * not yank the camera backward mid-coast, without being so loose that it
+ * ignores a real authored change (a preset, framing a device).
+ */
+export const nearlyEqualVec3 = (a: Vec3Tuple, b: Vec3Tuple, epsilon = 1e-3): boolean =>
+  length(subtract(a, b)) < epsilon
+
+/**
  * Converts a wheel event into the same multiplicative `dolly`/`dollyCamera`
  * factor the toolbar's zoom buttons use — see `wheel.ts` for why this scales
  * by the event's actual magnitude rather than counting events, which is what
