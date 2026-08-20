@@ -31,6 +31,7 @@
   --ink-800: #232530;
   --ink-700: #2e303e;
   --ink-600: #575976;
+
   /* Darkened from #636687 so muted text clears 4.5:1 on the sunken surface
      too, not only on the lighter panels — see contrast.test.ts. */
   --ink-500: #5c5f7e;
