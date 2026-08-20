@@ -14,7 +14,7 @@ We are building **Mockup Studio**: a free, open-source, fully-local web app wher
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | 3D geometry    | **Procedural/parametric**, with a `mesh` discriminated union so any device can swap to a GLB later with no refactor                        |
 | Styling        | **CSS Modules + 3-tier CSS custom-property tokens**; hex literals banned outside the token layer by lint                                   |
-| Visual style   | **Minimalist "chalk" theme**, light/dark switchable — deliberately quiet UI so the product/render is the focus                             |
+| Visual style   | **Minimalist, light/dark switchable** — deliberately quiet UI so the product/render is the focus. Shipped as a "chalk" scheme; later moved to the **Horizon** palette at the user's request (see `docs/reference/design-tokens.md`). |
 | Screen media   | Image **and video** upload (`VideoTexture`)                                                                                                |
 | Motion         | Animation preset system **+ WebM recording** via `MediaRecorder`                                                                           |
 | Stills         | PNG at 1x/2x/4x, transparent-background mode, platform size presets                                                                        |

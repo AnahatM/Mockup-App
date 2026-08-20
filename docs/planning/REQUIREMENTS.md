@@ -120,7 +120,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | #   | Requirement                                       | Delivered by                                                                                  | Phase | Status |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----- | ------ |
 | I1  | **Minimalist** app style                          | quiet chrome, hairline borders, near-shadowless surfaces                                      | P0/P1 | DONE   |
-| I2  | **Chalk theme**, light/dark switchable            | warm-paper and soft-charcoal ramps, with no pure black or pure white anywhere                 | P0/P1 | DONE   |
+| I2  | **Horizon theme**, light/dark switchable          | Horizon's warm sunset ramps (see `docs/reference/design-tokens.md`), no pure black or white anywhere. Originally shipped as a "chalk" scheme, then briefly cool blue-green; the user chose Horizon. | P0/P1 | DONE   |
 | I3  | **Focus off the app, on the product and visuals** | the viewport dominates, panels recede and collapse, and the UI theme never affects the render | P1    | DONE   |
 
 ---
