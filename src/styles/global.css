@@ -85,6 +85,50 @@ samp {
 }
 
 /*
+ * Display type painted with the sunset ramp.
+ *
+ * Global rather than a CSS Module class because four different pages want the
+ * same headline treatment, and the `-webkit-` fallback pair below would
+ * otherwise be copied into each of their stylesheets — the kind of duplication
+ * that drifts the moment one of them is edited.
+ *
+ * Large text only. The ramp is measured against 3:1 in `tokens/contrast.test`,
+ * which is the WCAG 1.4.3 threshold for text at 24px and up; below that size it
+ * is not a legal foreground, and `--text-accent` is what should be used instead.
+ * Anything wearing this class must also be a single unwrapped line: `background-clip:
+ * text` clips each line box against its own background, so a ramp across two
+ * wrapped lines restarts halfway through the sentence.
+ */
+.gradientText {
+  /* The box must hug its text, because the ramp is painted across the *box* and
+     only the part of it behind a glyph is ever seen. A full-width heading in a
+     46rem column would show the first inch of the ramp and throw the rest away.
+     `inline-block` does that on its own; `fit-content` is what keeps it true
+     when the heading is a flex item, since flex blockifies its children. */
+  display: inline-block;
+  width: fit-content;
+  color: transparent;
+  background: var(--gradient-primary);
+  background-clip: text;
+}
+
+/*
+ * Chromium and Safari still need the prefixed pair to clip a background to text.
+ * `-webkit-background-clip` is not the autoprefixable kind of duplicate: Safari
+ * accepts `background-clip: text` in the shorthand but not always standalone,
+ * and dropping the prefix is a blank headline on WebKit rather than a cosmetic
+ * regression — so this stays, deliberately, behind a feature query.
+ */
+@supports (-webkit-background-clip: text) {
+  .gradientText {
+    -webkit-text-fill-color: transparent;
+
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-background-clip: text;
+  }
+}
+
+/*
  * Printing.
  *
  * Only the documentation and prose pages are worth printing, and what a reader
@@ -112,6 +156,14 @@ samp {
   body {
     color: var(--text-primary);
     background: var(--surface-app);
+  }
+
+  /* Backgrounds are not printed, and this headline *is* its background — left
+     alone it prints as a blank line. Put the ink back. */
+  .gradientText {
+    color: var(--text-primary);
+    -webkit-text-fill-color: currentcolor;
+    background: none;
   }
 
   header,

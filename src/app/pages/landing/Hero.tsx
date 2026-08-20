@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { cx } from '@/lib/cx'
 import { Icon, ScreenshotSlot } from '@/ui'
 import heroShot from '@/assets/shots/hero-studio.png'
 import { LINKS, ROUTES } from '../../routes'
@@ -20,7 +21,9 @@ export function Hero() {
         <h1 className={styles.title}>
           Studio-grade mockups,
           <br />
-          without the studio.
+          <span className={cx(styles.titleAccent, 'gradientText')}>
+            without the studio.
+          </span>
         </h1>
         <p className={styles.lede}>
           Drop in a screenshot and render it on a{' '}

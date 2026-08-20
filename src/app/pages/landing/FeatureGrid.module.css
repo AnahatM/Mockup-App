@@ -5,23 +5,42 @@
   margin-top: var(--space-12);
 }
 
+/*
+ * The border is two stacked backgrounds rather than a border colour, so that
+ * hovering can run the sunset ramp around the card's rounded edge.
+ *
+ * `border-image` is the obvious tool and the wrong one: it ignores
+ * `border-radius` and would square the corners off. Painting the card's own
+ * surface to `padding-box` and the border colour to `border-box`, over a
+ * transparent border, gives a gradient edge that follows the radius exactly.
+ *
+ * The resting state uses the same two-layer construction with a flat colour, so
+ * hover swaps one background layer instead of changing the box model — nothing
+ * reflows, and the card does not jump by a hairline on the way in.
+ */
 .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   height: 100%;
   padding: var(--space-5);
-  background: var(--surface-panel);
-  border: var(--hairline) solid var(--border-subtle);
+  background:
+    linear-gradient(var(--surface-panel), var(--surface-panel)) padding-box,
+    linear-gradient(var(--border-subtle), var(--border-subtle)) border-box;
+  border: var(--hairline) solid transparent;
   border-radius: var(--radius-lg);
+
+  /* Backgrounds do not interpolate, so the edge arrives at once while the lift
+     and the shadow ease in around it — which is what sells it as a hover. */
   transition:
-    border-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out),
     transform var(--duration-normal) var(--ease-out);
 }
 
 .card:hover {
-  border-color: var(--accent-soft);
+  background:
+    linear-gradient(var(--surface-panel), var(--surface-panel)) padding-box,
+    var(--gradient-primary) border-box;
   box-shadow: var(--shadow-popover);
   transform: translateY(-4px);
 }

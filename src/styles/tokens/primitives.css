@@ -60,6 +60,17 @@
   --sunset-peach: #fab795;
   --sunset-ember: #cc3019;
 
+  /* ---- Sunset gradient mid-stops: literally what each theme's ramp reads as at
+     its halfway point, sampled in sRGB the same way the browser interpolates it.
+     Primary actions take this flat colour instead of the ramp — a gradient on a
+     28px button is a smear nobody can see, and it fought the ramp used as
+     decoration elsewhere. The hover steps are the same hue a shade further from
+     the page: darker on paper, lighter on ink. ---- */
+  --sunset-vermilion: #cc202a;
+  --sunset-vermilion-deep: #b11c25;
+  --sunset-salmon: #f28686;
+  --sunset-salmon-light: #f49797;
+
   /* ---- Status: Horizon's red/teal/peach status hues, tuned per theme for contrast ---- */
   --sage-400: #27d796;
   --sage-500: #1a7d58;

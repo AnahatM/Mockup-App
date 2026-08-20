@@ -1,12 +1,35 @@
+/*
+ * A ring cut out of a conic gradient rather than a bordered circle.
+ *
+ * The arc sweeps the sunset ramp from transparent through both of its stops,
+ * so the spinner reads as a comet trail — the head is `--gradient-to`, the tail
+ * fades out — instead of the flat quarter-arc a `border-top-color` gives you.
+ * A conic gradient paints the whole disc, so `mask` punches the middle back
+ * out; the mask only samples alpha, which is why `currentcolor` (opaque, set
+ * just below) is a fine stand-in for a colour this element never paints.
+ */
 .spinner {
   --spinner-track: var(--border-subtle);
-  --spinner-arc: var(--accent);
+  --spinner-ring: 2px;
 
   box-sizing: border-box;
   display: inline-block;
-  border: 2px solid var(--spinner-track);
-  border-top-color: var(--spinner-arc);
+  color: var(--gradient-to);
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0turn,
+      var(--gradient-from) 0.65turn,
+      var(--gradient-to) 0.98turn,
+      transparent 1turn
+    ),
+    var(--spinner-track);
   border-radius: var(--radius-full);
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--spinner-ring)),
+    currentcolor calc(100% - var(--spinner-ring))
+  );
   animation: spin 0.8s linear infinite;
 }
 
@@ -16,9 +39,12 @@
   }
 }
 
+/* Spinning is a vestibular trigger, so reduced motion drops the rotation and
+   the ramp with it — a stationary comet trail just looks like a broken ring —
+   and pulses a plain accent ring instead. */
 @media (prefers-reduced-motion: reduce) {
   .spinner {
-    border-top-color: var(--spinner-track);
+    background: var(--accent-solid);
     animation: pulse 1.6s var(--ease-in-out) infinite;
   }
 }

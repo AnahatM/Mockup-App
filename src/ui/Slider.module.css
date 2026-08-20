@@ -21,12 +21,16 @@
   opacity: 0.5;
 }
 
-/* The track is painted as a gradient so the filled portion needs no extra element. */
+/* The track is painted as a gradient so the filled portion needs no extra
+   element — and since it is a gradient already, the filled portion runs the
+   sunset ramp across it, which makes how far a slider is pushed readable from
+   its colour as well as its length. */
 .slider::-webkit-slider-runnable-track {
   height: 3px;
   background: linear-gradient(
     to right,
-    var(--track-fill) 0 var(--progress),
+    var(--gradient-from) 0,
+    var(--gradient-to) var(--progress),
     var(--track-bg) var(--progress) 100%
   );
   border-radius: var(--radius-full);
@@ -36,7 +40,8 @@
   height: 3px;
   background: linear-gradient(
     to right,
-    var(--track-fill) 0 var(--progress),
+    var(--gradient-from) 0,
+    var(--gradient-to) var(--progress),
     var(--track-bg) var(--progress) 100%
   );
   border-radius: var(--radius-full);

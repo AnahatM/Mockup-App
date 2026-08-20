@@ -43,8 +43,17 @@
   --accent-soft: var(--accent-200);
   --accent-contrast: var(--chalk-50);
 
-  /* Gradient — the Horizon sunset ramp, shared by primary buttons/toggles/cards. */
-  --gradient-primary: linear-gradient(135deg, var(--accent-500), var(--sunset-ember));
+  /* The flat fill of a primary action: the ramp below, sampled at its midpoint.
+     See primitives.css for why buttons take a solid and not the ramp. */
+  --accent-solid: var(--sunset-vermilion);
+  --accent-solid-hover: var(--sunset-vermilion-deep);
+
+  /* Gradient — the Horizon sunset ramp. Its two stops are exposed separately so a
+     component can lay the ramp along its own axis (a bar sweeps horizontally, a
+     spinner sweeps around) instead of being stuck with the 135deg default. */
+  --gradient-from: var(--accent-500);
+  --gradient-to: var(--sunset-ember);
+  --gradient-primary: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
 
   /* Controls */
   --control-bg: var(--paper-200);
@@ -53,7 +62,6 @@
   --control-fg: var(--ink-800);
   --control-border: var(--paper-400);
   --track-bg: var(--paper-300);
-  --track-fill: var(--accent-500);
   --thumb-bg: var(--paper-50);
   --thumb-border: var(--paper-500);
 
@@ -111,7 +119,12 @@
   --accent-soft: var(--accent-700);
   --accent-contrast: var(--ink-950);
 
-  --gradient-primary: linear-gradient(135deg, var(--accent-400), var(--sunset-peach));
+  --accent-solid: var(--sunset-salmon);
+  --accent-solid-hover: var(--sunset-salmon-light);
+
+  --gradient-from: var(--accent-400);
+  --gradient-to: var(--sunset-peach);
+  --gradient-primary: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
 
   /* Controls */
   --control-bg: var(--ink-800);
@@ -120,7 +133,6 @@
   --control-fg: var(--chalk-100);
   --control-border: var(--ink-700);
   --track-bg: var(--ink-700);
-  --track-fill: var(--accent-400);
   --thumb-bg: var(--ink-500);
   --thumb-border: var(--ink-400);
 

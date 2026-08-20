@@ -20,7 +20,7 @@ export function SitemapPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Sitemap</h1>
+      <h1 className={cx(styles.title, 'gradientText')}>Sitemap</h1>
       <p className={styles.lede}>
         Everything in Mockup Studio, generated from what actually exists.
       </p>

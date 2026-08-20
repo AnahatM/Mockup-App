@@ -13,14 +13,17 @@
   opacity: 1;
 }
 
+/* The sunset ramp laid along the sweep rather than across it: the bar enters
+   as `--gradient-from`, leaves as `--gradient-to`, and fades at both ends so
+   the 2px rule never shows a hard edge against the page. */
 .bar {
   width: 40%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--accent) 35%,
-    var(--accent) 65%,
+    var(--gradient-from) 30%,
+    var(--gradient-to) 70%,
     transparent
   );
 }

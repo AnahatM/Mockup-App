@@ -12,6 +12,18 @@
   border-radius: var(--radius-xl);
 }
 
+/* A ramp along the panel's top edge — the one horizontal rule on the page long
+   enough for the gradient to actually travel across. Inset by the corner radius
+   so it stops where the rounded corner starts instead of poking past it. */
+.closing::after {
+  position: absolute;
+  inset: 0 var(--radius-xl) auto;
+  height: 2px;
+  content: '';
+  background: var(--gradient-primary);
+  border-radius: 0 0 var(--radius-full) var(--radius-full);
+}
+
 .closing::before {
   position: absolute;
   inset: 0;

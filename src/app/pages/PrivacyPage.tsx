@@ -1,3 +1,4 @@
+import { cx } from '@/lib/cx'
 import { LINKS } from '../routes'
 import styles from './Prose.module.css'
 import { useDocumentTitle } from '../useDocumentTitle'
@@ -14,7 +15,7 @@ export function PrivacyPage() {
   useDocumentTitle('Privacy')
   return (
     <article className={styles.page}>
-      <h1 className={styles.title}>Privacy</h1>
+      <h1 className={cx(styles.title, 'gradientText')}>Privacy</h1>
       <p className={styles.lede}>
         Mockup Studio has no server. Nothing you load into it is uploaded anywhere,
         because there is nowhere for it to go.

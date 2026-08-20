@@ -50,8 +50,11 @@
   transition: transform var(--duration-fast) var(--ease-out);
 }
 
+/* Flat, for the same reason `Button`'s primary variant is: a 28x16px track has
+   no room to show a ramp travelling across it, only a colour that looks
+   slightly wrong. `--accent-solid` is that ramp's midpoint. */
 .input:checked + .track {
-  background: var(--gradient-primary);
+  background: var(--accent-solid);
 }
 
 .input:checked + .track .thumb {

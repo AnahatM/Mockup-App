@@ -53,10 +53,20 @@ describe('semantic token parity', () => {
 })
 
 describe('token tiering', () => {
-  it('resolves every primitive referenced by the semantic layer', () => {
+  /*
+   * A semantic token may reference a primitive, or another semantic token that
+   * both themes define — `--gradient-primary` is built from `--gradient-from`
+   * and `--gradient-to` so components can lay the same ramp along their own
+   * axis. What must never happen is a reference to something undefined, or to
+   * a semantic token only one theme declares, which would resolve in one theme
+   * and silently vanish in the other.
+   */
+  it('resolves every token referenced by the semantic layer', () => {
     const primitives = new Set(captures(primitivesCss, DECLARATION))
+    const inBothThemes = [...lightTokens].filter((token) => darkTokens.has(token))
+    const definable = new Set([...primitives, ...inBothThemes])
     const referenced = new Set(captures(semanticCss, REFERENCE))
-    const unresolved = [...referenced].filter((token) => !primitives.has(token))
+    const unresolved = [...referenced].filter((token) => !definable.has(token))
     expect(unresolved, 'referenced in semantic.css but never defined').toEqual([])
   })
 

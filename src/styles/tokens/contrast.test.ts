@@ -71,10 +71,19 @@ const SURFACES = [
 /** Tokens that carry text: WCAG 1.4.3, 4.5:1. */
 const TEXT = ['--text-primary', '--text-secondary', '--text-muted', '--text-accent']
 
-/** Non-text tokens that convey information: WCAG 1.4.11, 3:1. */
+/**
+ * Non-text tokens that convey information: WCAG 1.4.11, 3:1.
+ *
+ * The two gradient stops are held to the same 3:1 as any other mark, because
+ * the ramp is drawn as hairlines, bars and spinner arcs. That rating covers
+ * large display type too (1.4.3 relaxes to 3:1 above 24px), which is the only
+ * text the ramp is allowed to paint — never body copy.
+ */
 const INDICATORS = [
   '--focus-ring',
   '--accent',
+  '--gradient-from',
+  '--gradient-to',
   '--status-success',
   '--status-warning',
   '--status-danger',
@@ -83,6 +92,8 @@ const INDICATORS = [
 /** Foreground/background pairs stated explicitly by the token names. */
 const PAIRS: ReadonlyArray<readonly [string, string, number]> = [
   ['--accent-contrast', '--accent', 4.5],
+  ['--accent-contrast', '--accent-solid', 4.5],
+  ['--accent-contrast', '--accent-solid-hover', 4.5],
   ['--text-inverse', '--text-primary', 4.5],
   ['--on-color-mark', '--on-color-shade', 3],
 ]

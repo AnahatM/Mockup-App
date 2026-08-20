@@ -31,7 +31,7 @@ export function DocsIndexPage() {
   return (
     <div className={styles.indexPage}>
       <header className={styles.indexHeader}>
-        <h1 className={styles.indexTitle}>Documentation</h1>
+        <h1 className={cx(styles.indexTitle, 'gradientText')}>Documentation</h1>
         <p className={styles.indexLede}>
           Guides for every part of Mockup Studio — {articles.length} articles.
         </p>

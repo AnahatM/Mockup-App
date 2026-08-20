@@ -86,7 +86,7 @@ for contrast rather than eyeballed.
 |---|---|---|
 | T1 | Adopt the Horizon palette across primitives and semantics, light and dark | DONE |
 | T2 | Give the primary colour an accompanying shade for gradients | DONE |
-| T3 | Use that gradient on primary buttons, toggle switches, cards, landing design | DONE |
+| T3 | Use that gradient on primary buttons, toggle switches, cards, landing design | DONE — revised: buttons and toggle tracks are too small to show a ramp, so they take its midpoint (`--accent-solid`) and the gradient moved to surfaces with room for it — navbar rule, card borders, closing panel edge, loading bar, spinner arc, slider fills, page titles. See docs/reference/design-tokens.md#gradient |
 | T4 | Reading pages: headings distinguished from body by colour and/or weight | DONE |
 | T5 | Re-measure every contrast pair after the palette change | DONE |
 

@@ -31,6 +31,21 @@
   letter-spacing: -0.03em;
 }
 
+/*
+ * The second line of the headline wears the global `.gradientText` treatment.
+ *
+ * Only the second line: a two-line gradient reads as a wash and takes the
+ * sentence's emphasis with it, where one clipped line reads as a deliberate
+ * accent. The `<br>` above it is what guarantees the single unwrapped line
+ * that `.gradientText` requires, and at clamp()'s smallest step the headline
+ * is still 35px — comfortably the large text the ramp is rated for.
+ */
+.titleAccent {
+  /* Clipping a background to text kills the descenders' overflow allowance in
+     Chromium; a hair of leading gives the 'y' in "studio" its tail back. */
+  padding-bottom: 0.06em;
+}
+
 .lede {
   max-width: 46ch;
   font-size: var(--text-lg);
@@ -66,14 +81,16 @@
     box-shadow var(--duration-fast) var(--ease-out);
 }
 
+/* The same flat fill as `ui/Button`'s primary variant — this is a link that
+   looks like that button, so it must not drift from it. */
 .primary {
   color: var(--accent-contrast);
-  background: var(--accent);
+  background: var(--accent-solid);
   box-shadow: var(--shadow-panel);
 }
 
 .primary:hover {
-  background: var(--accent-hover);
+  background: var(--accent-solid-hover);
   box-shadow: var(--shadow-popover);
   transform: translateY(-2px);
 }

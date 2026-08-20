@@ -42,8 +42,9 @@ Role-named tokens grouped by purpose:
 | Text      | `--text-primary`, `--text-secondary`, `--text-muted`, `--text-disabled`, `--text-inverse`     |
 | Borders   | `--border-subtle`, `--border-default`, `--border-strong`                                      |
 | Accent    | `--accent`, `--accent-hover`, `--accent-soft`, `--accent-contrast`                            |
-| Gradient  | `--gradient-primary` (and its `-from`/derived `sunset-*` stop on the primitive layer)         |
-| Controls  | `--control-bg`, `--control-fg`, `--track-bg`, `--track-fill`, `--thumb-bg`                    |
+| Solid     | `--accent-solid`, `--accent-solid-hover` — the gradient's midpoint, for small controls        |
+| Gradient  | `--gradient-primary`, and its `--gradient-from` / `--gradient-to` stops                       |
+| Controls  | `--control-bg`, `--control-fg`, `--track-bg`, `--thumb-bg`                                    |
 | Status    | `--status-success`, `--status-warning`, `--status-danger`                                     |
 | Elevation | `--shadow-panel`, `--shadow-popover`                                                          |
 | Focus     | `--focus-ring`                                                                                |
@@ -80,10 +81,34 @@ not by eye.
 
 `--gradient-primary` is the sunset ramp as a ready-to-use `background`, defined once per
 theme in `semantic.css` from the same accent primitive `--accent` resolves to, out to a
-`--sunset-peach` (dark) or `--sunset-ember` (light) primitive stop — it references
-primitives directly, like every other semantic token, rather than chaining through
-`--accent`. Anything that wants the gradient — primary buttons, toggles, cards — reads this
-one token rather than repeating a `linear-gradient()` literal.
+`--sunset-peach` (dark) or `--sunset-ember` (light) primitive stop. Its two ends are also
+exposed on their own as `--gradient-from` and `--gradient-to`, because a component often
+needs the ramp along its own axis rather than the canonical 135°: the loading bar sweeps it
+horizontally, the spinner sweeps it around a circle, a slider lays it across the filled part
+of its track. These are the only semantic tokens that reference other semantic tokens; the
+tiering test in `tokens.test.ts` allows it precisely because both themes define them.
+
+#### Where the ramp goes, and where it does not
+
+**Not on small controls.** A 135° gradient across a 30px button or a 28×16px toggle track
+traverses a few pixels of its own ramp, which does not read as a gradient — it reads as a
+flat colour that is slightly wrong, and shifts as the element's width changes. Those take
+`--accent-solid`, which is that theme's ramp sampled at its exact halfway point in sRGB
+(the space the browser interpolates it in), with `--accent-solid-hover` a shade further
+from the page — darker on paper, lighter on ink. Both are held to 4.5:1 against
+`--accent-contrast` in `contrast.test.ts`.
+
+**On anything long enough to show it**: the navbar's hairline, the top edge of the closing
+panel, feature-card borders on hover, the loading bar, the spinner arc, slider fills, and
+display type.
+
+Painting text with the ramp goes through the global `.gradientText` class in
+`styles/global.css`, never a per-page reimplementation — it carries the `-webkit-` fallback
+pair, a `fit-content` box (the ramp is painted across the box, so a full-width heading would
+show only its first inch), and a print override that puts real ink back, since a printer
+does not paint backgrounds and the headline *is* its background. It is for **large text
+only**: both stops are measured to 3:1, which is WCAG 1.4.3's threshold at 24px and up.
+Below that size, `--text-accent` is the token to reach for.
 
 ## How theme switching works
 

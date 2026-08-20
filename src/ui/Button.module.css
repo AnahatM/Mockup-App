@@ -56,13 +56,22 @@
   background: var(--control-bg-active);
 }
 
+/*
+ * Flat, not the sunset ramp. A 135deg gradient across a 30px-tall button
+ * traverses maybe eight pixels of its own ramp — the result is not a gradient,
+ * it is a slightly-off flat colour that shifts with the button's width. So the
+ * button takes the ramp's exact midpoint (`--accent-solid`) and the ramp itself
+ * is spent where there is room to see it: hairlines, bars, spinners, display
+ * type. It also means the hover state can be a plain colour transition again,
+ * which a background-image never was.
+ */
 .primary {
   color: var(--accent-contrast);
-  background: var(--gradient-primary);
+  background: var(--accent-solid);
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: var(--accent-solid-hover);
 }
 
 .subtle {

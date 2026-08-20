@@ -1,3 +1,4 @@
+import { cx } from '@/lib/cx'
 import {
   Contributing,
   HowItIsBuilt,
@@ -20,7 +21,7 @@ export function AboutPage() {
   useDocumentTitle('About')
   return (
     <article className={styles.page}>
-      <h1 className={styles.title}>About Mockup Studio</h1>
+      <h1 className={cx(styles.title, 'gradientText')}>About Mockup Studio</h1>
       <p className={styles.lede}>
         A free, open-source mockup generator that renders your screenshots on real 3D
         devices — built because every good alternative is a subscription, and every free
