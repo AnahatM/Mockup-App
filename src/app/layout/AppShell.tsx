@@ -8,6 +8,7 @@ import { Toolbar } from './Toolbar'
 import { Sidebar } from './Sidebar'
 import { Viewport } from './Viewport'
 import { Inspector } from './Inspector'
+import { useCollapseOverlaysOnMount } from './useCollapseOverlaysOnMount'
 import styles from './AppShell.module.css'
 
 /**
@@ -17,6 +18,7 @@ import styles from './AppShell.module.css'
 export function AppShell() {
   useShortcuts()
   useHistoryRecorder()
+  useCollapseOverlaysOnMount()
   const highlight = useHighlightFade()
 
   return (

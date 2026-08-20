@@ -3,8 +3,8 @@ import { cx } from '@/lib/cx'
 import { EmptyState } from '@/ui'
 import { DOC_ARTICLES, DOC_SECTION_LABELS, findArticle, summarise } from '@/content/docs'
 import { ROUTES, docPath } from '../routes'
+import { DocContentsRail } from './DocContentsRail'
 import { DocMarkdown } from './DocMarkdown'
-import { DocsSidebar } from './DocsSidebar'
 import styles from './Docs.module.css'
 
 export function DocArticlePage() {
@@ -33,9 +33,7 @@ export function DocArticlePage() {
 
   return (
     <div className={styles.layout}>
-      <aside className={styles.rail}>
-        <DocsSidebar activeSlug={article.slug} />
-      </aside>
+      <DocContentsRail activeSlug={article.slug} />
 
       <article className={styles.article}>
         <p className={styles.breadcrumb}>

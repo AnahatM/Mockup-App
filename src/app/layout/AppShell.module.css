@@ -1,11 +1,25 @@
+/*
+ * The toolbar row is `minmax(toolbar-height, auto)` rather than a fixed
+ * height: on a narrow viewport the toolbar wraps onto more than one line (see
+ * Toolbar.module.css), and a fixed row would clip the wrapped rows instead of
+ * growing to fit them. On a wide viewport the toolbar's own content is one
+ * line tall, so this is indistinguishable from the fixed height it replaces.
+ */
 .shell {
   display: grid;
-  grid-template-rows: var(--toolbar-height) minmax(0, 1fr);
+  grid-template-rows: minmax(var(--toolbar-height), auto) minmax(0, 1fr);
   height: 100%;
   background: var(--surface-app);
 }
 
+/*
+ * `position: relative` so the device rail and inspector can anchor to it as
+ * `position: absolute` overlays below the `compact` breakpoint, instead of
+ * needing to know the page's fixed-chrome height to position a `fixed`
+ * overlay correctly.
+ */
 .body {
+  position: relative;
   display: flex;
   min-height: 0;
 }

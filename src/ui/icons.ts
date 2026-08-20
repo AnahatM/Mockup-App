@@ -78,6 +78,7 @@ export const ICON_PATHS = {
     'M6.2 7.5h.01M8.7 7.5h.01M11.2 7.5h.01',
   ],
   dots: ['M6 12h.01M12 12h.01M18 12h.01'],
+  menu: ['M4 6.5h16M4 12h16M4 17.5h16'],
 
   /* Navigation and identity */
   home: ['m3.5 11 8.5-7 8.5 7', 'M6 9.5v10h12v-10', 'M10 19.5v-5h4v5'],

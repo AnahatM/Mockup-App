@@ -19,6 +19,16 @@
   content: '';
 }
 
+/* A 16px-wide hit area is fine for a mouse but too thin to reliably grab with
+   a finger — widen it for a coarse pointer the same way the icon buttons and
+   toggle switch do. */
+@media (pointer: coarse) {
+  .handle::before {
+    inset-inline-start: -1.25rem;
+    width: 2.5rem;
+  }
+}
+
 .grip {
   position: absolute;
   inset-block: 0;

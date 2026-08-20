@@ -6,6 +6,16 @@
   cursor: pointer;
 }
 
+/* The draggable thumb is 11px — comfortable for a mouse, too small to land a
+   finger on reliably. The track (and so the whole input's hit area) grows;
+   the visible track and thumb sizes below are unaffected, since they are
+   drawn on pseudo-elements sized independently of `.slider`'s own height. */
+@media (pointer: coarse) {
+  .slider {
+    height: 2.75rem;
+  }
+}
+
 .slider:disabled {
   cursor: not-allowed;
   opacity: 0.5;

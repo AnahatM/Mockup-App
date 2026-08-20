@@ -112,6 +112,17 @@
   overflow-y: auto;
 }
 
+/* Hidden above `compact` (900px, see design-tokens.md) — the rail is always
+   visible as a column there, so there is nothing to toggle. */
+.railToggle {
+  display: none;
+}
+
+.railChevron {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -255,5 +266,35 @@
   .rail {
     position: static;
     max-height: none;
+  }
+
+  /*
+   * Below `compact`, the rail's own contents are a filterable list of every
+   * article — useful, but not something a reader wants standing between them
+   * and the article they came for. A disclosure keeps it one tap away instead
+   * of removing it: nothing is hidden, only collapsed.
+   */
+  .railToggle {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    width: 100%;
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+    font: inherit;
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+    background: var(--surface-panel);
+    border: var(--hairline) solid var(--border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .railBody {
+    display: none;
+    margin-bottom: var(--space-6);
+  }
+
+  .railBodyOpen {
+    display: block;
   }
 }

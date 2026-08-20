@@ -39,3 +39,21 @@
   width: 1.75rem;
   height: 1.75rem;
 }
+
+/*
+ * A touch-primary pointer (no mouse to fall back on) needs a real hit target,
+ * not just a legible icon — 24-28px reads fine but is too small to reliably
+ * tap. Keyed on the pointer, not the viewport: a touchscreen laptop at
+ * 1440px wide needs this exactly as much as a phone does.
+ */
+@media (pointer: coarse) {
+  .sm {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .md {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}

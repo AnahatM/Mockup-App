@@ -2,22 +2,18 @@
  * Absolutely positioned (not fixed) so it is contained by `.page` and never
  * bleeds into the site navbar/footer above and below it.
  *
- * Full-bleed horizontally, though: `.page` is a centred 68rem column, so an
- * `inset: 0` backdrop stopped at the text margin and drew two hard vertical
- * seams down the screen. Spanning the viewport moves the clip off-screen where
- * it cannot be seen, and the mask fades the remaining top and bottom edges into
- * the navbar and footer instead of ending abruptly.
+ * `.page` is already full-width — the centred reading column is one level
+ * down, in `.inner` — so a plain `inset: 0` reaches the real screen edge on
+ * its own; it does not need to escape a `max-width` parent to get there. The
+ * mask fades the top and bottom edges into the navbar and footer instead of
+ * ending abruptly.
  */
 .backdrop {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+  inset: 0;
   z-index: -1;
-  width: 100vw;
   overflow: hidden;
   pointer-events: none;
-  transform: translateX(-50%);
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,

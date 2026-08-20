@@ -6,3 +6,29 @@
   background: var(--surface-panel);
   border-right: var(--hairline) solid var(--border-subtle);
 }
+
+/*
+ * Below `compact` (900px, see design-tokens.md) the rail leaves the flex row
+ * entirely and becomes an overlay anchored to `.body` (see AppShell.module.css
+ * for why `.body` is the positioning context, not the viewport). The inline
+ * `width` style still comes from the store's `sidebarWidth`, but is capped so
+ * a wide stored value cannot push the panel past the screen edge.
+ */
+@media (width <= 900px) {
+  .sidebar {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    z-index: var(--z-panel);
+    max-width: min(88vw, 22rem);
+    box-shadow: var(--shadow-popover);
+  }
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-viewport-ui);
+  background: var(--scrim);
+  border: none;
+}

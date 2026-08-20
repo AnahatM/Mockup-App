@@ -1,10 +1,17 @@
+/*
+ * Full-bleed: the backdrop is a direct child of `.page` and reaches the real
+ * viewport edge with a plain `inset: 0`, so it never needs to escape a
+ * `max-width` column. `overflow-x: clip` (not `hidden`) contains the blurred
+ * backdrop blobs, which intentionally bleed past their own box, without
+ * turning the page into a scroll container.
+ */
 .page {
   position: relative;
   isolation: isolate;
-
-  /* `clip`, not `hidden`: it contains the full-bleed backdrop without turning
-     the page into a scroll container. */
   overflow-x: clip;
+}
+
+.inner {
   max-width: 68rem;
   padding: var(--space-8) var(--space-6) var(--space-10);
   margin: 0 auto;

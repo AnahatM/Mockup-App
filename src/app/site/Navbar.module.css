@@ -1,4 +1,5 @@
 .bar {
+  position: relative;
   display: flex;
   gap: var(--space-4);
   align-items: center;
@@ -59,10 +60,17 @@
   background: var(--surface-active);
 }
 
-.actions {
+/* Divider between the nav links and the theme/source cluster. A vertical
+   hairline on the desktop row; the mobile block below turns it horizontal. */
+.menuDivider {
+  display: none;
+}
+
+.menuActions {
   display: flex;
   gap: var(--space-3);
   align-items: center;
+  margin-left: auto;
 }
 
 .theme {
@@ -82,9 +90,67 @@
   color: var(--text-primary);
 }
 
+/* Hidden on the desktop row — the hamburger only appears once the links and
+   actions no longer fit beside the brand. */
+.menuButton {
+  display: none;
+  flex: none;
+}
+
+/*
+ * Below `mobile` (640px, see design-tokens.md) the links and the theme/source
+ * cluster no longer fit next to the brand. Rather than trimming them one at a
+ * time — which is how a navbar quietly loses a feature — they move into a
+ * dropdown panel behind a menu button, so every control stays reachable.
+ */
 @media (width <= 640px) {
-  .source span,
-  .theme {
+  .links {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    z-index: var(--z-dropdown);
     display: none;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-3);
+    background: var(--surface-panel);
+    border-bottom: var(--hairline) solid var(--border-subtle);
+    box-shadow: var(--shadow-popover);
+  }
+
+  .linksOpen {
+    display: flex;
+  }
+
+  .link {
+    padding: var(--space-3);
+    font-size: var(--text-lg);
+  }
+
+  .menuDivider {
+    display: block;
+    height: var(--hairline);
+    margin: var(--space-2) 0;
+    background: var(--border-subtle);
+  }
+
+  .menuActions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    margin-left: 0;
+  }
+
+  .theme {
+    width: 100%;
+  }
+
+  .source {
+    padding: var(--space-3);
+    font-size: var(--text-lg);
+  }
+
+  .menuButton {
+    display: inline-flex;
   }
 }

@@ -12,3 +12,24 @@
   min-height: 0;
   overflow-y: auto;
 }
+
+/* See Sidebar.module.css — the same overlay treatment, mirrored to the right
+   edge, below the `compact` breakpoint. */
+@media (width <= 900px) {
+  .inspector {
+    position: absolute;
+    inset-block: 0;
+    right: 0;
+    z-index: var(--z-panel);
+    max-width: min(88vw, 22rem);
+    box-shadow: var(--shadow-popover);
+  }
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-viewport-ui);
+  background: var(--scrim);
+  border: none;
+}

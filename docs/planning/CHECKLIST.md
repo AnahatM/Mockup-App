@@ -28,9 +28,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | DONE |
 | S16 | Palette reads too yellow/brown — move the whole scheme cool, blue/green | DONE |
 | S17 | Studio toolbar controls left-aligned, not spread across the bar | DONE |
-| S19 | Whole app mobile-responsive — every page, and the studio's panels/tools/options | TODO |
+| S19 | Whole app mobile-responsive — every page, and the studio's panels/tools/options | DONE |
 | S20 | Footer local-only badge: rectangular, small radius, not a pill | DONE |
-| S21 | Landing backdrop gradient still visibly cuts off before the page edge | TODO |
+| S21 | Landing backdrop gradient still visibly cuts off before the page edge | DONE |
 | S18 | Tooltips must flip/clamp so they stay on screen near any viewport edge | DONE |
 
 ## Mockup features
