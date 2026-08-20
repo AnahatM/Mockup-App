@@ -37,10 +37,10 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 
 | # | Task | Status |
 |---|---|---|
-| F1 | GLB/GLTF import with its own materials + screen-mesh picker (backlog #11) | TODO |
-| F2 | Mirror real iPhone finish names in the colour palette (backlog #12) | TODO |
+| F1 | GLB/GLTF import with its own materials + screen-mesh picker (backlog #11) | DONE |
+| F2 | Mirror real iPhone finish names in the colour palette (backlog #12) | DONE |
 | F3 | App Store screenshot mode — panoramic multi-device layouts + headline text (#25) | TODO |
-| F4 | Image cropping before the screenshot reaches the device (#26) | TODO |
+| F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | TODO |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
 | F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | TODO |
@@ -50,12 +50,12 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 
 | # | Task | Status |
 |---|---|---|
-| U1 | React error boundary with a well-designed error screen, not the router's default | TODO |
-| U2 | A proper 404 page | TODO |
+| U1 | React error boundary with a well-designed error screen, not the router's default | DONE |
+| U2 | A proper 404 page | DONE |
 | U3 | Empty states everywhere something can be empty | TODO |
-| U4 | Keyboard shortcut reference / help overlay | TODO |
+| U4 | Keyboard shortcut reference / help overlay | DONE |
 | U5 | Focus-visible styling audit across every interactive control | TODO |
-| U6 | `prefers-reduced-motion` honoured by every animation | TODO |
+| U6 | `prefers-reduced-motion` honoured by every animation | DONE |
 | U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | DONE |
 | U8 | Offline/local reassurance surfaced in the UI, not only in the docs | TODO |
 

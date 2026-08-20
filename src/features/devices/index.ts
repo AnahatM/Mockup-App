@@ -4,6 +4,7 @@ export { ColorwayPicker } from './components/ColorwayPicker'
 export { PaintPicker } from './components/PaintPicker'
 export { GlbImportPicker } from './components/GlbImportPicker'
 export { MeshPicker } from './components/MeshPicker'
+export { deviceFinishPalette } from './finishPalette'
 export { PAINT_COLORS, railColorFor, type PaintColor } from './paint'
 export {
   buildImportedDeviceSpec,
