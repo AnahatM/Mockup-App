@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 /*
  * Imported through the feature barrel, the way the app does.
@@ -69,5 +70,14 @@ describe('the built-in presets', () => {
   it('covers the window mockup, not only the 3D scene', () => {
     const window = BUILTIN_PRESETS.filter((p) => p.group === 'Window')
     expect(window.length).toBeGreaterThan(0)
+  })
+
+  it('names every preset in the manual', () => {
+    // The article lists them by name. Adding a preset and not the entry leaves
+    // the manual quietly describing an older version of the app.
+    const article = readFileSync('src/content/docs/articles/presets.md', 'utf8')
+    const undocumented = BUILTIN_PRESETS.filter((p) => !article.includes(p.name))
+
+    expect(undocumented.map((p) => p.name), 'presets missing from the manual').toEqual([])
   })
 })
