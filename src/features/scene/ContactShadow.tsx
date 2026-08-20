@@ -42,8 +42,11 @@ export function ContactShadow() {
   if (!shadow.enabled) return null
 
   // Rest the shadow on the pedestal top when there is one, otherwise on the
-  // floor. The offset also keeps the plane off geometry it would z-fight with.
-  const y = pedestal.enabled && pedestal.shape !== 'none' ? 0.001 : 0
+  // floor. 1mm was too fine a gap for the depth buffer to resolve — see the
+  // polygon offset on the plinth's own material, which is the other half of
+  // this fix. Both, because either alone leaves it marginal at some camera
+  // distance, and the failure is a visible starburst rather than a subtle one.
+  const y = pedestal.enabled && pedestal.shape !== 'none' ? 0.004 : 0
 
   // While a clip is playing the product moves every frame, so re-render-driven
   // baking is not enough — the store does not change between frames.

@@ -36,6 +36,15 @@ export function Pedestal() {
         metalness={config.metalness}
         roughnessMap={overlay?.roughnessMap ?? null}
         normalMap={overlay?.normalMap ?? null}
+        // The contact shadow lies flat on this face, a hair above it. That gap
+        // is far too small for the depth buffer to resolve at a normal camera
+        // distance, so the cap's triangle fan was winning the depth test in
+        // wedges and cutting a starburst through the shadow. Nudging the
+        // plinth's rasterised depth away from the camera makes the shadow win
+        // everywhere instead of almost everywhere.
+        polygonOffset
+        polygonOffsetFactor={1}
+        polygonOffsetUnits={1}
       />
     </mesh>
   )
