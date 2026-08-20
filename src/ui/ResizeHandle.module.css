@@ -45,8 +45,19 @@
   opacity: 1;
 }
 
+/*
+ * The handle is zero-width, so an outline would draw around nothing. Focus is
+ * shown by the grip itself becoming solid and thicker — but it also takes a
+ * ring, because a 2px line at the very edge of a panel is easy to miss, and a
+ * focus indicator that only a careful eye can find is not one.
+ */
 .handle:focus-visible {
   outline: none;
+}
+
+.handle:focus-visible .grip {
+  width: 3px;
+  box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
 @media (prefers-reduced-motion: reduce) {

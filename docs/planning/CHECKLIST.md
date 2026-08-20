@@ -46,6 +46,9 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
 | F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
+| F12 | Fly mode: Q/E for up and down alongside WASD | TODO |
+| F13 | Show every viewport control and keybinding in the UI, not just the docs | TODO |
+| F14 | More bindings for trackpad users — e.g. Space to pan, easier dragging without a mouse | TODO |
 | F8 | Light gizmos: icons showing each light's position, direction and colour — NOT the light panels themselves, which must stay invisible in the render. Toggleable from the toolbar; every light editable in the inspector | DONE |
 | F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
 
