@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Icon, ScreenshotSlot } from '@/ui'
+import heroShot from '@/assets/shots/hero-studio.png'
 import { LINKS, ROUTES } from '../../routes'
 import { StatRow } from './StatRow'
 import { useTilt } from './useTilt'
@@ -22,10 +23,12 @@ export function Hero() {
           without the studio.
         </h1>
         <p className={styles.lede}>
-          Drop in a screenshot and render it on a <strong className={styles.emphasis}>parametric</strong>{' '}
-          device — generated from data, not modelled by hand — inside a fully{' '}
-          <strong className={styles.emphasis}>customizable</strong> 3D studio. No account, no upload, no
-          watermark, and nothing you load ever leaves your machine.
+          Drop in a screenshot and render it on a{' '}
+          <strong className={styles.emphasis}>parametric</strong> device — generated
+          from data, not modelled by hand — inside a fully{' '}
+          <strong className={styles.emphasis}>customizable</strong> 3D studio. No
+          account, no upload, no watermark, and nothing you load ever leaves your
+          machine.
         </p>
 
         <div className={styles.actions}>
@@ -33,7 +36,12 @@ export function Hero() {
             <Icon name="camera" size={16} />
             Open the studio
           </Link>
-          <a className={styles.secondary} href={LINKS.repo} target="_blank" rel="noreferrer noopener">
+          <a
+            className={styles.secondary}
+            href={LINKS.repo}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             <Icon name="github" size={16} />
             View source
           </a>
@@ -45,8 +53,8 @@ export function Hero() {
       <div ref={tiltRef} className={styles.showcase}>
         <ScreenshotSlot
           caption="The studio, mid-render"
+          src={heroShot}
           aspect="tall"
-          icon="camera"
           className={styles.showcaseSlot}
         />
       </div>

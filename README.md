@@ -30,8 +30,6 @@ the whole app, and every file you give it, stays on your machine.
 
 <p align="center">
   <img src="docs/images/studio-hero.png" alt="Mockup Studio's 3D viewport showing a phone with a brushed-titanium finish under rim lighting on a soft studio backdrop" width="820" />
-  <br />
-  <em>Screenshot slot — drop a capture of the studio in <code>docs/images/studio-hero.png</code>.</em>
 </p>
 
 ---

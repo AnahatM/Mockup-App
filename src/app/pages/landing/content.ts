@@ -1,5 +1,8 @@
 import type { IconName } from '@/ui'
 import { DEVICES } from '@/features/devices/state'
+import deviceShot from '@/assets/shots/showcase-device.png'
+import backdropShot from '@/assets/shots/showcase-backdrop.png'
+import motionShot from '@/assets/shots/showcase-motion.png'
 
 export interface Highlight {
   icon: IconName
@@ -54,12 +57,16 @@ export const STATS: readonly Stat[] = [
 ] as const
 
 export interface ShowcaseItem {
-  icon: IconName
+  /** Captured by `scripts/capture-shots.mjs`, so it never drifts from the app. */
+  src: string
   caption: string
 }
 
 export const SHOWCASE_ITEMS: readonly ShowcaseItem[] = [
-  { icon: 'phone', caption: 'A phone mockup, lit and posed on a pedestal' },
-  { icon: 'droplet', caption: 'A backdrop matched to your screenshot’s brand colour' },
-  { icon: 'film', caption: 'A motion preset, recorded straight to WebM' },
+  { src: deviceShot, caption: 'A phone mockup, lit and posed on a pedestal' },
+  {
+    src: backdropShot,
+    caption: 'A backdrop matched to your screenshot’s brand colour',
+  },
+  { src: motionShot, caption: 'A motion preset, recorded straight to WebM' },
 ] as const

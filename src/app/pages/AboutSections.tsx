@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { cx } from '@/lib/cx'
 import { DEVICES } from '@/features/devices/state'
 import { ScreenshotSlot } from '@/ui'
+import aboutShot from '@/assets/shots/about-procedural.png'
 import { LINKS, ROUTES } from '../routes'
 import styles from './Prose.module.css'
 
@@ -44,7 +45,7 @@ export function HowItIsBuilt() {
       </p>
       <ScreenshotSlot
         caption="A procedural phone in the studio — every dimension is data"
-        icon="phone"
+        src={aboutShot}
       />
       <p className={styles.body}>
         The same idea runs through the rest: lighting rigs are arrays of parametric area

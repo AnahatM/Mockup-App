@@ -22,7 +22,7 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | S9 | Icons on every tool, page link and button (GitHub icon on "View source", nav icons) | DONE |
 | S10 | Footer: cleaner, gradient shading | DONE |
 | S11 | Screenshot slots on docs and about pages | DONE |
-| S12 | Capture real screenshots of the app for those slots | TODO |
+| S12 | Capture real screenshots of the app for those slots | DONE |
 | S13 | Studio first paint: spinner/loading state instead of a blank viewport | DONE |
 | S14 | Dark theme grey is washed out — raise saturation | DONE |
 | S15 | Hero copy must work in "parametric" and "customizable" — they are the key features | DONE |
@@ -127,7 +127,7 @@ things paid products do that we should match or beat.
 | P3 | Maintain this checklist as tasks arrive | ONGOING |
 | P4 | Commit in stages as work lands | ONGOING |
 | P6 | Reference AnahatM/sparkfile's info pages (fetch from GitHub — not present locally) | DONE |
-| P5 | **FINAL PASS** — capture real screenshots for every placeholder slot across the whole site (landing hero, landing showcase ×3, About) and the README's image slots, then wire them in and delete the "coming soon" states. Do this last, once the UI has settled. `scripts/capture-shots.mjs` is the harness. | TODO |
+| P5 | **FINAL PASS** — capture real screenshots for every placeholder slot across the whole site (landing hero, landing showcase ×3, About) and the README's image slots, then wire them in and delete the "coming soon" states. Do this last, once the UI has settled. `scripts/capture-shots.mjs` is the harness. | DONE |
 
 ## Standing constraints
 
