@@ -19,7 +19,7 @@ export interface BuiltinPreset {
   name: string
   description: string
   /** Groups the preset list, so a dozen entries stay scannable. */
-  group: 'Studio' | 'Dramatic' | 'Flat' | 'Window' | 'Motion'
+  group: 'Studio' | 'Dramatic' | 'Environment' | 'Flat' | 'Window' | 'Motion'
   build: () => SceneState
 }
 

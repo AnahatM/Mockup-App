@@ -13,6 +13,8 @@ export const DRAMATIC_PRESETS: readonly BuiltinPreset[] = [
       scene.scene.backdrop.color = '#0d0e11'
       scene.scene.backdrop.accent = '#2a3547'
       scene.scene.pedestal.color = '#15161a'
+      scene.scene.pedestal.texture.kind = 'noise'
+      scene.scene.pedestal.texture.strength = 0.25
       scene.scene.post.bloomThreshold = 0.7
       scene.scene.post.vignetteDarkness = 0.5
       scene.lighting = lighting('dramatic')
@@ -48,6 +50,12 @@ export const DRAMATIC_PRESETS: readonly BuiltinPreset[] = [
       const scene = base()
       scene.device.frameFinish = 'titanium'
       scene.device.backFinish = 'matte-glass'
+      // The rim light is what shows a brushed grain; anywhere else on the
+      // frame it would be too fine to see, which is why it lives on this
+      // preset rather than on the titanium finish itself.
+      scene.device.frameTexture.kind = 'brushed'
+      scene.device.frameTexture.strength = 0.5
+      scene.device.frameTexture.contrast = 0.28
       scene.lighting = lighting('rim-glow')
       scene.scene.post.aoIntensity = 2.2
       scene.camera.preset = 'macro'

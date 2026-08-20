@@ -35,11 +35,15 @@ Any finish takes any colour. A brushed metal in your brand colour is a legitimat
 
 Underneath a finish you can layer a second, independent pattern: noise, fine grain, brushed metal, scratches or a woven weave. Every pixel is generated on a canvas at load time from a handful of numbers — nothing is ever downloaded or shipped as an image, which is what keeps the app fully local.
 
-The pattern is available in three places, each with its own settings:
+The pattern is available in five places, each with its own settings:
 
 - **Body texture** — the device's back/body surface.
 - **Frame texture** — the device's side band, buttons and stand.
 - **Pedestal texture** — the plinth the product stands on.
+- **Backdrop texture** — the cyclorama sweep, in the Scene tab.
+- **Environment texture** — a structured environment's tiles, walls or blocks.
+
+The last two matter more than they sound. The backdrop is the largest surface in the frame, so it is where a perfectly flat colour gives a render away fastest.
 
 Each has the same six controls:
 

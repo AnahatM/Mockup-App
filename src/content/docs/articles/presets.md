@@ -2,16 +2,24 @@ A preset is an entire scene saved as one file: the device, its colours and mater
 
 ## Premade looks
 
-The **Presets** tab ships with sixteen, grouped by feel. Each one shows a small
+The **Presets** tab ships with twenty, grouped by feel. Each one shows a small
 preview of the look beside its name.
 
 | Group | Presets |
 | --- | --- |
 | Studio | Clean studio, Soft light, Glass desk |
 | Dramatic | Dark hero, Neon edge, Rim metal |
+| Environment | Hex field, Tiled room, Pulse grid, Concrete cove |
 | Flat | Catalogue white, Blueprint, Transparent cutout, App Store portrait |
 | Window | Glass browser, macOS dark, Outlined shot, Bare screenshot |
 | Motion | Floating turntable, Hero reveal |
+
+The **Environment** group builds the backdrop out of real geometry rather than
+a painted gradient: a hexagon-tiled floor, a room whose own corners shade it, a
+grid of blocks that ripple outward, and a cove finished in cast concrete. All
+of it is generated from numbers, so nothing is downloaded and every knob stays
+adjustable afterwards. "Pulse grid" is the only one that moves, and it holds
+still if your system asks for reduced motion.
 
 The **Window** group sets up the 2D window mockup rather than the 3D scene —
 the browser or macOS chrome, the container treatment and the shadow. "Bare
@@ -19,7 +27,7 @@ screenshot" drops the frame entirely and puts your image straight on the
 backdrop.
 
 Applying one changes the scene but never your screenshot, so you can try all
-sixteen against the same image.
+twenty against the same image.
 
 ## Saving your own
 
