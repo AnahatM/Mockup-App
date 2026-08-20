@@ -39,14 +39,15 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 |---|---|---|
 | F1 | GLB/GLTF import with its own materials + screen-mesh picker (backlog #11) | DONE |
 | F2 | Mirror real iPhone finish names in the colour palette (backlog #12) | DONE |
-| F3 | App Store screenshot mode — panoramic multi-device layouts + headline text (#25) | TODO |
+| F3 | App Store screenshot mode — panoramic multi-device layouts + headline text (#25) | DONE |
 | F4 | Image cropping before the screenshot reaches the device (#26) | DONE |
 | F5 | Standalone window/flat mockup mode, no device required (#27) | DONE |
 | F6 | Background should read as a real 3D space, not a flat gradient (#29) | TODO |
 | F15 | Structured backdrop environments — hexagon tiles, square-tile room, real room shading, pulsating blocks oscillating up and down, and more. All parametric and procedural, no bundled assets | TODO |
 | F16 | Procedural surface textures — noise, brushed metal, etc. — applicable to pedestal, walls and devices | TODO |
 | F17 | Update the built-in presets to use the new backdrop environments and textures | TODO |
-| F18 | Separate the 2D mockup features from the 3D studio — the window/showcase compositor is pure canvas and needs no WebGL, so it should preview in a modal without the 3D scene at all | TODO |
+| F18 | Live 2D preview driven by the same compositor as the export, working with no WebGL | TODO |
+| F19 | **Decided:** split the 2D tools onto their own route and page, separate from the 3D studio. Not a modal bolted onto the studio — a genuinely separate tool that loads without the 3D scene | TODO |
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
 | F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
@@ -104,7 +105,7 @@ things paid products do that we should match or beat.
 | C2 | Border shape control: sharp / curved / round, plus a radius slider | DONE |
 | C3 | Shadow presets: none / spread / hug / adaptive, with an opacity slider | DONE |
 | C4 | Layout preset gallery with live thumbnails, not just a names list | DONE |
-| C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | TODO |
+| C5 | Multi-up layouts — 1, 2 or 3 devices in one composition | DONE |
 | C6 | Separate Zoom and Tilt controls with a live preview | TODO |
 | C7 | Undo / redo | DONE |
 | C8 | "Start over" — reset the whole scene, behind a confirmation | DONE |
