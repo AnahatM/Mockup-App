@@ -196,6 +196,50 @@ device geometry is procedural instead of a bundled 3D model.
 - [`docs/adr/`](docs/adr/) — architecture decision records, with the reasoning behind each one
 - [`src/content/docs/articles/quick-start.md`](src/content/docs/articles/quick-start.md) — the in-app user guide's starting page (also readable live at `/docs` in the running app)
 
+## Roadmap
+
+Every phase is independently useful — the studio has been usable since phase 2,
+and each later phase adds a capability rather than finishing a half-built one.
+
+| Phase | Ships | Status |
+| --- | --- | --- |
+| Foundation | Design tokens, control system, app shell | Complete |
+| Studio | Parametric lighting, backdrops, pedestal, postprocessing | Complete |
+| Devices | Procedural device system, 15 devices, materials | Complete |
+| Media | Screenshots and video on the device screen, brand-colour extraction | Complete |
+| Overlays | Status bars, gesture bars, menu bars, docks | Complete |
+| Output | PNG export at any size, WebM recording, preset manifest | Complete |
+| Site | Landing page, 17-article manual, search, sitemap | Complete |
+| 2D mockups | macOS and browser chrome, container styles, shadow presets | Complete |
+| Import | GLB/GLTF models with their own materials | Complete |
+| Composition | Multi-device App Store layouts with headline text | In progress |
+| Environments | Structured 3D backdrops and procedural surface textures | In progress |
+
+## Known limitations
+
+Stated plainly, because a feature list that omits what does not work is not a
+feature list.
+
+- **Video exports are WebM only.** `MediaRecorder` cannot produce MP4 in the
+  browser, and MP4 would need a WebCodecs path. WebM is not accepted by every
+  upload target, App Store Connect among them.
+- **Transparent video is not possible today.** `canvas.captureStream()`
+  composites to opaque RGB before the recorder ever sees it, so alpha is lost
+  before encoding. Transparent *stills* work fine.
+- **Screen overlays do not composite onto an imported GLB model.** The status
+  bar and gesture bar are texture layers positioned against a known screen
+  geometry; an imported model's screen mesh has an arbitrary orientation.
+  Procedural devices are unaffected.
+- **Draco-compressed GLB files are unsupported.** The usual decoder is fetched
+  from a CDN on first use, which would break the fully-local promise. Export
+  your model uncompressed.
+- **Glass and inset container styles are approximations.** Canvas 2D has no
+  backdrop-filter, and the compositor also paints the device-screen texture,
+  which cannot see what is behind it in the 3D scene.
+- **First render can be slow on low-end hardware.** The postprocessing stack
+  compiles several shaders on first paint. A loading indicator covers it, but
+  it is genuinely slower on integrated graphics.
+
 ## Contributing
 
 Contributions are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md). Adding a

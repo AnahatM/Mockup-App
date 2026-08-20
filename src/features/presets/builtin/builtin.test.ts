@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 /*
  * Imported through the feature barrel, the way the app does.
@@ -70,6 +70,36 @@ describe('the built-in presets', () => {
   it('covers the window mockup, not only the 3D scene', () => {
     const window = BUILTIN_PRESETS.filter((p) => p.group === 'Window')
     expect(window.length).toBeGreaterThan(0)
+  })
+
+  it('puts desktop window chrome on a desktop-class device', () => {
+    /*
+     * Browser and macOS window furniture on a phone screen is wrong — those
+     * are desktop windows. Device kinds are read from the catalogue files
+     * rather than imported, because the devices barrel exports components that
+     * reach the store and would close an import cycle here.
+     */
+    const kinds = new Map(
+      readdirSync('src/features/devices/catalog')
+        .filter((name) => name.endsWith('.ts'))
+        .map((name) => {
+          const source = readFileSync(`src/features/devices/catalog/${name}`, 'utf8')
+          return [
+            /id:\s*'([^']+)'/.exec(source)?.[1] ?? '',
+            /kind:\s*'([^']+)'/.exec(source)?.[1] ?? '',
+          ] as const
+        }),
+    )
+    const DESKTOP_CLASS = new Set(['laptop', 'desktop'])
+
+    for (const preset of BUILTIN_PRESETS.filter((p) => p.group === 'Window')) {
+      const scene = preset.build()
+      if (scene.flat.style === 'none') continue
+      expect(
+        DESKTOP_CLASS.has(kinds.get(scene.device.specId) ?? ''),
+        `${preset.id} puts ${scene.flat.style} chrome on a ${kinds.get(scene.device.specId)}`,
+      ).toBe(true)
+    }
   })
 
   it('names every preset in the manual', () => {

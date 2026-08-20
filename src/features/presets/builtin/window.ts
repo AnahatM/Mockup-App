@@ -6,6 +6,11 @@ import { base, lighting, type BuiltinPreset } from './types'
  * The built-in presets covered the 3D studio only, so the window compositor —
  * chrome, container treatment, shadow — had no starting points at all despite
  * having as many knobs as the scene does.
+ *
+ * Each picks a device the chrome makes sense on. Browser and macOS window
+ * furniture on a phone screen is simply wrong: those are desktop windows, so
+ * these default to a laptop or a monitor. The device stays changeable
+ * afterwards like every other part of a preset.
  */
 export const WINDOW_PRESETS: readonly BuiltinPreset[] = [
   {
@@ -15,6 +20,7 @@ export const WINDOW_PRESETS: readonly BuiltinPreset[] = [
     group: 'Window',
     build: () => {
       const scene = base()
+      scene.device.specId = 'macbook-pro'
       scene.flat.style = 'browser'
       scene.flat.containerStyle = 'glass-light'
       scene.flat.borderShape = 'curved'
@@ -35,6 +41,7 @@ export const WINDOW_PRESETS: readonly BuiltinPreset[] = [
     group: 'Window',
     build: () => {
       const scene = base()
+      scene.device.specId = 'macbook-pro'
       scene.flat.style = 'macos'
       scene.flat.dark = true
       scene.flat.containerStyle = 'inset-dark'
@@ -56,6 +63,7 @@ export const WINDOW_PRESETS: readonly BuiltinPreset[] = [
     group: 'Window',
     build: () => {
       const scene = base()
+      scene.device.specId = 'monitor-27'
       scene.flat.style = 'none'
       scene.flat.containerStyle = 'outline'
       scene.flat.borderShape = 'sharp'
@@ -76,6 +84,7 @@ export const WINDOW_PRESETS: readonly BuiltinPreset[] = [
     group: 'Window',
     build: () => {
       const scene = base()
+      scene.device.specId = 'macbook-air'
       scene.flat.hideMockup = true
       scene.flat.shadowStyle = 'adaptive'
       scene.scene.backdrop.mode = 'gradient'

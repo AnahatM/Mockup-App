@@ -46,6 +46,7 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F15 | Structured backdrop environments — hexagon tiles, square-tile room, real room shading, pulsating blocks oscillating up and down, and more. All parametric and procedural, no bundled assets | TODO |
 | F16 | Procedural surface textures — noise, brushed metal, etc. — applicable to pedestal, walls and devices | TODO |
 | F17 | Update the built-in presets to use the new backdrop environments and textures | TODO |
+| F18 | Separate the 2D mockup features from the 3D studio — the window/showcase compositor is pure canvas and needs no WebGL, so it should preview in a modal without the 3D scene at all | TODO |
 | F9 | A large triangular slab is visible in the background from some camera angles — the backdrop seen from outside | TODO |
 | F10 | Fly controls feel unintuitive, especially on a trackpad; the camera drifts away | TODO |
 | F11 | Unity-style axis gizmo showing current 3D orientation | TODO |
@@ -121,6 +122,7 @@ things paid products do that we should match or beat.
 | P2 | Organise `docs/` into folders | DONE |
 | P3 | Maintain this checklist as tasks arrive | ONGOING |
 | P4 | Commit in stages as work lands | ONGOING |
+| P6 | Reference AnahatM/sparkfile's info pages (fetch from GitHub — not present locally) | TODO |
 | P5 | **FINAL PASS** — capture real screenshots for every placeholder slot across the whole site (landing hero, landing showcase ×3, About) and the README's image slots, then wire them in and delete the "coming soon" states. Do this last, once the UI has settled. `scripts/capture-shots.mjs` is the harness. | TODO |
 
 ## Standing constraints
