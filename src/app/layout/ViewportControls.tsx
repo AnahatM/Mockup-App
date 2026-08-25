@@ -28,6 +28,8 @@ export function ViewportControls() {
   const resetCamera = useAppStore((state) => state.resetCamera)
   const showGizmos = useAppStore((state) => state.ui.showLightGizmos)
   const toggleGizmos = useAppStore((state) => state.toggleLightGizmos)
+  const showAxis = useAppStore((state) => state.ui.showAxisGizmo)
+  const toggleAxis = useAppStore((state) => state.toggleAxisGizmo)
 
   return (
     <div className={styles.cluster} role="group" aria-label="Viewport">
@@ -66,6 +68,13 @@ export function ViewportControls() {
         size="sm"
         active={showGizmos}
         onClick={toggleGizmos}
+      />
+      <IconButton
+        icon="target"
+        label={showAxis ? 'Hide orientation gizmo' : 'Show orientation gizmo'}
+        size="sm"
+        active={showAxis}
+        onClick={toggleAxis}
       />
     </div>
   )

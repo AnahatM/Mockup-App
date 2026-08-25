@@ -44,12 +44,18 @@ const LABEL_COLOR = '#000000'
  */
 export function AxisGizmo() {
   const target = useAppStore((state) => state.camera.target)
+  const shown = useAppStore((state) => state.ui.showAxisGizmo)
   const groupRef = useRef<Group>(null)
 
   useLayoutEffect(() => {
     registerAxisGizmoGroup(groupRef.current)
     return () => registerAxisGizmoGroup(null)
-  }, [])
+  }, [shown])
+
+  // Unmounted rather than hidden, so the extra `Hud` render pass goes away with
+  // it. The capture guard still covers exports, which have to strip the gizmo
+  // whether or not the user has it switched on.
+  if (!shown) return null
 
   return (
     <GizmoHelper

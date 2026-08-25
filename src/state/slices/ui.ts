@@ -47,6 +47,16 @@ export interface UiState {
    * captured into a preset or appear in an export.
    */
   showLightGizmos: boolean
+  /**
+   * Orientation gizmo in the corner of the viewport.
+   *
+   * View state for the same reason the light markers are: an editing aid that
+   * must never reach a preset. Exports already strip it (`axisGizmoGuard`), but
+   * until this existed there was no way to get a clean viewport on *screen* —
+   * which is what you want while judging a composition, and what a screenshot
+   * of the app needs.
+   */
+  showAxisGizmo: boolean
 }
 
 export interface UiSlice {
@@ -62,6 +72,7 @@ export interface UiSlice {
   focusSetting: (tab: InspectorTab, label: string) => void
   clearHighlight: () => void
   toggleLightGizmos: () => void
+  toggleAxisGizmo: () => void
 }
 
 export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
@@ -75,6 +86,7 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
     paletteOpen: false,
     highlight: null,
     showLightGizmos: false,
+    showAxisGizmo: true,
   },
   setInspectorTab: (tab) =>
     set((draft) => {
@@ -132,6 +144,11 @@ export const createUiSlice: SliceCreator<UiSlice> = (set) => ({
   toggleLightGizmos: () =>
     set((draft) => {
       draft.ui.showLightGizmos = !draft.ui.showLightGizmos
+    }),
+
+  toggleAxisGizmo: () =>
+    set((draft) => {
+      draft.ui.showAxisGizmo = !draft.ui.showAxisGizmo
     }),
 })
 

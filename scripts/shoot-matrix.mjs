@@ -88,6 +88,8 @@ const SWEEPS = {
       { label: 'watch profile', env: 'none', device: 'Watch 45mm', camera: 'profile' },
       { label: 'monitor stand', env: 'none', device: 'Monitor 27"', camera: 'low-hero' },
       { label: 'all-in-one', env: 'none', device: 'All-in-one 24"', camera: 'three-quarter' },
+      { label: 'screen macro', env: 'none', device: 'All-in-one 24"', camera: 'front' },
+      { label: 'phone front', env: 'none', device: 'Pro Phone 6.1"', camera: 'front' },
     ],
   },
   devices: {

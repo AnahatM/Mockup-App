@@ -77,6 +77,10 @@ at the results, which is the only way these show up.
 | R2 | Keyboard deck was five rows of identical keycaps. Now a real layout: wide space bar, stepped left edge, short function row, inverted-T arrows | DONE |
 | R3 | **Bug:** the trackpad overhung the front edge of the laptop base, and the keyboard plane stretched its texture | DONE |
 | R4 | Monitor and iMac stood on rectangular slabs — the stand radii were fixed millimetres, invisible on a 240mm foot. Now proportional | DONE |
+| R8 | **Bug:** the screenshot texture had no mip chain, so fine UI text crawled at any angle; the Dock and menu bar were a third too large against a display no Mac has | DONE |
+| R9 | **Bug:** applying a built-in look replaced the chosen device with the default phone, and carried over camera/plinth/shadow sized for it | DONE |
+| R10 | Marketing screenshots now use the app's own pages as the on-device content, captured by `scripts/make-shot-fixtures.mjs` | DONE |
+| R11 | Toolbar toggle for the orientation gizmo — exports stripped it, but there was no way to get a clean viewport on screen | DONE |
 | R7 | **Bug:** the contact shadow was drawn from below the floor, compressing into a grey streak past the product at Low hero and while orbiting under | DONE |
 | R5 | Audit every catalogue spec against published dimensions. `spec/screenAspect.test.ts` cross-checks each screen's geometry against its published display aspect and caught seven | DONE |
 | R6 | Speaker/mic cutouts, ports, MagSafe ring, laptop feet, fold and flip hinge crease | TODO |

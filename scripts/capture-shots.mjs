@@ -16,8 +16,18 @@ import puppeteer from 'puppeteer-core'
 import { mkdirSync } from 'node:fs'
 
 const PORT = process.env.PORT ?? '4173'
+/**
+ * The screenshots that go *on* the devices, produced by
+ * `make-shot-fixtures.mjs` from this app's own pages.
+ *
+ * Each device gets the capture shaped like its screen: a phone-width one on a
+ * phone, a desktop-width one on a laptop. Putting the wrong one on either is
+ * the difference between a mockup and a mockup with bars down the sides.
+ */
 const FIXTURE = 'scripts/out/screenshot.png'
+const DESKTOP_FIXTURE = 'scripts/out/screenshot-desktop.png'
 const PHONE = 'Pro Phone 6.1"'
+const LAPTOP = 'Pro Laptop 14"'
 
 mkdirSync('src/assets/shots', { recursive: true })
 mkdirSync('docs/images', { recursive: true })
@@ -60,6 +70,8 @@ async function shoot({
   theme = 'light',
   width,
   height,
+  device = PHONE,
+  fixture = FIXTURE,
   preset,
   tab,
   hero = false,
@@ -85,8 +97,8 @@ async function shoot({
   await page.waitForSelector('canvas', { timeout: 60_000 })
   await wait(4000)
 
-  await selectDevice(page, PHONE)
-  await uploadFixture(page)
+  await selectDevice(page, device)
+  await uploadFixture(page, fixture)
   if (preset) await applyPreset(page, preset[0], preset[1])
   if (extra) await extra(page)
 
@@ -174,13 +186,18 @@ made.push(
 )
 
 made.push(
+  // The README's banner. A portrait phone in a 16:9 frame is mostly empty
+  // margin, so this one is the laptop carrying a desktop-shaped capture, on an
+  // environment with something in it — a wide shot wants a wide subject.
   await shoot({
     name: 'studio-hero',
     outDir: 'docs/images',
     theme: 'light',
     width: 1600,
     height: 900,
-    preset: ['Dramatic', 'Rim metal'],
+    device: LAPTOP,
+    fixture: DESKTOP_FIXTURE,
+    preset: ['Environment', 'Hex field'],
     hero: true,
   }),
 )
@@ -210,12 +227,12 @@ async function selectDevice(page, deviceName) {
   await wait(600)
 }
 
-async function uploadFixture(page) {
+async function uploadFixture(page, fixture) {
   await openTab(page, 'Screen')
   await wait(400)
   const fileInput = await page.$('input[type=file]')
   if (!fileInput) throw new Error('screen file input not found')
-  await fileInput.uploadFile(FIXTURE)
+  await fileInput.uploadFile(fixture)
   await wait(2500)
 }
 
@@ -314,6 +331,9 @@ async function closePanels(page) {
   await page.evaluate(() => {
     document.querySelector('button[aria-label="Hide device rail"]')?.click()
     document.querySelector('button[aria-label="Hide inspector"]')?.click()
+    // The orientation gizmo is an editing aid. Exports strip it automatically;
+    // these are page screenshots, so they have to ask.
+    document.querySelector('button[aria-label="Hide orientation gizmo"]')?.click()
   })
   await wait(600)
 }
