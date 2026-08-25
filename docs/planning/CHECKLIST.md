@@ -63,7 +63,8 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F24 | **Bug:** at the top of the depth/relief/pulse sliders a field grew to fifteen units, closed over the camera and left the viewport flat grey | DONE |
 | F25 | **Bug:** a tile size larger than the field size produced a single hidden tile, so the environment rendered nothing at all | DONE |
 | F27 | **Bug:** the built room at a small Size rendered as scattered debris — its inward-facing walls were always closer than the camera, so every one was back-face culled. It now reaches at least past the framing distance | DONE |
-| F28 | Contact-sheet harness (`scripts/shoot-matrix.mjs`) sweeping environments x cameras x device sizes into one reviewable PNG | DONE |
+| F28 | Contact-sheet harness (`scripts/shoot-matrix.mjs`) sweeping environments x cameras x device sizes x close details x every built-in preset into one reviewable PNG | DONE |
+| F29 | Swept all twelve built-in presets after the plinth became visible, since every one of them was authored while it was not. No regressions: the studio looks gain a plinth, and the environment looks correctly disable it | DONE |
 | F26 | **Bug:** the whole Scene tab crashed with "Maximum update depth exceeded" in any session with no screenshot uploaded — `mediaPalette` returned a fresh `[]` into a Zustand selector | DONE |
 
 ## Device realism

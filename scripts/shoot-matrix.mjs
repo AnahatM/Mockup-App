@@ -96,6 +96,30 @@ const SWEEPS = {
       { label: 'flip crease', env: 'none', device: 'Flip (open)', camera: 'three-quarter' },
     ],
   },
+  presets: {
+    columns: 3,
+    /*
+     * Every built-in look. They were all authored while the plinth was
+     * invisible — it was hidden behind the cyclorama floor by a stray depth
+     * offset — so making it visible changes what each of them renders, and a
+     * disc appearing where the author never saw one is a regression of my own
+     * making.
+     */
+    cells: [
+      ['Studio', 'Clean studio'],
+      ['Studio', 'Soft light'],
+      ['Studio', 'Glass desk'],
+      ['Dramatic', 'Dark hero'],
+      ['Dramatic', 'Neon edge'],
+      ['Dramatic', 'Rim metal'],
+      ['Environment', 'Hex field'],
+      ['Environment', 'Tiled room'],
+      ['Environment', 'Pulse grid'],
+      ['Environment', 'Concrete cove'],
+      ['Motion', 'Floating turntable'],
+      ['Motion', 'Hero reveal'],
+    ].map(([group, name]) => ({ label: name, preset: [group, name] })),
+  },
   devices: {
     columns: 3,
     // Size is the axis that breaks things: a watch and a monitor differ by an
@@ -174,6 +198,9 @@ const clickByText = (text) =>
       (b) => b.textContent?.trim() === t && b.getBoundingClientRect().width > 0,
     )
     if (!button) return false
+    // The preset list scrolls inside the inspector, and anything below the fold
+    // is present but not clickable where puppeteer would aim.
+    button.scrollIntoView({ block: 'center' })
     button.click()
     return true
   }, text)
@@ -231,6 +258,35 @@ for (const cell of sweep.cells) {
     await expandAll()
     if (!(await clickByText(cell.device))) problems.push(`no device "${cell.device}"`)
     await wait(1400)
+  }
+
+  if (cell.preset) {
+    await openTab('Presets')
+    await expandAll()
+    const [group, name] = cell.preset
+    await page.evaluate((g) => {
+      const button = [...document.querySelectorAll('button[aria-expanded]')].find(
+        (b) => b.textContent?.trim() === g,
+      )
+      if (button && button.getAttribute('aria-expanded') === 'false') button.click()
+    }, group)
+    await wait(350)
+    // A preset button carries its description as well as its name, so this is
+    // a prefix match rather than an exact one — the same lookup
+    // verify-environments.mjs uses.
+    const picked = await page.evaluate((n) => {
+      const button = [...document.querySelectorAll('button')].find((b) =>
+        (b.textContent ?? '').trim().startsWith(n),
+      )
+      if (!button) return false
+      button.scrollIntoView({ block: 'center' })
+      button.click()
+      return true
+    }, name)
+    if (!picked) problems.push(`no preset "${name}"`)
+    await wait(1800)
+    shots.push({ label: cell.label, data: await grab() })
+    continue
   }
 
   await openTab('Scene')
