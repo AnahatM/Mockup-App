@@ -20,9 +20,17 @@ import type { StructureConfig } from './schema'
  */
 export function TiledRoom({ config }: { config: StructureConfig }) {
   const mesh = useRef<InstancedMesh>(null)
-  const { clear } = useProductBounds()
+  const { clear, roomExtent } = useProductBounds()
 
-  const tiles = useMemo(() => roomTiles(config, clear), [config, clear])
+  // A room the camera is standing outside of is not a small room, it is
+  // debris — see `roomExtent`. Everything downstream reads `extent` off the
+  // config, so the floor is applied once, here, rather than in five places.
+  const room = useMemo(
+    () => ({ ...config, extent: Math.max(config.extent, roomExtent) }),
+    [config, roomExtent],
+  )
+
+  const tiles = useMemo(() => roomTiles(room, clear), [room, clear])
 
   const overlay = useMemo(
     () =>
@@ -41,7 +49,7 @@ export function TiledRoom({ config }: { config: StructureConfig }) {
     })
   }, [tiles, config.color, config.accent])
 
-  const footprint = tileFootprint(roomPitch(config), config.gap)
+  const footprint = tileFootprint(roomPitch(room), room.gap)
 
   return (
     <instancedMesh

@@ -3,6 +3,7 @@ import {
   DEVICES,
   clearanceRadiusFor,
   defaultDeviceConfig,
+  frameDevice,
   productHeightFor,
   resolveDevice,
 } from '@/features/devices/state'
@@ -46,6 +47,10 @@ const CLEARANCES = DEVICES.map((spec) => ({
 /** The largest device in the catalogue, where a whole neighbourhood of cells
  *  falls inside the exclusion. */
 const CLEAR = Math.max(...CLEARANCES.map((entry) => entry.clear))
+
+/** Restated from `cameraSchema` and `structureSchema` rather than imported. */
+const DEFAULT_FOV = 30
+const SMALLEST_EXTENT = 1
 
 /** Sampled across a full 4-second cycle at the default speed of 0.25 Hz. */
 const TIMES = Array.from({ length: 41 }, (_, i) => i * 0.1)
@@ -215,4 +220,28 @@ describe('a field always has a field in it', () => {
     // The cap is a floor on detail, not a redesign of the default look.
     expect(cappedPitch(0.55, 8)).toBe(0.55)
   })
+})
+
+describe('the built room always contains the camera', () => {
+  it.each(DEVICES.map((spec) => ({ name: spec.name, spec })))(
+    'reaches past the framing distance for $name',
+    ({ spec }) => {
+      /*
+       * Every tile in the room is a single-sided plane facing inward, so a
+       * camera outside sees straight through it — deliberate, and what stops
+       * the walls occluding the product when someone zooms out. But at the
+       * bottom of the Size slider the walls are always closer than the camera,
+       * and the result does not read as a small room. It reads as debris: near
+       * walls gone, far walls showing their insides at a raking angle, floor a
+       * postage stamp under the device.
+       */
+      const { distance } = frameDevice(spec, DEFAULT_FOV)
+      const applied = Math.max(SMALLEST_EXTENT, distance * 1.25)
+
+      expect(applied).toBeGreaterThan(distance)
+      // The floor must not be so eager that it overrides a room the user has
+      // deliberately made large.
+      expect(Math.max(24, distance * 1.25)).toBe(24)
+    },
+  )
 })
