@@ -135,7 +135,7 @@ for contrast rather than eyeballed.
 | D7 | GitHub issue templates, PR template, and a stronger trademark/attribution note | DONE |
 | D8 | Code pushed to `origin/main` | DONE |
 | D9 | **Build proven to deploy.** An anonymous `vercel deploy --temporary` served every route, the SPA rewrite, the CSP and the immutable asset caching correctly from real Vercel infrastructure; `verify:csp` and `verify:offline` both pass against a live deployment via `BASE_URL`. It found a genuine blocker on the way: a `"//"` comment key in `vercel.json` that Vercel rejects outright, which would have failed the first real deploy before it built anything | DONE |
-| D10 | **BLOCKED — needs account access.** `mockup-studio.anahatmudgal.com` has no DNS record. `npx vercel login` is interactive and the CLI is not authenticated here. Three commands plus a Domains-tab entry — see `docs/reference/deployment.md` | BLOCKED |
+| D10 | **Live.** `mockup-studio.anahatmudgal.com` serves the current build. Verified against production: all nine routes plus `sitemap.xml` and `robots.txt` return 200, the SPA rewrite catches unknown paths, the CSP and every security header arrive intact, HSTS is on, assets are immutable for a year, `verify:csp` reports no violations across five routes and `verify:offline` no foreign requests across eight plus a full studio session. The Scene tab loads clean and the plinth renders, so the deployed bundle is current | DONE |
 
 ## Competitive features
 

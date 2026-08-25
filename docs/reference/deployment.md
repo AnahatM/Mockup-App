@@ -6,32 +6,10 @@ deploying it is just serving `dist/`.
 
 Production: <https://mockup-studio.anahatmudgal.com>
 
-> **The subdomain does not exist yet.** `mockup-studio.anahatmudgal.com` has no
-> DNS record — the apex `anahatmudgal.com` points at Vercel, so the account is in
-> place, but this project's domain is not. Until it is, the README badge, the
-> sitemap's canonical URLs and the footer link all point at nothing.
->
-> The build itself is proven to deploy: an anonymous `vercel deploy --temporary`
-> served every route, the SPA rewrite, the CSP and the immutable asset caching
-> correctly from real Vercel infrastructure, and both `verify:csp` and
-> `verify:offline` pass against a live deployment when pointed at one with
-> `BASE_URL`. What is left is account work:
->
-> ```sh
-> npx vercel login          # interactive; needs a browser
-> npx vercel link --yes
-> npm run deploy            # vercel deploy --prod
-> ```
->
-> then add the subdomain under the project's Domains tab and accept the DNS
-> record it offers.
->
-> **Without an account**, `npm run deploy:preview` builds and serves the app at
-> a real Vercel URL anonymously and prints a link to claim it. That is how the
-> config above was verified against the platform rather than against a local
-> imitation of it, and it is worth running before any deploy that changes
-> `vercel.json` — the schema is strict and it rejects the whole file rather than
-> the offending key. Anonymous deployments expire after an hour unless claimed.
+Live and serving the current build. Verified against production with
+`BASE_URL=https://mockup-studio.anahatmudgal.com npm run verify:csp` and the
+same for `verify:offline` — no policy violations, and no request leaving the
+origin across eight routes and a full studio session.
 
 ## Checking a real deployment
 
