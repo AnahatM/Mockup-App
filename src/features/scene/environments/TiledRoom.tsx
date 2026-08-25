@@ -1,6 +1,6 @@
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import type { InstancedMesh } from 'three'
-import { buildSurfaceMaps } from '@/features/textures'
+import { buildSurfaceMaps, mapsKey } from '@/features/textures'
 import { writeInstances } from './instances'
 import { roomPitch, roomTiles } from './room'
 import { tileFootprint } from './field'
@@ -59,6 +59,7 @@ export function TiledRoom({ config }: { config: StructureConfig }) {
     >
       <planeGeometry args={[footprint, footprint]} />
       <meshStandardMaterial
+        key={mapsKey(overlay)}
         roughness={config.roughness}
         metalness={config.metalness}
         roughnessMap={overlay?.roughnessMap ?? null}

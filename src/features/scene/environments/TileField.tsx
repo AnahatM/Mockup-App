@@ -1,7 +1,7 @@
 import { useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import type { InstancedMesh } from 'three'
-import { buildSurfaceMaps } from '@/features/textures'
+import { buildSurfaceMaps, mapsKey } from '@/features/textures'
 import { useReducedMotion } from '@/ui'
 import { fieldOffsetY, placer, tileFootprint, tileHeight } from './field'
 import { writeInstances } from './instances'
@@ -115,6 +115,7 @@ export function TileField({ config }: { config: StructureConfig }) {
           <boxGeometry args={[footprint, 1, footprint]} />
         )}
         <meshStandardMaterial
+          key={mapsKey(overlay)}
           roughness={config.roughness}
           metalness={config.metalness}
           roughnessMap={overlay?.roughnessMap ?? null}

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { buildSurfaceMaps } from '@/features/textures'
+import { buildSurfaceMaps, mapsKey } from '@/features/textures'
 import { useAppStore } from '@/state/store'
 
 /**
@@ -31,6 +31,8 @@ export function Pedestal() {
         <boxGeometry args={[config.radius * 2, config.height, config.radius * 2]} />
       )}
       <meshStandardMaterial
+        // Rebuilt when the maps appear or vanish — see `mapsKey`.
+        key={mapsKey(overlay)}
         color={config.color}
         roughness={config.roughness}
         metalness={config.metalness}

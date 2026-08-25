@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import type { Texture } from 'three'
-import { buildSurfaceMaps, type SurfaceTextureConfig } from '@/features/textures'
+import { mapsKey, buildSurfaceMaps, type SurfaceTextureConfig } from '@/features/textures'
 import { FINISHES, type Finish } from './finishes'
 import { brushedRoughness, speckleRoughness } from './maps'
 import type { FinishKind } from '../spec/types'
@@ -70,6 +70,9 @@ export function FinishMaterial({
 
   return (
     <meshPhysicalMaterial
+      // The roughness slot always has the finish's automatic map, but the normal
+      // slot does not — so this material needs the same rebuild. See `mapsKey`.
+      key={mapsKey(overlay)}
       attach={attach ?? 'material'}
       color={color}
       metalness={spec.metalness}
