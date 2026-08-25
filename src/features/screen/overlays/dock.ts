@@ -15,10 +15,24 @@ import type { OverlaysConfig } from '../schema'
 /** How many icons show the "app is open" dot beneath them. */
 const RUNNING = 3
 
+/**
+ * Icon size, as a share of the screen's shorter and longer sides.
+ *
+ * macOS defaults to a 64pt icon, and a MacBook Pro 14" is 982pt tall — so an
+ * icon is about 6.5% of the height, and the whole Dock about 8.7%. These were
+ * 8.5% and 5.5%, which is a third too big: on a laptop mockup the Dock came out
+ * looking like a tablet's, and it crowded whatever screenshot was behind it.
+ *
+ * Two ratios rather than one because a very wide screen would otherwise get a
+ * Dock as tall as a square one, and a very tall screen a Dock wider than it.
+ */
+const ICON_OF_HEIGHT = 0.065
+const ICON_OF_WIDTH = 0.042
+
 export function drawDock(canvas: OverlayCanvas, config: OverlaysConfig): void {
   const { ctx, width, height } = canvas
   const count = Math.max(3, Math.min(12, Math.round(config.dockIcons)))
-  const icon = Math.min(height * 0.085, width * 0.055)
+  const icon = Math.min(height * ICON_OF_HEIGHT, width * ICON_OF_WIDTH)
   const gap = icon * 0.16
   const pad = icon * 0.24
   const divider = icon * 0.5

@@ -16,8 +16,15 @@ import type { OverlaysConfig } from '../schema'
  */
 const MENUS = ['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help']
 
-/** The real bar is 24pt tall on a 1080pt-tall display; the ratio holds up. */
-const BAR_SHARE = 0.032
+/**
+ * The menu bar is 24pt tall, and the display it is measured against here is a
+ * MacBook Pro 14" at 982pt — so 2.4% of the height.
+ *
+ * It was 3.2%, taken against a nominal 1080pt-tall display that no Mac
+ * actually has. A third too tall is not obvious on its own, but next to a Dock
+ * that was also a third too big it made every laptop mockup read as a tablet.
+ */
+const BAR_SHARE = 0.024
 
 export function drawMenuBar(canvas: OverlayCanvas, config: OverlaysConfig): void {
   const { ctx, width, height } = canvas

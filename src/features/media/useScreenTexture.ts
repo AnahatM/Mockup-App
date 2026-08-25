@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import {
   ClampToEdgeWrapping,
   LinearFilter,
+  LinearMipmapLinearFilter,
   SRGBColorSpace,
   TextureLoader,
   VideoTexture,
@@ -37,7 +38,7 @@ function useVideoTexture(source: MediaSource): VideoTexture | null {
   const url = source.kind === 'video' ? source.url : null
 
   const texture = useMemo(
-    () => (url ? configure(new VideoTexture(createVideoElement(url))) : null),
+    () => (url ? configure(new VideoTexture(createVideoElement(url)), false) : null),
     [url],
   )
 
@@ -75,7 +76,7 @@ function useImageTexture(source: MediaSource): Texture | null {
         result.dispose()
         return
       }
-      setLoaded({ url, texture: configure(result) })
+      setLoaded({ url, texture: configure(result, true) })
     })
 
     return () => {
@@ -119,15 +120,27 @@ function createVideoElement(url: string): HTMLVideoElement {
   return video
 }
 
-function configure<T extends Texture>(texture: T): T {
+/**
+ * @param mipmapped Whether the texture may build a mip chain. False for video,
+ *   which would have to rebuild the whole chain on every decoded frame.
+ */
+function configure<T extends Texture>(texture: T, mipmapped: boolean): T {
   texture.colorSpace = SRGBColorSpace
   texture.wrapS = ClampToEdgeWrapping
   texture.wrapT = ClampToEdgeWrapping
-  texture.minFilter = LinearFilter
+
+  // A screenshot is almost always minified — a 2000px-wide capture rendered
+  // onto a phone a few hundred pixels tall — and it is almost always seen at an
+  // angle. Without a mip chain that combination samples one texel per pixel out
+  // of an image with twenty times the detail, so fine UI text crawls and
+  // sparkles as the camera moves. Anisotropy alone does not fix it: it samples
+  // *along* the mip chain, so with no chain to walk there is nothing for it to
+  // do. Both were being set, and only one of them was working.
+  texture.generateMipmaps = mipmapped
+  texture.minFilter = mipmapped ? LinearMipmapLinearFilter : LinearFilter
   texture.magFilter = LinearFilter
-  // Screens are viewed at an angle in almost every mockup, so anisotropic
-  // filtering is the difference between crisp text and a smeared mess.
   texture.anisotropy = 16
+
   texture.needsUpdate = true
   return texture
 }
