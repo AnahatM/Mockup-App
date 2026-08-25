@@ -19,7 +19,8 @@
 import puppeteer from 'puppeteer-core'
 
 const PORT = process.env.PORT ?? '4173'
-const ORIGIN = `http://localhost:${PORT}`
+/** Point at a real deployment with BASE_URL to audit the live thing instead. */
+const ORIGIN = process.env.BASE_URL ?? `http://localhost:${PORT}`
 
 const ROUTES = ['/', '/studio', '/window', '/docs', '/docs/quick-start', '/about', '/privacy', '/sitemap']
 

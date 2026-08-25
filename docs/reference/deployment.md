@@ -6,13 +6,39 @@ deploying it is just serving `dist/`.
 
 Production: <https://mockup-studio.anahatmudgal.com>
 
-> **Not live yet.** That hostname does not currently resolve — the subdomain has
-> never been created. The apex `anahatmudgal.com` points at Vercel, so the
-> account is in place; this project's domain is not. Connect a Vercel project to
-> the `AnahatM/Mockup-App` repository (the config below needs no changes), then
-> add the subdomain under its Domains tab and accept the DNS record it asks for.
-> Until that is done the README badge, the sitemap's canonical URLs and the
-> footer link all point at nothing.
+> **The subdomain does not exist yet.** `mockup-studio.anahatmudgal.com` has no
+> DNS record — the apex `anahatmudgal.com` points at Vercel, so the account is in
+> place, but this project's domain is not. Until it is, the README badge, the
+> sitemap's canonical URLs and the footer link all point at nothing.
+>
+> The build itself is proven to deploy: an anonymous `vercel deploy --temporary`
+> served every route, the SPA rewrite, the CSP and the immutable asset caching
+> correctly from real Vercel infrastructure, and both `verify:csp` and
+> `verify:offline` pass against a live deployment when pointed at one with
+> `BASE_URL`. What is left is account work:
+>
+> ```sh
+> npx vercel login
+> npx vercel link --yes
+> npx vercel --prod
+> ```
+>
+> then add the subdomain under the project's Domains tab and accept the DNS
+> record it offers.
+
+## Checking a real deployment
+
+`verify:csp` and `verify:offline` both take a `BASE_URL`, so the same checks
+that run against `serve-deployed.mjs` can be pointed at the live site:
+
+```sh
+BASE_URL=https://mockup-studio.anahatmudgal.com npm run verify:csp
+BASE_URL=https://mockup-studio.anahatmudgal.com npm run verify:offline
+```
+
+Worth doing after the first deploy and after any change to the headers: a CDN
+can serve a header the local server does not, and the local server cannot see a
+platform that rejects the config outright.
 
 ## Vercel
 
@@ -36,6 +62,13 @@ The policy is the local-only promise made enforceable rather than only claimed.
 so a dependency that started phoning home would be blocked outright rather than
 quietly succeed. `blob:` and `data:` are the app's own generated content: an
 uploaded screenshot's object URL, a canvas export, an imported GLB.
+
+`vercel.json` cannot carry comments. Vercel validates the file against a strict
+schema and rejects any key it does not recognise — including a `"//"` comment
+inside a `headers` entry, which fails the deploy outright with
+`Invalid vercel.json` before it builds anything. The reasoning lives here
+instead, and `serve-deployed.mjs` now refuses the same keys the platform does,
+so a config that serves locally is one that will deploy.
 
 **Test it before you deploy.** `vite preview` sends none of these headers, so
 the policy is invisible to every other check in the repo — it either works in

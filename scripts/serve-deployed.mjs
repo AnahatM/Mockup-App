@@ -51,14 +51,37 @@ function matches(source, path) {
   return path.startsWith(prefix)
 }
 
+/**
+ * Rejects anything Vercel's own schema would reject.
+ *
+ * This server exists to catch deployment problems locally, so being more
+ * permissive than the platform defeats it entirely. An earlier version quietly
+ * skipped a `//` comment key inside a header entry — which Vercel refuses
+ * outright, with `Invalid vercel.json`. The config looked fine here and the
+ * deploy failed before it built anything.
+ */
+function validate(config) {
+  for (const rule of config.headers ?? []) {
+    for (const header of rule.headers) {
+      const extra = Object.keys(header).filter((k) => k !== 'key' && k !== 'value')
+      if (extra.length > 0) {
+        throw new Error(
+          `Invalid vercel.json: headers entry has unsupported ${extra.join(', ')}. ` +
+            `Vercel allows only "key" and "value" — put the reasoning in ` +
+            `docs/reference/deployment.md instead.`,
+        )
+      }
+    }
+  }
+}
+
+validate(config)
+
 function headersFor(path) {
   const headers = {}
   for (const rule of config.headers ?? []) {
     if (!matches(rule.source, path)) continue
-    for (const { key, value } of rule.headers) {
-      // A `//` comment key is documentation in the JSON, not a header.
-      if (key !== undefined) headers[key] = value
-    }
+    for (const { key, value } of rule.headers) headers[key] = value
   }
   return headers
 }

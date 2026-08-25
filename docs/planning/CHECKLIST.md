@@ -133,7 +133,8 @@ for contrast rather than eyeballed.
 | D6 | CI workflow running `npm run verify` and `npm run build` on push and PR | DONE |
 | D7 | GitHub issue templates, PR template, and a stronger trademark/attribution note | DONE |
 | D8 | Code pushed to `origin/main` | DONE |
-| D9 | **BLOCKED — needs account access.** `mockup-studio.anahatmudgal.com` does not resolve: the subdomain has never been created. The apex `anahatmudgal.com` points at Vercel (76.76.21.21), so the account is there, but this project's hostname is not. Nothing in the repo can fix it. Two steps, both in the Vercel dashboard: connect a project to `AnahatM/Mockup-App` (the build config in `vercel.json` needs no changes), then add `mockup-studio.anahatmudgal.com` under its Domains and accept the DNS record it asks for. Until then the README badge, the sitemap's canonical URLs and the footer link all point at a hostname that does not exist | BLOCKED |
+| D9 | **Build proven to deploy.** An anonymous `vercel deploy --temporary` served every route, the SPA rewrite, the CSP and the immutable asset caching correctly from real Vercel infrastructure; `verify:csp` and `verify:offline` both pass against a live deployment via `BASE_URL`. It found a genuine blocker on the way: a `"//"` comment key in `vercel.json` that Vercel rejects outright, which would have failed the first real deploy before it built anything | DONE |
+| D10 | **BLOCKED — needs account access.** `mockup-studio.anahatmudgal.com` has no DNS record. `npx vercel login` is interactive and the CLI is not authenticated here. Three commands plus a Domains-tab entry — see `docs/reference/deployment.md` | BLOCKED |
 
 ## Competitive features
 

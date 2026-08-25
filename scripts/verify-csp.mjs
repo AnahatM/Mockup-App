@@ -30,6 +30,8 @@ import { readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 
 const PORT = process.env.PORT ?? '4180'
+/** Point at a real deployment with BASE_URL to check the live thing instead. */
+const BASE = process.env.BASE_URL ?? `http://localhost:${PORT}`
 const ROUTES = ['/', '/studio', '/window', '/docs', '/about']
 
 const problems = []
@@ -87,7 +89,7 @@ for (const route of ROUTES) {
   page.on('pageerror', (e) => problems.push(`${route}: ${e.message}`))
 
   await page.setViewport({ width: 1280, height: 800 })
-  await page.goto(`http://localhost:${PORT}${route}`, {
+  await page.goto(`${BASE}${route}`, {
     waitUntil: 'load',
     timeout: 60_000,
   })

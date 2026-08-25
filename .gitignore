@@ -31,3 +31,5 @@ Thumbs.db
 
 # Local verification screenshots
 scripts/out
+
+.vercel
