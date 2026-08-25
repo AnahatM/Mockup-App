@@ -45,6 +45,7 @@ export const macbookPro: DeviceSpec = {
     },
     keyboard: { width: 278, height: 106, y: 46 },
     trackpad: { width: 160, height: 100, y: -51 },
+    feet: { width: 46, depth: 9, height: 1.6, inset: 14 },
   },
 
   materials: { frame: 'aluminium', back: 'aluminium' },

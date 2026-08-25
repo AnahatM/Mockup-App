@@ -40,6 +40,14 @@ export const iphoneNotch: DeviceSpec = {
     { side: 'right', offset: 34, length: 20, protrusion: 0.5 },
   ],
 
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: -19, length: 13, kind: 'grille', count: 5 },
+    { side: 'bottom', offset: 19, length: 13, kind: 'grille', count: 5 },
+    { side: 'top', offset: 12, length: 1.4, kind: 'hole' },
+  ],
+
+  magsafe: { radius: 27, band: 4.5, y: -6 },
   materials: { frame: 'aluminium', back: 'gloss-glass' },
   colorways: [
     { id: 'midnight', label: 'Midnight', body: '#25282d', frame: '#33373d' },

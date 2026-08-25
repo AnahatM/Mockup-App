@@ -84,6 +84,29 @@ the rest. It caught three genuine errors on the day it was written, including a
 folding phone eight percent too wide and an all-in-one built to Apple's
 published height, which turns out to include the stand.
 
+### `edges`, `crease`, `magsafe`, `hinge.feet`
+
+The details that separate a product shot from a rounded box, all optional and
+all data:
+
+- **`edges`** — ports, microphones and speaker grilles on the rails.
+  `{ side, offset, length, across?, kind }`, where `kind` is `slot` (a port),
+  `hole` (a microphone) or `grille` (a row of `count` holes across `length`).
+  Drawn as flat unlit shapes a hair proud of the rail rather than cut into it: a
+  boolean subtraction would cost a mesh rebuild per device and look identical at
+  the size a USB-C port occupies on screen.
+- **`crease`** — the fold line on a foldable's inner display, `{ axis, width }`.
+  A translucent band rather than a colour, so it darkens an uploaded screenshot
+  the way a real fold does rather than sitting on top of it like tape.
+- **`magsafe`** — the magnet ring under a phone's back glass. Deliberately
+  faint; drawn with real contrast it reads as a sticker.
+- **`hinge.feet`** — the four pads under a laptop base. Without them the base
+  sits flush on the desk, which no laptop does, and the missing shadow gap makes
+  it read as printed onto the floor.
+
+None of these are visible from most camera angles, which is exactly why their
+placement is unit-tested rather than eyeballed — see `edgeCutouts.test.ts`.
+
 ### `cutout`
 
 `{ type: 'none' }`, `{ type: 'notch', width, height }`,

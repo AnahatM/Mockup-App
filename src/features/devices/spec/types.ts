@@ -99,6 +99,62 @@ export interface ButtonSpec {
 }
 
 /** Laptops and folding phones: two bodies joined by a hinge. */
+/**
+ * A hole in a rail: a charging port, a microphone, a speaker grille.
+ *
+ * The detail that most separates a phone from a rounded rectangle, and the one
+ * a viewer never consciously notices — a bottom edge with nothing on it reads
+ * as "unfinished" without anyone being able to say why. Modelled as data
+ * because that is the rule here: a new detail is a spec field, not a new mesh.
+ */
+export interface EdgeCutoutSpec {
+  side: 'bottom' | 'top' | 'left' | 'right'
+  /** Centre offset along the rail, from the body's centre. */
+  offset: number
+  /** Along the rail. */
+  length: number
+  /** Across the rail. Defaults to a proportion of the body's depth. */
+  across?: number
+  /**
+   * `slot` is a port, `hole` a single microphone, `grille` a row of holes —
+   * `count` of them, spread across `length`.
+   */
+  kind: 'slot' | 'hole' | 'grille'
+  count?: number
+}
+
+/** Rubber pads under a laptop's base. Four of them, inset from the corners. */
+export interface FeetSpec {
+  width: number
+  depth: number
+  height: number
+  /** How far in from each corner the pads sit. */
+  inset: number
+}
+
+/**
+ * The fold line down a foldable's inner screen.
+ *
+ * A folding phone without one does not read as folding — it reads as a wide
+ * phone. It is a shading feature rather than a hole, so it is drawn as a soft
+ * band across the glass rather than cut into it.
+ */
+export interface CreaseSpec {
+  /** `x` folds left-to-right (a book fold), `y` top-to-bottom (a flip). */
+  axis: 'x' | 'y'
+  /** How wide the softened band is, in millimetres. */
+  width: number
+}
+
+/** The magnet ring under a phone's back glass. Visible as a faint disc. */
+export interface MagSafeSpec {
+  radius: number
+  /** Ring thickness. */
+  band: number
+  /** Distance below the camera bump's centre. */
+  y: number
+}
+
 export interface HingeSpec {
   /** Angle in degrees between the two halves. 180 is flat. */
   defaultAngle: number
@@ -109,6 +165,9 @@ export interface HingeSpec {
   /** Trackpad and keyboard plate, for laptops. */
   keyboard?: { width: number; height: number; y: number }
   trackpad?: { width: number; height: number; y: number }
+  /** Pads under the base. Without them a laptop sits flush on the desk, which
+   *  is the one thing no laptop does. */
+  feet?: FeetSpec
 }
 
 /** Desktops and monitors: a neck rising from a foot on the desk. */
@@ -180,6 +239,12 @@ export interface DeviceSpec {
   colorways: readonly Colorway[]
   supportedOverlays: readonly OverlayKind[]
   cameraBump?: CameraBumpSpec
+  /** Ports, microphones and speaker grilles cut into the rails. */
+  edges?: readonly EdgeCutoutSpec[]
+  /** Fold line, for foldables. */
+  crease?: CreaseSpec
+  /** Magnet ring under the back glass. */
+  magsafe?: MagSafeSpec
   hinge?: HingeSpec
   stand?: StandSpec
   band?: BandSpec

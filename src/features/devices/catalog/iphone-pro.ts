@@ -55,6 +55,14 @@ export const iphonePro: DeviceSpec = {
     { side: 'right', offset: 35.3, length: 21.6, protrusion: 0.55 },
   ],
 
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: -19, length: 13, kind: 'grille', count: 5 },
+    { side: 'bottom', offset: 19, length: 13, kind: 'grille', count: 5 },
+    { side: 'top', offset: 12, length: 1.4, kind: 'hole' },
+  ],
+
+  magsafe: { radius: 27, band: 4.5, y: -6 },
   materials: { frame: 'titanium', back: 'matte-glass' },
 
   colorways: [

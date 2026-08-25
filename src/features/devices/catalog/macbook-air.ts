@@ -36,6 +36,7 @@ export const macbookAir: DeviceSpec = {
     },
     keyboard: { width: 268, height: 102, y: 44 },
     trackpad: { width: 150, height: 94, y: -50 },
+    feet: { width: 42, depth: 8, height: 1.4, inset: 13 },
   },
 
   materials: { frame: 'aluminium', back: 'aluminium' },

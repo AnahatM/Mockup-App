@@ -90,6 +90,10 @@ const SWEEPS = {
       { label: 'all-in-one', env: 'none', device: 'All-in-one 24"', camera: 'three-quarter' },
       { label: 'screen macro', env: 'none', device: 'All-in-one 24"', camera: 'front' },
       { label: 'phone front', env: 'none', device: 'Pro Phone 6.1"', camera: 'front' },
+      { label: 'phone underside', env: 'none', device: 'Pro Phone 6.1"', camera: 'low-hero' },
+      { label: 'phone back', env: 'none', device: 'Pro Phone 6.1"', camera: 'profile' },
+      { label: 'fold crease', env: 'none', device: 'Fold (open)', camera: 'hero' },
+      { label: 'flip crease', env: 'none', device: 'Flip (open)', camera: 'three-quarter' },
     ],
   },
   devices: {

@@ -36,6 +36,11 @@ export const tabletPro: DeviceSpec = {
     { side: 'left', offset: 108, length: 22, protrusion: 0.4 },
   ],
 
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: -42, length: 18, kind: 'grille', count: 6 },
+    { side: 'bottom', offset: 42, length: 18, kind: 'grille', count: 6 },
+  ],
   materials: { frame: 'aluminium', back: 'aluminium' },
   colorways: [
     { id: 'space-black', label: 'Space black', body: '#3a3b40', frame: '#45464c' },

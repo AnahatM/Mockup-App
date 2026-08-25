@@ -36,6 +36,11 @@ export const tabletMini: DeviceSpec = {
     { side: 'top', offset: -34, length: 20, protrusion: 0.4 },
   ],
 
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: -30, length: 14, kind: 'grille', count: 5 },
+    { side: 'bottom', offset: 30, length: 14, kind: 'grille', count: 5 },
+  ],
   materials: { frame: 'aluminium', back: 'aluminium' },
   colorways: [
     { id: 'starlight', label: 'Starlight', body: '#e4ded2', frame: '#cec9be' },

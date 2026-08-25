@@ -5,6 +5,7 @@ import { buildBody } from '../builders/body'
 import { keyboardTexture } from '../builders/keyboard'
 import { squircleShape } from '../builders/shape'
 import { FinishMaterial } from '../materials/FinishMaterial'
+import { LaptopFeet } from './LaptopFeet'
 import type { DeviceConfig } from '../schema'
 import type { DeviceSpec, HingeSpec } from '../spec/types'
 
@@ -53,6 +54,10 @@ export function LaptopBase({ spec, hinge, config }: LaptopBaseProps) {
           <planeGeometry args={[hinge.keyboard.width, hinge.keyboard.height]} />
           <meshStandardMaterial map={keyboard} roughness={0.78} metalness={0} />
         </mesh>
+      )}
+
+      {hinge.feet && (
+        <LaptopFeet base={base} feet={hinge.feet} bodyColor={config.bodyColor} />
       )}
 
       {trackpad && hinge.trackpad && (

@@ -5,6 +5,7 @@ import { DeviceBody } from './DeviceBody'
 import { DeviceScreen } from './DeviceScreen'
 import { DeviceStand } from './DeviceStand'
 import { WatchBand } from './WatchBand'
+import { HardwareDetails } from './HardwareDetails'
 import { LaptopDevice } from './LaptopDevice'
 import { ScreenCutout } from './ScreenCutout'
 import { SideButtons } from './SideButtons'
@@ -94,6 +95,8 @@ export function ProceduralDevice({
       )}
 
       {spec.band && <WatchBand spec={spec} band={spec.band} />}
+
+      <HardwareDetails spec={spec} config={config} frontZ={frontZ} />
 
       {config.showCameraBump && spec.cameraBump && (
         <CameraBump

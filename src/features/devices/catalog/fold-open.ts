@@ -23,6 +23,11 @@ export const foldOpen: DeviceSpec = {
 
   buttons: [{ side: 'right', offset: 34, length: 26, protrusion: 0.45 }],
 
+  crease: { axis: 'x', width: 3.2 },
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: 40, length: 14, kind: 'grille', count: 5 },
+  ],
   materials: { frame: 'aluminium', back: 'matte-glass' },
   colorways: [
     { id: 'phantom-black', label: 'Phantom black', body: '#2b2c31', frame: '#3a3c42' },

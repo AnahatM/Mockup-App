@@ -46,6 +46,12 @@ export const androidFlagship: DeviceSpec = {
     { side: 'right', offset: 16, length: 11, protrusion: 0.5 },
   ],
 
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: -19, length: 13, kind: 'grille', count: 5 },
+    { side: 'bottom', offset: 19, length: 13, kind: 'grille', count: 5 },
+    { side: 'top', offset: 12, length: 1.4, kind: 'hole' },
+  ],
   materials: { frame: 'aluminium', back: 'gloss-glass' },
 
   colorways: [

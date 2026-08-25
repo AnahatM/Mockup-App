@@ -29,6 +29,11 @@ export const flipOpen: DeviceSpec = {
     { side: 'right', offset: 8, length: 10, protrusion: 0.45 },
   ],
 
+  crease: { axis: 'y', width: 2.6 },
+  edges: [
+    { side: 'bottom', offset: 0, length: 8.7, across: 3.2, kind: 'slot' },
+    { side: 'bottom', offset: 20, length: 12, kind: 'grille', count: 4 },
+  ],
   materials: { frame: 'aluminium', back: 'matte-glass' },
   colorways: [
     { id: 'graphite', label: 'Graphite', body: '#33343a', frame: '#43454c' },
