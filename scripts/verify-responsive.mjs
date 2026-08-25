@@ -14,15 +14,40 @@ import puppeteer from 'puppeteer-core'
 import { mkdirSync } from 'node:fs'
 
 const OUT = 'scripts/out/responsive'
+/** Defaults to the dev server; set PORT=4173 to run it against a static build. */
+const PORT = process.env.PORT ?? '5173'
 mkdirSync(OUT, { recursive: true })
 
 const VIEWPORTS = [
+  // A small phone rather than a typical one: 360px is where a layout that only
+  // ever gets checked at 390 falls over, and plenty of Androids are 360.
+  { name: 'small-phone', width: 360, height: 780 },
   { name: 'phone', width: 390, height: 844 },
   { name: 'tablet', width: 768, height: 1024 },
+  { name: 'laptop', width: 1280, height: 800 },
   { name: 'desktop', width: 1440, height: 900 },
 ]
 
-const ROUTES = ['/', '/studio', '/docs', '/docs/quick-start', '/about', '/privacy', '/sitemap']
+const ROUTES = [
+  '/',
+  '/studio',
+  '/window',
+  '/docs',
+  '/docs/quick-start',
+  '/about',
+  '/privacy',
+  '/sitemap',
+  // Every layout has to survive the route nobody plans for.
+  '/this-route-does-not-exist',
+]
+
+/**
+ * Both themes, because half the tokens only exist in one of them and a
+ * contrast or overflow bug can live in the other for months. The theme is
+ * seeded into localStorage before the page's first paint rather than toggled
+ * afterwards, so nothing is measured mid-transition.
+ */
+const THEMES = ['light', 'dark']
 
 let browser = await launchBrowser()
 
@@ -46,9 +71,11 @@ async function relaunchBrowser() {
 
 const results = []
 
-for (const viewport of VIEWPORTS) {
-  for (const route of ROUTES) {
-    results.push(await withPageRetry(viewport, route))
+for (const theme of THEMES) {
+  for (const viewport of VIEWPORTS) {
+    for (const route of ROUTES) {
+      results.push(await withPageRetry(viewport, route, theme))
+    }
   }
 }
 
@@ -66,22 +93,23 @@ if (failures.length > 0) process.exitCode = 1
  * itself, so this retries generously (with backoff, and a fresh page or
  * browser as needed) rather than letting the whole run go down over it.
  */
-async function withPageRetry(viewport, route) {
+async function withPageRetry(viewport, route, theme) {
   const attempts = 4
   let lastError
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      return await checkRoute(viewport, route)
+      return await checkRoute(viewport, route, theme)
     } catch (err) {
       lastError = err
       console.error(
-        `attempt ${attempt}/${attempts} for ${viewport.name} ${route} failed: ${err.message}`,
+        `attempt ${attempt}/${attempts} for ${theme} ${viewport.name} ${route} failed: ${err.message}`,
       )
       await new Promise((r) => setTimeout(r, 1500 * attempt))
       if (!browser.connected) await relaunchBrowser()
     }
   }
   return {
+    theme,
     viewport: viewport.name,
     route,
     file: null,
@@ -92,21 +120,23 @@ async function withPageRetry(viewport, route) {
   }
 }
 
-async function checkRoute(viewport, route) {
+async function checkRoute(viewport, route, theme) {
   const page = await browser.newPage()
+  await page.evaluateOnNewDocument(
+    (t) => localStorage.setItem('mockup-studio:theme', t),
+    theme,
+  )
   await page.setViewport({ width: viewport.width, height: viewport.height })
   page.setDefaultNavigationTimeout(60000)
   const problems = []
   page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`))
   page.on('console', (m) => m.type() === 'error' && problems.push(`[console] ${m.text()}`))
 
-  await page.evaluateOnNewDocument(() =>
-    localStorage.setItem('mockup-studio:theme', 'light'),
-  )
   // `networkidle0` can hang forever alongside a live Vite HMR websocket, so
   // wait for `load` and then settle explicitly instead.
-  await page.goto(`http://localhost:5173${route}`, { waitUntil: 'load' })
-  await new Promise((r) => setTimeout(r, route === '/studio' ? 2500 : 800))
+  await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'load' })
+  const heavy = route === '/studio' || route === '/window'
+  await new Promise((r) => setTimeout(r, heavy ? 2800 : 800))
 
   const overflow = await measureOverflow(page)
   if (overflow.documentOverflow > 0) {
@@ -117,17 +147,18 @@ async function checkRoute(viewport, route) {
   }
 
   let studio = null
-  if (route === '/studio' && viewport.name === 'phone') {
+  if (route === '/studio' && viewport.name === 'phone' && theme === 'light') {
     studio = await checkStudioPhone(page)
     problems.push(...studio.problems)
   }
 
   const safeRoute = route === '/' ? 'home' : route.replace(/\//g, '_').replace(/^_/, '')
-  const file = `${OUT}/${viewport.name}-${safeRoute}.png`
+  const file = `${OUT}/${theme}-${viewport.name}-${safeRoute}.png`
   await page.screenshot({ path: file, fullPage: false })
 
   await page.close()
   return {
+    theme,
     viewport: viewport.name,
     route,
     file,

@@ -50,4 +50,16 @@
   .controlsColumn {
     max-width: none;
   }
+
+  /*
+   * Stacked, the preview keeps its 24rem floor and pushes every control below
+   * the fold — on a 360px phone that is most of the screen given over to a
+   * window mockup you cannot yet change. Capped to a share of the viewport so
+   * the first control is always reachable without scrolling past a picture.
+   */
+  .previewColumn {
+    flex: 0 0 auto;
+    min-height: 12rem;
+    max-height: 45vh;
+  }
 }

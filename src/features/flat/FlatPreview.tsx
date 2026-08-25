@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { cx } from '@/lib/cx'
+import { EmptyState } from '@/ui'
 import { mediaAspect, type MediaSource } from '@/features/media/schema'
 import { WINDOW_ASPECT } from './compose'
 import { fitPreviewLayout } from './previewSize'
@@ -46,6 +47,27 @@ export function FlatPreview({ config, source, className }: FlatPreviewProps) {
     chrome,
     dominant,
   )
+
+  /*
+   * With no screenshot *and* no window chrome there is nothing for the
+   * compositor to draw, and a correctly-working preview is indistinguishable
+   * from a broken one: a large empty rectangle. That is the state the window
+   * tool opens in, so it was the first thing anyone saw on that route.
+   *
+   * Chrome with no screenshot is left alone — an empty window frame is a real
+   * preview of a real setting, and worth showing.
+   */
+  if (source.kind === 'none' && config.style === 'none') {
+    return (
+      <div ref={containerRef} className={cx(styles.container, className)}>
+        <EmptyState
+          icon="image"
+          title="Nothing to preview yet"
+          description="Drop in a screenshot, or switch on a window frame to see it on its own."
+        />
+      </div>
+    )
+  }
 
   return (
     <div ref={containerRef} className={cx(styles.container, className)}>

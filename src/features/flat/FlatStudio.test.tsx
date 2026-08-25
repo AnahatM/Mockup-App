@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { act, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 /**
  * The window tool renders the studio's own control schemas outside the studio.
@@ -62,5 +62,41 @@ describe('FlatStudio', () => {
     })
 
     expect(screen.getByText('Dark window')).toBeTruthy()
+  })
+})
+
+describe('the window tool with nothing loaded', () => {
+  // The store is a module singleton shared across this file, and the test
+  // above deliberately switches the chrome on. Without this, "nothing loaded"
+  // would be testing whatever the previous test left behind.
+  beforeEach(() => {
+    act(() => {
+      useAppStore.setState((draft) => {
+        draft.flat.style = 'none'
+      })
+    })
+  })
+
+  it('explains the empty preview instead of showing a blank rectangle', () => {
+    /*
+     * The tool opens with no screenshot and `style: 'none'`, so the compositor
+     * has nothing to draw and the preview is a large empty box — a correctly
+     * working preview that is indistinguishable from a broken one, and the
+     * first thing anyone saw on this route.
+     */
+    render(<FlatStudio />)
+    expect(screen.getByText('Nothing to preview yet')).toBeDefined()
+  })
+
+  it('draws the preview once there is chrome to show, with no upload', () => {
+    // An empty window frame is a real preview of a real setting.
+    act(() => {
+      useAppStore.setState((draft) => {
+        draft.flat.style = 'macos'
+      })
+    })
+    render(<FlatStudio />)
+    expect(screen.queryByText('Nothing to preview yet')).toBeNull()
+    expect(screen.getByLabelText('Live preview of the window mockup')).toBeDefined()
   })
 })

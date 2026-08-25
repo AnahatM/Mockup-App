@@ -97,6 +97,8 @@ at the results, which is the only way these show up.
 | U6 | `prefers-reduced-motion` honoured by every animation | DONE |
 | U7 | Toast/inline feedback when an action succeeds (export saved, preset applied) | DONE |
 | U8 | Offline/local reassurance surfaced in the UI, not only in the docs | DONE |
+| U9 | **Bug:** the /window tool opened on a large empty rectangle — no screenshot and no chrome means nothing to draw, and on a phone it filled the fold | DONE |
+| U10 | Responsive sweep widened to both themes, a 360px phone, a laptop width, `/window` and the 404 — 90 checks, all clean | DONE |
 
 ## Theme — Horizon
 
