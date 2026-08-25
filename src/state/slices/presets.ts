@@ -2,6 +2,7 @@ import { createId } from '@/lib/id'
 import {
   MANIFEST_KIND,
   MANIFEST_VERSION,
+  applyLook,
   applyScene,
   captureScene,
   exportManifest,
@@ -63,7 +64,9 @@ export const createPresetsSlice: SliceCreator<PresetsSlice> = (set, get) => {
     applyBuiltinPreset: (id) => {
       const preset = findBuiltinPreset(id)
       if (!preset) return
-      set((draft) => applyScene(draft, preset.build()))
+      // A built-in is a look, not a whole scene — see `applyLook` for why it
+      // must not take the device with it.
+      set((draft) => applyLook(draft, preset.build()))
     },
 
     renamePreset: (id, name) =>

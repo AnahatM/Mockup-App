@@ -10,6 +10,7 @@ export {
 } from './manifest'
 export { PresetThumbnail, type PresetThumbnailProps } from './PresetThumbnail'
 export { parseManifest } from './migrate'
+export { applyLook } from './applyLook'
 export { applyScene, captureScene, sameScene } from './sceneState'
 export { loadPresets, savePresets } from './storage'
 export {
