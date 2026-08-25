@@ -6,6 +6,8 @@
  * reasoned about without a renderer in the way.
  */
 
+import { clearanceAt } from './clearance'
+
 const ROOT3 = Math.sqrt(3)
 
 export interface Cell {
@@ -18,6 +20,14 @@ export interface Cell {
    * relief rise with distance and leave the product's own patch of floor flat.
    */
   falloff: number
+  /**
+   * 0 where the product is standing, easing to 1 clear of it. Multiplies
+   * anything that would lift a tile off the floor.
+   *
+   * `falloff` above is not a substitute — see `clearance.ts`, which explains
+   * why, and `clearanceRadiusFor`, which supplies the radius.
+   */
+  clearance: number
 }
 
 /**
@@ -55,6 +65,22 @@ export function fitPitch(pitch: number, area: number, perCell = 1): number {
   return Math.max(pitch, minimum)
 }
 
+/**
+ * Fewest rings of tiles a field needs before it stops reading as a field.
+ *
+ * Nothing stops the tile-size slider being set larger than the field itself,
+ * and when it is, the lattice generates a single cell at the origin — which
+ * the product's own clearance then flattens, so the environment renders
+ * literally nothing and the control appears dead. Coarsening for the instance
+ * budget is a ceiling on detail; this is the floor.
+ */
+const MIN_RINGS = 4
+
+/** The pitch a field can actually use: never so coarse that the field is one
+ *  tile hidden underneath the product. */
+export const cappedPitch = (pitch: number, extent: number): number =>
+  Math.min(pitch, extent / MIN_RINGS)
+
 /** Area one hexagon covers at unit pitch, relative to a square's. */
 export const HEX_DENSITY = Math.sqrt(3) / 2
 
@@ -69,21 +95,32 @@ export const HEX_DENSITY = Math.sqrt(3) / 2
 export const hexRadius = (pitch: number): number => pitch / ROOT3
 
 /** Adds a cell if it falls inside the field's circular boundary. */
-function collect(cells: Cell[], x: number, z: number, extent: number): void {
+function collect(
+  cells: Cell[],
+  x: number,
+  z: number,
+  extent: number,
+  clear: number,
+): void {
   const radius = Math.hypot(x, z)
   if (radius > extent) return
-  cells.push({ x, z, falloff: Math.min(1, radius / extent) })
+  cells.push({
+    x,
+    z,
+    falloff: Math.min(1, radius / extent),
+    clearance: clearanceAt(radius, clear),
+  })
 }
 
 /** Square lattice on a circular footprint, ordered outward from the centre. */
-export function squareLattice(extent: number, pitch: number): Cell[] {
+export function squareLattice(extent: number, pitch: number, clear = 0): Cell[] {
   const cells: Cell[] = []
   const steps = Math.ceil(extent / Math.max(pitch, 0.01))
 
   for (let iz = -steps; iz <= steps; iz += 1) {
     for (let ix = -steps; ix <= steps; ix += 1) {
       if (cells.length >= MAX_CELLS) return cells
-      collect(cells, ix * pitch, iz * pitch, extent)
+      collect(cells, ix * pitch, iz * pitch, extent, clear)
     }
   }
   return cells
@@ -97,7 +134,7 @@ export function squareLattice(extent: number, pitch: number): Cell[] {
  * a pitch to do so. Getting either wrong leaves visible seams or overlaps —
  * the two failure modes look quite different and both read as "broken tiling".
  */
-export function hexLattice(extent: number, pitch: number): Cell[] {
+export function hexLattice(extent: number, pitch: number, clear = 0): Cell[] {
   const cells: Cell[] = []
   const rowStep = pitch * (ROOT3 / 2)
   const rows = Math.ceil(extent / Math.max(rowStep, 0.01))
@@ -109,7 +146,7 @@ export function hexLattice(extent: number, pitch: number): Cell[] {
 
     for (let column = -columns; column <= columns; column += 1) {
       if (cells.length >= MAX_CELLS) return cells
-      collect(cells, column * pitch + offset, z, extent)
+      collect(cells, column * pitch + offset, z, extent, clear)
     }
   }
   return cells

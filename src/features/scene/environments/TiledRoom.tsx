@@ -4,6 +4,7 @@ import { buildSurfaceMaps } from '@/features/textures'
 import { writeInstances } from './instances'
 import { roomPitch, roomTiles } from './room'
 import { tileFootprint } from './field'
+import { useProductBounds } from './useClearance'
 import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
 
@@ -19,8 +20,9 @@ import type { StructureConfig } from './schema'
  */
 export function TiledRoom({ config }: { config: StructureConfig }) {
   const mesh = useRef<InstancedMesh>(null)
+  const { clear } = useProductBounds()
 
-  const tiles = useMemo(() => roomTiles(config), [config])
+  const tiles = useMemo(() => roomTiles(config, clear), [config, clear])
 
   const overlay = useMemo(
     () =>

@@ -1,4 +1,5 @@
 import { hash2 } from '@/features/textures'
+import { clearanceAt } from './clearance'
 import { MAX_CELLS, fitPitch } from './lattice'
 import type { Placement } from './instances'
 import type { StructureConfig } from './schema'
@@ -117,11 +118,11 @@ function tileCount(config: StructureConfig, pitch: number): number {
  * `roomPitch` should keep the count under it, so the cap no longer decides
  * which surfaces get drawn.
  */
-export function roomTiles(config: StructureConfig): Placement[] {
+export function roomTiles(config: StructureConfig, clear = 0): Placement[] {
   const tiles: Placement[] = []
   const pitch = roomPitch(config)
   for (const surface of surfaces(config)) {
-    if (!fillSurface(tiles, surface, config, pitch)) break
+    if (!fillSurface(tiles, surface, config, pitch, clear)) break
   }
   return tiles
 }
@@ -132,6 +133,7 @@ function fillSurface(
   surface: Surface,
   config: StructureConfig,
   fitted: number,
+  clear: number,
 ): boolean {
   const pitch = Math.max(fitted, 0.01)
   const columns = Math.ceil(surface.half / pitch)
@@ -141,7 +143,7 @@ function fillSurface(
   for (let row = first; row <= rows; row += 1) {
     for (let column = -columns; column <= columns; column += 1) {
       if (tiles.length >= MAX_CELLS) return false
-      tiles.push(tile(surface, config, column * pitch, row * pitch, column, row))
+      tiles.push(tile(surface, config, column * pitch, row * pitch, column, row, clear))
     }
   }
   return true
@@ -154,11 +156,18 @@ function tile(
   up: number,
   column: number,
   row: number,
+  clear: number,
 ): Placement {
   // A deterministic per-tile lift, so the wall reads as laid rather than
   // printed. Seeded, so a saved preset lays exactly the same room again.
-  const lift = hash2(column, row, config.seed) * config.relief * config.depth
+  //
+  // On the floor it is also held down under the product. The lift is small —
+  // at most `relief * depth` — but it is the floor the device is standing on,
+  // so any of it at all is the device's feet sunk into the tiles. The walls
+  // are nowhere near the product and take the lift unmodified.
   const [x, y, z] = surface.at(across, up)
+  const flat = surface.normal[1] === 1 ? clearanceAt(Math.hypot(x, z), clear) : 1
+  const lift = hash2(column, row, config.seed) * config.relief * config.depth * flat
   const [nx, ny, nz] = surface.normal
 
   return {

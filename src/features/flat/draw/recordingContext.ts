@@ -44,9 +44,6 @@ export interface Recording {
   rects: RectCall[]
 }
 
-/* eslint-disable-next-line max-lines-per-function --
-   One object literal standing in for one browser API. Splitting it across
-   helpers would scatter a single flat surface for no readability gain. */
 export function recordingContext(): Recording {
   const arcs: ArcCall[] = []
   const texts: TextCall[] = []

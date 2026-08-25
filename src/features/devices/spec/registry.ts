@@ -14,6 +14,7 @@ import { tabletPro } from '../catalog/tablet-pro'
 import { watchRound } from '../catalog/watch-round'
 import { watchSquare } from '../catalog/watch-square'
 import type { Colorway, DeviceSpec } from './types'
+import { buildImportedDeviceSpec, type ImportedGlbSource } from '../glb/spec'
 
 /**
  * The device catalogue.
@@ -68,4 +69,21 @@ export function devicesByCategory(): ReadonlyMap<string, readonly DeviceSpec[]> 
     else groups.set(device.category, [device])
   }
   return groups
+}
+
+/**
+ * The spec for whatever device is currently in the scene.
+ *
+ * An imported model bypasses the catalogue — its "spec" is synthesised from
+ * the model's own bounding box — so every caller that needs the active device
+ * has to make the same choice. Doing it here means the scene, the camera and
+ * the backdrop cannot drift apart on which device they think is standing
+ * there, which is exactly the kind of disagreement that puts a block field
+ * through a phone.
+ */
+export function activeDeviceSpec(config: {
+  specId: string
+  glb: ImportedGlbSource | null
+}): DeviceSpec {
+  return config.glb ? buildImportedDeviceSpec(config.glb) : resolveDevice(config.specId)
 }

@@ -3,8 +3,7 @@ import { mediaAspect, useScreenTexture } from '@/features/media'
 import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'
 import { groundOffsetMm } from '../spec/framing'
-import { resolveDevice } from '../spec/registry'
-import { buildImportedDeviceSpec } from '../glb/spec'
+import { activeDeviceSpec } from '../spec/registry'
 import { GlbDevice } from './GlbDevice'
 import { ProceduralDevice } from './ProceduralDevice'
 
@@ -19,7 +18,7 @@ export function Device() {
   const source = useAppStore((state) => state.media.source)
   // An import bypasses the catalogue entirely: its "spec" is synthesised from
   // the model's own bounding box rather than looked up. See glb/spec.ts.
-  const spec = config.glb ? buildImportedDeviceSpec(config.glb) : resolveDevice(config.specId)
+  const spec = activeDeviceSpec(config)
   const media = useScreenTexture()
 
   // When a window frame is active the screen shows the composed window rather

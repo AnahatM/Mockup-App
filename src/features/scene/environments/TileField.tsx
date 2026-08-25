@@ -3,16 +3,17 @@ import { useFrame } from '@react-three/fiber'
 import type { InstancedMesh } from 'three'
 import { buildSurfaceMaps } from '@/features/textures'
 import { useReducedMotion } from '@/ui'
-import { blockRise, tileFootprint, tileHeight, tileTint } from './field'
-import { writeInstances, type Placement } from './instances'
+import { fieldOffsetY, placer, tileFootprint, tileHeight } from './field'
+import { writeInstances } from './instances'
 import {
   HEX_DENSITY,
+  cappedPitch,
   fitPitch,
   hexLattice,
   hexRadius,
   squareLattice,
-  type Cell,
 } from './lattice'
+import { useProductBounds } from './useClearance'
 import { BACKDROP_LAYER } from '../layers'
 import type { StructureConfig } from './schema'
 
@@ -28,13 +29,14 @@ import type { StructureConfig } from './schema'
 export function TileField({ config }: { config: StructureConfig }) {
   const mesh = useRef<InstancedMesh>(null)
   const reducedMotion = useReducedMotion()
+  const { clear, ceiling } = useProductBounds()
 
   // Coarsened if the requested pitch would ask for more tiles than one field
   // is allowed. See `fitPitch` for why that beats drawing part of the field.
   const pitch = useMemo(
     () =>
       fitPitch(
-        config.pitch,
+        cappedPitch(config.pitch, config.extent),
         Math.PI * config.extent * config.extent,
         config.kind === 'hex' ? HEX_DENSITY : 1,
       ),
@@ -44,14 +46,14 @@ export function TileField({ config }: { config: StructureConfig }) {
   const cells = useMemo(
     () =>
       config.kind === 'hex'
-        ? hexLattice(config.extent, pitch)
-        : squareLattice(config.extent, pitch),
-    [config.kind, config.extent, pitch],
+        ? hexLattice(config.extent, pitch, clear)
+        : squareLattice(config.extent, pitch, clear),
+    [config.kind, config.extent, pitch, clear],
   )
 
   const heights = useMemo(
-    () => cells.map((cell) => tileHeight(cell, config)),
-    [cells, config],
+    () => cells.map((cell) => tileHeight(cell, config, ceiling)),
+    [cells, config, ceiling],
   )
 
   const overlay = useMemo(
@@ -62,7 +64,10 @@ export function TileField({ config }: { config: StructureConfig }) {
     [config.texture, config.roughness],
   )
 
-  const place = useMemo(() => placer(cells, heights, config), [cells, heights, config])
+  const place = useMemo(
+    () => placer(cells, heights, config, ceiling),
+    [cells, heights, config, ceiling],
+  )
 
   // The resting pose. Written on layout rather than in an effect so the field
   // is never visible for a frame stacked at the origin.
@@ -93,48 +98,29 @@ export function TileField({ config }: { config: StructureConfig }) {
   const radius = hexRadius(pitch) * (1 - config.gap)
 
   return (
-    <instancedMesh
-      ref={mesh}
-      args={[undefined, undefined, Math.max(cells.length, 1)]}
-      // Casting is off, not an oversight: a mesh on the backdrop layer is
-      // invisible to the lights' shadow cameras anyway, and a field of
-      // thousands of tiles shadowing itself costs far more than it shows.
-      receiveShadow
-    >
-      {config.kind === 'hex' ? (
-        <cylinderGeometry args={[radius, radius, 1, 6]} />
-      ) : (
-        <boxGeometry args={[footprint, 1, footprint]} />
-      )}
-      <meshStandardMaterial
-        roughness={config.roughness}
-        metalness={config.metalness}
-        roughnessMap={overlay?.roughnessMap ?? null}
-        normalMap={overlay?.normalMap ?? null}
-      />
-    </instancedMesh>
+    // Sunk so the plateau under the product comes out level with the floor —
+    // see `fieldOffsetY`, which is also what the test measures against.
+    <group position={[0, fieldOffsetY(config, ceiling), 0]}>
+      <instancedMesh
+        ref={mesh}
+        args={[undefined, undefined, Math.max(cells.length, 1)]}
+        // Casting is off, not an oversight: a mesh on the backdrop layer is
+        // invisible to the lights' shadow cameras anyway, and a field of
+        // thousands of tiles shadowing itself costs far more than it shows.
+        receiveShadow
+      >
+        {config.kind === 'hex' ? (
+          <cylinderGeometry args={[radius, radius, 1, 6]} />
+        ) : (
+          <boxGeometry args={[footprint, 1, footprint]} />
+        )}
+        <meshStandardMaterial
+          roughness={config.roughness}
+          metalness={config.metalness}
+          roughnessMap={overlay?.roughnessMap ?? null}
+          normalMap={overlay?.normalMap ?? null}
+        />
+      </instancedMesh>
+    </group>
   )
-}
-
-/**
- * Builds the per-instance placement callback.
- *
- * Returns a function of (index, time) rather than closing over the time, so
- * the animated and static paths share one definition of where a tile goes and
- * cannot drift apart.
- */
-function placer(cells: Cell[], heights: number[], config: StructureConfig) {
-  return (index: number, time: number): Placement => {
-    const cell = cells[index] ?? { x: 0, z: 0, falloff: 0 }
-    const height = heights[index] ?? config.depth
-    const rise = config.kind === 'blocks' ? blockRise(cell, config, time) : 0
-
-    return {
-      // The geometry is unit-height and centred, so a tile resting on the
-      // floor sits at half its own height.
-      position: [cell.x, height / 2 + rise, cell.z],
-      scale: [1, height, 1],
-      tint: tileTint(height, config),
-    }
-  }
 }

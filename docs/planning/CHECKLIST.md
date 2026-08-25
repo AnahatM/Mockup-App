@@ -59,6 +59,10 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F7 | Recent uploads — keep the last few screenshots so the user can switch between them | DONE |
 | F21 | **Bug:** zoom in/out resets the camera orientation — zooming must keep the current view direction and target, whatever angle you are looking from | DONE |
 | F22 | **Bug:** device contact shadows on the ground/pedestal are broken up rather than continuous, and flicker | DONE |
+| F23 | **Bug:** the pulsating block field rises straight through the device; tile fields bury its feet by one tile depth. Environments now know the product's footprint — see ADR 0009 | DONE |
+| F24 | **Bug:** at the top of the depth/relief/pulse sliders a field grew to fifteen units, closed over the camera and left the viewport flat grey | DONE |
+| F25 | **Bug:** a tile size larger than the field size produced a single hidden tile, so the environment rendered nothing at all | DONE |
+| F26 | **Bug:** the whole Scene tab crashed with "Maximum update depth exceeded" in any session with no screenshot uploaded — `mediaPalette` returned a fresh `[]` into a Zustand selector | DONE |
 
 ## UX and robustness
 

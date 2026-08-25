@@ -49,8 +49,20 @@ export type MediaSource =
       palette: string[]
     }
 
+/**
+ * Shared, so the no-media case returns the *same* array every time.
+ *
+ * A fresh `[]` here is what crashed the whole Scene tab: `AdaptiveBackdrops`
+ * passed this straight to a Zustand selector, React compared the new empty
+ * array against the last one, found them unequal, re-rendered, and did it
+ * again — "Maximum update depth exceeded" before a single backdrop control
+ * could be read. The selector was fixed too (see `AdaptiveBackdrops.tsx`);
+ * this makes the helper safe to misuse the same way again.
+ */
+const NO_PALETTE: readonly string[] = Object.freeze([])
+
 export const mediaPalette = (source: MediaSource): readonly string[] =>
-  source.kind === 'none' ? [] : source.palette
+  source.kind === 'none' ? NO_PALETTE : source.palette
 
 export const mediaAspect = (source: MediaSource): number =>
   source.kind === 'none' || source.height === 0 ? 1 : source.width / source.height

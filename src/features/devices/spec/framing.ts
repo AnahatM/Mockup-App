@@ -29,7 +29,7 @@ export function groundOffsetMm(spec: DeviceSpec): number {
 }
 
 /** Total extent of the assembly in each axis, in millimetres. */
-function extentMm(spec: DeviceSpec): { x: number; y: number; z: number } {
+export function extentMm(spec: DeviceSpec): { x: number; y: number; z: number } {
   const { width, height, depth } = spec.body
 
   if (spec.hinge) {
@@ -75,49 +75,4 @@ export function frameDevice(spec: DeviceSpec, fovDegrees: number): DeviceFraming
     position: [distance * 0.4, centreY + distance * 0.3, distance * 0.86],
     distance,
   }
-}
-
-/**
- * A pedestal radius that suits the device's footprint, in scene units.
- *
- * A disc sized for a phone leaves a monitor hanging off both edges, so this
- * scales with the device for the same reason the camera does.
- */
-export function pedestalRadiusFor(spec: DeviceSpec): number {
-  const extent = extentMm(spec)
-  const footprintDepth = spec.hinge ? spec.hinge.base.height : extent.z
-  const footprint = Math.max(extent.x, footprintDepth)
-  return Number((footprint * 0.85 * MM_TO_UNITS).toFixed(3))
-}
-
-/**
- * Contact-shadow extent for the device, in scene units.
- *
- * The shadow is drawn on a finite plane, so one sized for a phone shows its own
- * straight edge behind a monitor. Scaling it with the device keeps the fade
- * off-frame.
- */
-/**
- * Depth range of the contact shadow's camera, in scene units.
- *
- * The bake is an orthographic depth render looking up from the floor, so
- * anything further away than this contributes nothing at all. A value sized
- * for a phone therefore truncates a monitor part-way up, and the shadow loses
- * the contribution of everything above the cut — which reads as a shadow that
- * is not the shape of the thing casting it. `shadowScaleFor` has always
- * adapted the plane's width to the device; this is the same idea for depth,
- * and the two being out of step was the bug.
- *
- * Headroom above the device's own height covers the levitate lift, which the
- * caller adds on top at render time.
- */
-export function shadowFarFor(spec: DeviceSpec): number {
-  const height = extentMm(spec).y * MM_TO_UNITS
-  return Number(Math.min(10, Math.max(1.6, height * 1.6)).toFixed(2))
-}
-
-export function shadowScaleFor(spec: DeviceSpec): number {
-  const extent = extentMm(spec)
-  const footprint = Math.max(extent.x, spec.hinge ? spec.hinge.base.height : extent.z)
-  return Number(Math.max(3, footprint * 2.4 * MM_TO_UNITS).toFixed(2))
 }

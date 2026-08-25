@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { EmptyState, Swatch } from '@/ui'
 import { mediaPalette } from '@/features/media/schema'
 import { useAppStore } from '@/state/store'
@@ -14,11 +15,15 @@ import styles from './AdaptiveBackdrops.module.css'
  * recipes and for why none of them simply reuses the dominant colour.
  */
 export function AdaptiveBackdrops() {
-  const palette = useAppStore((state) => mediaPalette(state.media.source))
+  // Select the source, then derive. Deriving *inside* the selector is what
+  // took the Scene tab down: a selector runs on every store read and its
+  // result is compared by identity, so one that builds a new array or object
+  // never settles. Nothing here may call a function that allocates.
+  const source = useAppStore((state) => state.media.source)
   const applyAdaptiveBackdrop = useAppStore((state) => state.applyAdaptiveBackdrop)
   const current = useAppStore((state) => state.scene.backdrop)
 
-  const options = deriveBackdrops(palette)
+  const options = useMemo(() => deriveBackdrops(mediaPalette(source)), [source])
 
   if (options.length === 0) {
     return (

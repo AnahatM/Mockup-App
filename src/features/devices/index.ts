@@ -21,15 +21,16 @@ export {
 } from './materials/finishes'
 export { deviceConfigSchema, type DeviceConfig, type GlbSource } from './schema'
 export { configForDevice, defaultDeviceConfig } from './spec/defaults'
+export { frameDevice, groundOffsetMm, type DeviceFraming } from './spec/framing'
 export {
-  frameDevice,
-  groundOffsetMm,
+  clearanceRadiusFor,
   pedestalRadiusFor,
+  productHeightFor,
   shadowFarFor,
   shadowScaleFor,
-  type DeviceFraming,
-} from './spec/framing'
+} from './spec/ground'
 export {
+  activeDeviceSpec,
   DEVICES,
   devicesByCategory,
   findColorway,
