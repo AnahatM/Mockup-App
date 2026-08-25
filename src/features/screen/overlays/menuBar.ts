@@ -1,4 +1,5 @@
 import { glyph, type OverlayCanvas } from './context'
+import { pointScale, type ReferenceScreen } from './points'
 import type { OverlaysConfig } from '../schema'
 
 /**
@@ -17,20 +18,24 @@ import type { OverlaysConfig } from '../schema'
 const MENUS = ['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help']
 
 /**
- * The menu bar is 24pt tall, and the display it is measured against here is a
- * MacBook Pro 14" at 982pt — so 2.4% of the height.
- *
- * It was 3.2%, taken against a nominal 1080pt-tall display that no Mac
- * actually has. A third too tall is not obvious on its own, but next to a Dock
- * that was also a third too big it made every laptop mockup read as a tablet.
+ * macOS's menu bar is 24pt tall on every display it runs on, and its titles are
+ * 13pt. Converted once from the reference screen — see `points.ts` — rather
+ * than kept as a share of the canvas, which is how it ended up quoted against a
+ * nominal 1080pt-tall display that no Mac actually has.
  */
-const BAR_SHARE = 0.024
+const BAR_HEIGHT_PT = 24
+const TITLE_PT = 13
 
-export function drawMenuBar(canvas: OverlayCanvas, config: OverlaysConfig): void {
-  const { ctx, width, height } = canvas
-  const barHeight = height * BAR_SHARE
+export function drawMenuBar(
+  canvas: OverlayCanvas,
+  config: OverlaysConfig,
+  reference: ReferenceScreen,
+): void {
+  const { ctx, width } = canvas
+  const pt = pointScale(canvas, reference)
+  const barHeight = BAR_HEIGHT_PT * pt
   const ink = glyph(config.menuBarDark)
-  const size = barHeight * 0.5
+  const size = TITLE_PT * pt
 
   ctx.save()
   // A faint scrim so titles stay legible over any screenshot behind them.

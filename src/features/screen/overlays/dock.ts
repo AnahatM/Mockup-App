@@ -1,4 +1,5 @@
 import { roundRect, type OverlayCanvas } from './context'
+import { pointScale, type ReferenceScreen } from './points'
 import { APPS, TRASH, drawIcon } from './dockIcons'
 import type { OverlaysConfig } from '../schema'
 
@@ -16,23 +17,25 @@ import type { OverlaysConfig } from '../schema'
 const RUNNING = 3
 
 /**
- * Icon size, as a share of the screen's shorter and longer sides.
+ * macOS's default Dock icon is 64pt, and it sits 8pt clear of the bottom edge.
  *
- * macOS defaults to a 64pt icon, and a MacBook Pro 14" is 982pt tall — so an
- * icon is about 6.5% of the height, and the whole Dock about 8.7%. These were
- * 8.5% and 5.5%, which is a third too big: on a laptop mockup the Dock came out
- * looking like a tablet's, and it crowded whatever screenshot was behind it.
- *
- * Two ratios rather than one because a very wide screen would otherwise get a
- * Dock as tall as a square one, and a very tall screen a Dock wider than it.
+ * Converted once from the reference screen rather than kept as a share of the
+ * canvas — see `points.ts`. As a share it was 8.5% of the height, taken against
+ * a display no Mac has, which made the Dock a third too big and left it
+ * crowding whatever screenshot was behind it.
  */
-const ICON_OF_HEIGHT = 0.065
-const ICON_OF_WIDTH = 0.042
+const ICON_PT = 64
+const BOTTOM_PT = 8
 
-export function drawDock(canvas: OverlayCanvas, config: OverlaysConfig): void {
+export function drawDock(
+  canvas: OverlayCanvas,
+  config: OverlaysConfig,
+  reference: ReferenceScreen,
+): void {
   const { ctx, width, height } = canvas
+  const pt = pointScale(canvas, reference)
   const count = Math.max(3, Math.min(12, Math.round(config.dockIcons)))
-  const icon = Math.min(height * ICON_OF_HEIGHT, width * ICON_OF_WIDTH)
+  const icon = ICON_PT * pt
   const gap = icon * 0.16
   const pad = icon * 0.24
   const divider = icon * 0.5
@@ -40,7 +43,7 @@ export function drawDock(canvas: OverlayCanvas, config: OverlaysConfig): void {
   const slabW = count * icon + (count - 1) * gap + pad * 2 + divider
   const slabH = icon + pad * 2
   const x = (width - slabW) / 2
-  const y = height - slabH - height * 0.016
+  const y = height - slabH - BOTTOM_PT * pt
 
   drawSlab(ctx, { x, y, width: slabW, height: slabH }, config)
 

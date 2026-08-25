@@ -74,6 +74,7 @@ at the results, which is the only way these show up.
 | # | Task | Status |
 |---|---|---|
 | R1 | **Bug:** the watch strap swept out and stopped, reading as two ribbons past the case. Both halves are now arcs of one fastened loop — see `spec/bandLoop.ts` | DONE |
+| R15 | On-screen overlays converted to the ADR 0008 points model — home indicator, Android nav, status bar, menu bar and Dock, each against a reference screen chosen by device class rather than one screen scaled | DONE |
 | R2 | Keyboard deck was five rows of identical keycaps. Now a real layout: wide space bar, stepped left edge, short function row, inverted-T arrows | DONE |
 | R3 | **Bug:** the trackpad overhung the front edge of the laptop base, and the keyboard plane stretched its texture | DONE |
 | R4 | Monitor and iMac stood on rectangular slabs — the stand radii were fixed millimetres, invisible on a 240mm foot. Now proportional | DONE |

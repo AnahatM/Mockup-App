@@ -81,3 +81,34 @@ The cost is that the chrome modules now know a table of platform constants that
 will drift as those platforms change. That is the correct place for the
 knowledge to live, and it is at least now written down where a future reader can
 compare it against a screenshot.
+
+## Amendment, 2026-08-25: the on-screen overlays too
+
+The original decision covered the chrome drawn *around* a screenshot — the
+window bar, the browser toolbar. Everything drawn *on* a device screen was left
+on fractions, and it had all the same problems. The iOS home indicator was
+`width * 0.36` by `height * 0.0042`, the Android back button `width * 0.25`,
+the macOS menu bar `height * 0.032` against a nominal 1080pt display no Mac has.
+
+Those are now points as well: a 139 x 5pt indicator 8pt clear of the bottom, a
+48dp navigation bar with 24dp icons, a 24pt menu bar, a 64pt Dock icon, a 54pt
+status bar with its clock centred at 60pt.
+
+**One reference screen was not enough**, and that is the part worth writing
+down. The platforms differ by device class rather than merely scaling: an
+iPhone's status bar is 54pt on a 393pt-wide screen and an iPad's is 24pt on a
+1024pt one. Quoting both against the phone and scaling to fit would put a bar
+nearly three times too deep on every tablet in the catalogue. So `points.ts`
+holds a reference screen per class — iPhone 15 Pro, Pixel 8, iPad Pro 13",
+MacBook Pro 14" — and the device's own `kind` chooses which one applies. Each
+surface still converts exactly once.
+
+The same testing rule carries over, and earned itself immediately twice. The
+first version inferred the platform as "iOS if the device supports the iOS
+status bar, otherwise Android", which reads fine and sends any device
+supporting one of iOS's *other* overlays to Android's 412dp reference;
+`overlays.test.ts` caught it within a minute of the model existing. And the
+recording context had to learn to record path bounds, because these shapes are
+drawn as `moveTo` plus four `arcTo`s rather than with the native `roundRect` —
+so a home indicator previously left no trace an assertion could reach. It moved
+to `lib/canvas/` at the same time, since two features now draw through it.

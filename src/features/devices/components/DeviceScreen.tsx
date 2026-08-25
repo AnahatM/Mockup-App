@@ -44,6 +44,7 @@ export function DeviceScreen({
   const overlay = useOverlayTexture(
     spec.supportedOverlays,
     layout.width / layout.height,
+    spec.kind,
   )
   // Glossy glass mirrors the room; a matte etch scatters it. This is the single
   // most noticeable material choice on a device, because the screen is the

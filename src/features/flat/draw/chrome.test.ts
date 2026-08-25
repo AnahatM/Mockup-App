@@ -3,7 +3,7 @@ import { flatSchema } from '../schema'
 import type { FlatConfig } from '../schema'
 import { drawMacBar } from './macBar'
 import { drawBrowserBar } from './browserBar'
-import { recordingContext } from './recordingContext'
+import { recordingContext } from '@/lib/canvas/recordingContext'
 
 /**
  * The window chrome is measured off the real thing, in macOS points, and

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { CanvasTexture, SRGBColorSpace } from 'three'
-import type { OverlayKind } from '@/features/devices'
+import type { DeviceKind, OverlayKind } from '@/features/devices'
 import { useAppStore } from '@/state/store'
 import { composeOverlays } from './overlays/compose'
 
@@ -17,6 +17,7 @@ const RESOLUTION = 2048
 export function useOverlayTexture(
   supported: readonly OverlayKind[],
   aspect: number,
+  kind: DeviceKind,
 ): CanvasTexture | null {
   const overlays = useAppStore((state) => state.overlays)
 
@@ -30,14 +31,14 @@ export function useOverlayTexture(
     const ctx = canvas.getContext('2d')
     if (!ctx) return null
 
-    const drew = composeOverlays({ ctx, width, height }, supported, overlays)
+    const drew = composeOverlays({ ctx, width, height }, supported, overlays, kind)
     if (!drew) return null
 
     const created = new CanvasTexture(canvas)
     created.colorSpace = SRGBColorSpace
     created.anisotropy = 8
     return created
-  }, [supported, aspect, overlays])
+  }, [supported, aspect, overlays, kind])
 
   useEffect(() => () => texture?.dispose(), [texture])
 
