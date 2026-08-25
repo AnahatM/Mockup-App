@@ -131,5 +131,23 @@ export function buildMaterial(
     envMapIntensity: 0.85,
     roughnessMap: overlay?.roughnessMap ?? null,
     normalMap: overlay?.normalMap ?? null,
+
+    /*
+     * The floor loses the depth test to anything standing on it.
+     *
+     * The plinth's top face is deliberately coplanar with this floor — a device
+     * at y=0 rests on both — so which one is drawn comes down to rasterised
+     * depth. The plinth carries its own offset so the contact shadow can win
+     * over *it*, and that same offset pushed it behind this sweep, which meant
+     * the plinth was never drawn at all: invisible at every size, every colour,
+     * and with any procedural texture on it.
+     *
+     * Ordering the three by offset is what keeps all of it true at once —
+     * shadow at 0, plinth at 1, floor here at 2. A backdrop is behind
+     * everything by definition, so this is where the largest offset belongs.
+     */
+    polygonOffset: true,
+    polygonOffsetFactor: 2,
+    polygonOffsetUnits: 2,
   })
 }

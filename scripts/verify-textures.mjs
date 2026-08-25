@@ -219,13 +219,64 @@ await setSelect(frameSection, 'Pattern', 'none')
 
 await browser.close()
 
-const monotonic = (steps) => steps.low <= steps.mid && steps.mid <= steps.high
-let allMonotonic = true
-for (const surface of Object.values(results)) {
-  for (const steps of Object.values(surface)) {
-    if (!monotonic(steps)) allMonotonic = false
+/**
+ * The noise floor of this measurement, in mean per-channel difference.
+ *
+ * The metric averages a whole 320x220 frame, so a pattern that only modulates
+ * the specular response of a small surface moves it by thousandths. The device
+ * frame's weave at low strength measured 0.0078 then 0.0073 — half a
+ * thousandth *down*, which is below one 8-bit level and is not a direction.
+ */
+const NOISE = 0.01
+
+/**
+ * How much of the frame each surface occupies, and therefore what this
+ * instrument can actually resolve on it.
+ *
+ * The pedestal is a broad disc filling the lower third, so every pattern has to
+ * register on it — and that is the check worth having, because it is what
+ * caught the plinth being invisible: for as long as it was hidden behind the
+ * cyclorama floor, all five patterns produced a byte-identical frame and strict
+ * monotonicity passed anyway, since 0 <= 0 <= 0.
+ *
+ * The device frame is a narrow rail a few pixels wide. A whole-canvas mean
+ * cannot resolve a subtle roughness change on it — noise, brushed and
+ * scratches all land under a hundredth — so requiring each of them to register
+ * would be asserting something the measurement cannot see. What it *can* see is
+ * whether the texture reaches the surface at all, which one strongly
+ * structured pattern demonstrates.
+ */
+const EVERY_PATTERN = new Set(['pedestal'])
+
+const failures = []
+for (const [name, surface] of Object.entries(results)) {
+  const patterns = Object.entries(surface)
+
+  if (EVERY_PATTERN.has(name)) {
+    for (const [pattern, steps] of patterns) {
+      if (steps.high <= NOISE) {
+        failures.push(
+          `${name}/${pattern}: at full strength the render is unchanged ` +
+            `(${steps.high.toFixed(4)}) — the texture is not reaching the surface`,
+        )
+      }
+    }
+  } else if (!patterns.some(([, steps]) => steps.high > NOISE * 5)) {
+    failures.push(
+      `${name}: no pattern changed the render at full strength — the texture ` +
+        `system is not reaching this surface at all`,
+    )
+  }
+
+  for (const [pattern, steps] of patterns) {
+    if (steps.mid < steps.low - NOISE || steps.high < steps.mid - NOISE) {
+      failures.push(
+        `${name}/${pattern}: turning the pattern up made less difference, not more ` +
+          `(${steps.low.toFixed(4)} -> ${steps.mid.toFixed(4)} -> ${steps.high.toFixed(4)})`,
+      )
+    }
   }
 }
 
-console.log(JSON.stringify({ results, allMonotonic, problems }, null, 2))
-if (!allMonotonic) process.exit(1)
+console.log(JSON.stringify({ results, noiseFloor: NOISE, failures, problems }, null, 2))
+if (failures.length > 0 || problems.length > 0) process.exit(1)
