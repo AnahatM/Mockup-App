@@ -54,6 +54,23 @@ export function applyScreenTexture(
   const material = mesh.material
   if (Array.isArray(material)) return
 
+  /*
+   * glTF puts the UV origin at the *top* left, and `GLTFLoader` accordingly
+   * loads its own textures with `flipY = false`. Our screenshot does not come
+   * from that loader — `TextureLoader` flips on upload so three.js's own
+   * bottom-left-origin UVs come out the right way up — so handing it
+   * unmodified to an imported mesh renders it upside down.
+   *
+   * Set here rather than where the texture is built because the same texture
+   * object serves both paths, and each has the opposite convention. Only one
+   * device is ever mounted, so whichever path is live states what it needs and
+   * the procedural screen does the same. See `screenMaterial`.
+   */
+  if (texture && texture.flipY) {
+    texture.flipY = false
+    texture.needsUpdate = true
+  }
+
   if (material instanceof MeshStandardMaterial) {
     material.map = texture
     material.emissiveMap = texture

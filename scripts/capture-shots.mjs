@@ -24,8 +24,8 @@ const PORT = process.env.PORT ?? '4173'
  * phone, a desktop-width one on a laptop. Putting the wrong one on either is
  * the difference between a mockup and a mockup with bars down the sides.
  */
-const FIXTURE = 'scripts/out/screenshot.png'
-const DESKTOP_FIXTURE = 'scripts/out/screenshot-desktop.png'
+const FIXTURE = 'scripts/out/shot-phone.png'
+const DESKTOP_FIXTURE = 'scripts/out/shot-desktop.png'
 const PHONE = 'Pro Phone 6.1"'
 const LAPTOP = 'Pro Laptop 14"'
 

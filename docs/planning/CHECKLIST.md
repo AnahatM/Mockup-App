@@ -80,6 +80,8 @@ at the results, which is the only way these show up.
 | R8 | **Bug:** the screenshot texture had no mip chain, so fine UI text crawled at any angle; the Dock and menu bar were a third too large against a display no Mac has | DONE |
 | R9 | **Bug:** applying a built-in look replaced the chosen device with the default phone, and carried over camera/plinth/shadow sized for it | DONE |
 | R10 | Marketing screenshots now use the app's own pages as the on-device content, captured by `scripts/make-shot-fixtures.mjs` | DONE |
+| R12 | **Bug:** an imported GLB showed the screenshot upside down — glTF's UV origin is the opposite of three.js's, and each path now states the convention it needs | DONE |
+| R13 | **Bug:** a corrupt `.glb` passed the extension check and its loader rejection escaped as an unhandled page error. The header is read before the loader sees it | DONE |
 | R11 | Toolbar toggle for the orientation gizmo — exports stripped it, but there was no way to get a clean viewport on screen | DONE |
 | R7 | **Bug:** the contact shadow was drawn from below the floor, compressing into a grey streak past the product at Low hero and while orbiting under | DONE |
 | R5 | Audit every catalogue spec against published dimensions. `spec/screenAspect.test.ts` cross-checks each screen's geometry against its published display aspect and caught seven | DONE |

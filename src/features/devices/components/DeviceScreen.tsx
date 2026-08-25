@@ -70,6 +70,16 @@ export function DeviceScreen({
     if (!texture) return
     texture.repeat.set(placement.repeat[0], placement.repeat[1])
     texture.offset.set(placement.offset[0], placement.offset[1])
+
+    /*
+     * This plane's UVs put the origin at the bottom left, which is what
+     * `TextureLoader` flips an image for. An imported glTF mesh has the
+     * opposite convention and clears this flag on the very same texture
+     * object, so a device switched from an import back to a catalogue pick
+     * would otherwise show the screenshot upside down. Whichever path is
+     * mounted states what it needs — see `applyScreenTexture`.
+     */
+    texture.flipY = true
     texture.needsUpdate = true
   }, [texture, placement])
 

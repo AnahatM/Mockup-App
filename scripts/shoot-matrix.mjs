@@ -161,10 +161,13 @@ const expandAll = async () => {
   await wait(400)
 }
 
+/** Visible buttons only: a closed `<dialog>`'s Cancel and Confirm are in the
+ *  document from first paint and would otherwise match and silently do
+ *  nothing. */
 const clickByText = (text) =>
   page.evaluate((t) => {
     const button = [...document.querySelectorAll('button')].find(
-      (b) => b.textContent?.trim() === t,
+      (b) => b.textContent?.trim() === t && b.getBoundingClientRect().width > 0,
     )
     if (!button) return false
     button.click()

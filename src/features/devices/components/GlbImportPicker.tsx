@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Button, Icon, Tooltip } from '@/ui'
 import { useAppStore } from '@/state/store'
+import { validateModelFile } from '../glb/validate'
 import styles from './GlbImportPicker.module.css'
 
 const ACCEPT = '.glb,.gltf,model/gltf-binary,model/gltf+json'
@@ -26,12 +27,18 @@ export function GlbImportPicker() {
   const setGlbError = useAppStore((state) => state.setGlbError)
   const input = useRef<HTMLInputElement>(null)
 
-  const accept = (file: File | undefined) => {
+  const accept = async (file: File | undefined) => {
     if (!file) return
-    if (!/\.(glb|gltf)$/i.test(file.name)) {
-      setGlbError('Models must be a .glb or .gltf file.')
+
+    // Read the header before handing anything to three.js. The extension alone
+    // let a corrupt file reach the loader, whose rejection then escaped to the
+    // page as an unhandled error even though the panel showed a message.
+    const problem = await validateModelFile(file)
+    if (problem) {
+      setGlbError(problem)
       return
     }
+
     importGlbModel(URL.createObjectURL(file), file.name)
     if (file.size > SIZE_WARNING_BYTES) {
       const mb = Math.round(file.size / (1024 * 1024))
@@ -47,8 +54,9 @@ export function GlbImportPicker() {
         accept={ACCEPT}
         className={styles.input}
         onChange={(event) => {
-          accept(event.currentTarget.files?.[0])
+          const file = event.currentTarget.files?.[0]
           event.currentTarget.value = ''
+          void accept(file)
         }}
       />
 

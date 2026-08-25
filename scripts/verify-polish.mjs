@@ -135,14 +135,29 @@ async function openTab(page, name) {
   await tabs[index].click()
 }
 
+/**
+ * Clicks the first *visible* button with this exact label.
+ *
+ * Visibility matters here and nowhere else in this file: the confirmation
+ * dialog is a native `<dialog>`, so its Cancel and Confirm buttons are in the
+ * document from first paint and only `display: none` while it is closed. They
+ * still match a text search, they are the first two buttons on the page, and
+ * clicking one throws "Node is either not clickable" — which reads like a
+ * broken dialog and is in fact a correctly closed one. (Not focusable either,
+ * which is the part that would have been an accessibility bug.)
+ */
 async function clickByText(page, text) {
   const buttons = await page.$$('button')
   for (const button of buttons) {
-    const label = await button.evaluate((el) => el.textContent)
-    if (label?.trim() === text) {
+    const match = await button.evaluate(
+      (el, wanted) =>
+        (el.textContent ?? '').trim() === wanted && el.getBoundingClientRect().width > 0,
+      text,
+    )
+    if (match) {
       await button.click()
       return
     }
   }
-  throw new Error(`button "${text}" not found`)
+  throw new Error(`no visible button labelled "${text}"`)
 }

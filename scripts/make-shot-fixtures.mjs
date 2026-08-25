@@ -14,6 +14,13 @@
  * a problem no licence fixes. This one is ours, it stays current as the app
  * changes, and regenerating it is one command.
  *
+ * Written as `shot-*.png`, deliberately clear of `screenshot.png`. That name
+ * belongs to `make-fixture.mjs`'s synthetic capture, which the regression
+ * harnesses upload — and they need a *high-contrast* image, because several of
+ * them check that a screenshot landed on a screen by measuring how much a pixel
+ * changed. A real landing page is mostly dark, so quietly reusing that name
+ * made `verify-glb.mjs` report a texture that had not applied when it had.
+ *
  * Run against a static build: `npm run build && npx vite preview --port 4173`.
  */
 import puppeteer from 'puppeteer-core'
@@ -30,7 +37,7 @@ const PORT = process.env.PORT ?? '4173'
  */
 const SHOTS = [
   {
-    name: 'screenshot.png',
+    name: 'shot-phone.png',
     path: '/',
     width: 430,
     height: 932,
@@ -38,7 +45,7 @@ const SHOTS = [
     settle: 2600,
   },
   {
-    name: 'screenshot-desktop.png',
+    name: 'shot-desktop.png',
     path: '/',
     width: 1512,
     height: 982,
@@ -46,7 +53,7 @@ const SHOTS = [
     settle: 2600,
   },
   {
-    name: 'screenshot-docs.png',
+    name: 'shot-docs.png',
     path: '/docs',
     width: 1512,
     height: 982,
