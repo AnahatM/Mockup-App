@@ -18,13 +18,20 @@ Production: <https://mockup-studio.anahatmudgal.com>
 > `BASE_URL`. What is left is account work:
 >
 > ```sh
-> npx vercel login
+> npx vercel login          # interactive; needs a browser
 > npx vercel link --yes
-> npx vercel --prod
+> npm run deploy            # vercel deploy --prod
 > ```
 >
 > then add the subdomain under the project's Domains tab and accept the DNS
 > record it offers.
+>
+> **Without an account**, `npm run deploy:preview` builds and serves the app at
+> a real Vercel URL anonymously and prints a link to claim it. That is how the
+> config above was verified against the platform rather than against a local
+> imitation of it, and it is worth running before any deploy that changes
+> `vercel.json` — the schema is strict and it rejects the whole file rather than
+> the offending key. Anonymous deployments expire after an hour unless claimed.
 
 ## Checking a real deployment
 

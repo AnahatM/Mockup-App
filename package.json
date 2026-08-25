@@ -24,7 +24,9 @@
     "verify:csp": "node scripts/verify-csp.mjs",
     "verify:responsive": "node scripts/verify-responsive.mjs",
     "shots": "node scripts/make-shot-fixtures.mjs && node scripts/capture-shots.mjs",
-    "sheets": "node scripts/shoot-matrix.mjs"
+    "sheets": "node scripts/shoot-matrix.mjs",
+    "deploy:preview": "vercel deploy --temporary --prod --yes",
+    "deploy": "vercel deploy --prod"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

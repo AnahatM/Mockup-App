@@ -103,6 +103,12 @@ That is not hypothetical tidiness. The first run of `verify:csp` found the
 pre-paint theme script blocked on every route — a flash of the wrong palette on
 the live site, and nothing local would ever have said so.
 
+Neither is a substitute for deploying, though. `npm run deploy:preview` puts the
+app on a real Vercel URL without an account, which is the only way to find the
+class of problem that lives in the platform rather than in the app — the CSP
+rationale was in a `"//"` key that Vercel rejects outright, failing the deploy
+before it built anything, and the local server had been written to tolerate it.
+
 ### Looking, when looking is the point
 
 Some failures are not a number. Geometry grazing a device, a backdrop edge in
