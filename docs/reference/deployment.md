@@ -6,6 +6,14 @@ deploying it is just serving `dist/`.
 
 Production: <https://mockup-studio.anahatmudgal.com>
 
+> **Not live yet.** That hostname does not currently resolve — the subdomain has
+> never been created. The apex `anahatmudgal.com` points at Vercel, so the
+> account is in place; this project's domain is not. Connect a Vercel project to
+> the `AnahatM/Mockup-App` repository (the config below needs no changes), then
+> add the subdomain under its Domains tab and accept the DNS record it asks for.
+> Until that is done the README badge, the sitemap's canonical URLs and the
+> footer link all point at nothing.
+
 ## Vercel
 
 `vercel.json` at the repo root configures it:
