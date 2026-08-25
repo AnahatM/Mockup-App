@@ -1,5 +1,9 @@
+import { useRef } from 'react'
 import { ContactShadows } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { Mesh, type Group } from 'three'
 import { useAppStore } from '@/state/store'
+import { shadowFade } from './shadowFade'
 
 /**
  * Grounds the product. Uses a contact shadow rather than a real shadow map: it
@@ -30,6 +34,7 @@ import { useAppStore } from '@/state/store'
  * layer — see `layers.ts`.
  */
 export function ContactShadow() {
+  const group = useRef<Group>(null)
   const shadow = useAppStore((state) => state.scene.shadow)
   const pedestal = useAppStore((state) => state.scene.pedestal)
   // The whole device slice, not just the fields read below: a re-render is
@@ -53,16 +58,49 @@ export function ContactShadow() {
   const moving = animation.clip !== 'none' && animation.playing
 
   return (
-    <ContactShadows
-      position={[0, y, 0]}
-      opacity={shadow.opacity}
-      blur={shadow.blur}
-      // A levitating device is lifted clear of the floor, so the depth range
-      // has to reach past the lift as well as over the device itself.
-      far={shadow.far + device.levitate}
-      scale={shadow.scale}
-      resolution={1024}
-      frames={moving ? Infinity : 1}
-    />
+    <>
+      <ContactShadows
+        ref={group}
+          position={[0, y, 0]}
+        opacity={shadow.opacity}
+        blur={shadow.blur}
+        // A levitating device is lifted clear of the floor, so the depth range
+        // has to reach past the lift as well as over the device itself.
+        far={shadow.far + device.levitate}
+        scale={shadow.scale}
+        resolution={1024}
+        frames={moving ? Infinity : 1}
+      />
+      <GrazingFade group={group} opacity={shadow.opacity} planeY={y} />
+    </>
   )
+}
+
+interface GrazingFadeProps {
+  group: React.RefObject<Group | null>
+  opacity: number
+  planeY: number
+}
+
+/**
+ * Fades the shadow out as the camera drops towards the floor — see
+ * `shadowFade.ts` for why, and `Low hero` for the preset that made it
+ * necessary.
+ *
+ * Its own component because `ContactShadow` returns early when the shadow is
+ * switched off, and a `useFrame` above that return would be a conditional
+ * hook. It writes the opacity straight onto the material rather than through
+ * drei's `opacity` prop: that prop is a React render, and a render of this
+ * subtree re-bakes the shadow's two 1024px render targets. Doing that on every
+ * frame of an orbit is exactly the churn the flicker fix removed.
+ */
+function GrazingFade({ group, opacity, planeY }: GrazingFadeProps) {
+  useFrame(({ camera }) => {
+    const mesh = group.current?.children[0]
+    if (!(mesh instanceof Mesh) || Array.isArray(mesh.material)) return
+
+    const horizontal = Math.hypot(camera.position.x, camera.position.z)
+    mesh.material.opacity = opacity * shadowFade(camera.position.y - planeY, horizontal)
+  })
+  return null
 }
