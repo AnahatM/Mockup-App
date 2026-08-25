@@ -18,7 +18,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "verify": "npm run typecheck && npm run lint && npm run lint:css && npm run test",
-    "sitemap": "node scripts/build-sitemap.mjs"
+    "sitemap": "node scripts/build-sitemap.mjs",
+    "serve:deployed": "node scripts/serve-deployed.mjs",
+    "verify:offline": "node scripts/verify-offline.mjs",
+    "verify:csp": "node scripts/verify-csp.mjs",
+    "verify:responsive": "node scripts/verify-responsive.mjs",
+    "shots": "node scripts/make-shot-fixtures.mjs && node scripts/capture-shots.mjs",
+    "sheets": "node scripts/shoot-matrix.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

@@ -251,9 +251,21 @@ before you open a PR.
 
 ## Licence
 
-[MIT](LICENSE). No device manufacturer is affiliated with or endorses this
-project; every device model is an original procedural approximation, and brand
-names are used only to describe a form factor.
+[MIT](LICENSE).
+
+**No device manufacturer is affiliated with or endorses this project.** Every
+device is an original procedural approximation generated from published outside
+dimensions — there is not a single downloaded or traced model in the repository,
+which is one of the reasons it works that way (see
+[ADR 0001](docs/adr/0001-procedural-geometry.md)). Catalogue names describe a
+form factor rather than a product: "Pro Phone 6.1"", "Flip (open)", "All-in-one
+24"".
+
+The screenshots on the devices in this repo's own images are **this app's own
+pages**, captured by `npm run shots`. That is deliberate: a mockup tool
+advertising itself with somebody else's product UI is a problem no licence
+fixes, and if you contribute an image please do the same rather than pasting a
+real product's interface.
 
 ---
 

@@ -1,0 +1,49 @@
+name: Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A newer push to the same branch makes the older run irrelevant.
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Matches the floor every dependency here needs, and the version the
+          # project is developed on.
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # typecheck + eslint + stylelint + vitest. The same gate the project runs
+      # before every commit, so CI and a local run cannot disagree.
+      - run: npm run verify
+
+      # The build is not part of `verify` and fails differently: `tsc -b`
+      # catches types, but a broken import graph or a bad Vite plugin only
+      # shows up here.
+      - run: npm run build
+
+# Deliberately not run here: the puppeteer harnesses under `scripts/`. They
+# drive a real Chrome against a real WebGL context to check things no unit test
+# can see — that an environment renders, that nothing intersects the device,
+# that the deployed CSP does not block the app. They need a GPU-ish browser and
+# a served build, and they are pointed at a Windows Chrome path.
+#
+# Running them in CI is worth doing and is not free; until then they are a
+# release-time step, listed in CONTRIBUTING.md.

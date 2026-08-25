@@ -1,0 +1,36 @@
+name: Feature request
+description: A device, a look, a control, or a workflow that is missing.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to make?
+      description: >
+        The mockup you are trying to produce, rather than the control you think
+        would produce it — there is often already a way, and where there is not,
+        the shot you want is the thing worth designing against.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: A reference, if you have one
+      description: >
+        A link or an image of the result you are after. Please do not paste
+        another product's UI — see the note on trademarks in the README.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the app?
+      options:
+        - A device that is missing from the catalogue
+        - The 3D scene — backdrops, lighting, camera, motion
+        - The 2D window tool
+        - Export or presets
+        - The site, docs or accessibility
+        - Something else
+    validations:
+      required: true

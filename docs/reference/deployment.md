@@ -21,6 +21,32 @@ Production: <https://mockup-studio.anahatmudgal.com>
   camera, microphone and geolocation because the app never asks for any of
   them, so the denial can be absolute.
 
+## The Content-Security-Policy
+
+The policy is the local-only promise made enforceable rather than only claimed.
+`connect-src` names no host at all — there is no API, no analytics and no CDN —
+so a dependency that started phoning home would be blocked outright rather than
+quietly succeed. `blob:` and `data:` are the app's own generated content: an
+uploaded screenshot's object URL, a canvas export, an imported GLB.
+
+**Test it before you deploy.** `vite preview` sends none of these headers, so
+the policy is invisible to every other check in the repo — it either works in
+production or takes the app down, and nothing local would say which:
+
+```sh
+npm run build
+npm run serve:deployed &   # serves dist/ reading this same vercel.json
+npm run verify:csp
+PORT=4180 npm run verify:offline
+```
+
+The first run of `verify:csp` found the pre-paint theme script blocked on every
+route: a flash of the wrong palette on the live site that no preview would ever
+have shown. That script has to be inline — its whole job is beating the first
+paint — so `script-src` carries its SHA-256, and `verify:csp` recomputes the
+hash from the build and fails if anyone edits the script without updating the
+policy. That drift is otherwise completely silent.
+
 ## The sitemap
 
 `npm run build` runs `scripts/build-sitemap.mjs` before `vite build`, so

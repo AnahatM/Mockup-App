@@ -123,6 +123,11 @@ for contrast rather than eyeballed.
 |---|---|---|
 | D1 | Production URL is `https://mockup-studio.anahatmudgal.com` — use it in README, docs, sitemap and canonical links | DONE |
 | D2 | `vercel.json` — SPA rewrites so deep links work, plus sensible headers | DONE |
+| D3 | Content-Security-Policy enforcing the local-only promise, tested against the real headers via `serve-deployed.mjs` | DONE |
+| D4 | `verify-offline.mjs` — no request ever leaves the machine, measured across every route and a full studio session | DONE |
+| D5 | `verify-csp.mjs` — the policy does not block the app, and its inline-script hash is current | DONE |
+| D6 | CI workflow running `npm run verify` and `npm run build` on push and PR | DONE |
+| D7 | GitHub issue templates, PR template, and a stronger trademark/attribution note | DONE |
 
 ## Competitive features
 

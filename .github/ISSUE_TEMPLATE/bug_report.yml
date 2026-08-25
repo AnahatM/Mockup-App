@@ -1,0 +1,60 @@
+name: Bug report
+description: Something renders wrong, exports wrong, or does not work.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. The most useful bug report for this project
+        is usually **a screenshot of what you got next to what you expected** —
+        most of what goes wrong here is visual, and a description of a render
+        rarely survives the trip.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you see, and what did you expect to see instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce it
+      description: |
+        The device, the preset, and anything you changed. If you can, use
+        **Presets -> Export** to save a `.mockup.json` and drag it in here —
+        that captures the whole scene exactly, and it contains no image data
+        unless you ask it to.
+      placeholder: |
+        1. Pick the Monitor 27"
+        2. Apply the "Pulse grid" environment
+        3. Drag the Depth slider to the top
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and OS
+      placeholder: Chrome 141 on Windows 11
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Anything in the browser console
+      description: Optional, but it usually names the problem outright.
+      render: text
+
+  - type: checkboxes
+    id: local
+    attributes:
+      label: Before you post
+      options:
+        - label: >
+            This does not include a screenshot I would mind being public. The
+            app never uploads anything, but a GitHub issue is a public page.
+          required: true

@@ -78,11 +78,44 @@ drive the real UI against a running dev server (`npm run dev` first):
 | `verify-presets.mjs`  | A preset survives a page reload, exports, and a corrupted file is rejected without crashing |
 | `verify-window.mjs`   | Window chrome renders on a device and exports flat                                          |
 | `verify-exposure.mjs` | Tone-mapping exposure actually reaches the renderer                                         |
+| `verify-structure-extremes.mjs` | No backdrop environment swallows the scene at any slider setting                  |
+| `verify-responsive.mjs` | Every route, both themes, five widths: no overflow, no console errors                     |
+| `verify-offline.mjs`  | **No request ever leaves the machine.** The whole product promise, measured               |
+| `verify-csp.mjs`      | The deployed Content-Security-Policy does not block the app, and its script hash is current |
 | `probe-capture.mjs`   | Isolates canvas capture behaviour when recording misbehaves                                 |
 
 These measure rather than eyeball, which is deliberate: exposure once appeared to
 work and was doing nothing at all, and recording once produced zero bytes while
 reporting success. Both were found by measuring, not looking.
+
+Two of them need the build served the way the deployment serves it, headers and
+all, because `vite preview` sends none of `vercel.json`'s headers and the CSP is
+therefore invisible to every other check here:
+
+```sh
+npm run build
+npm run serve:deployed &          # reads vercel.json, so the two cannot drift
+npm run verify:csp
+PORT=4180 npm run verify:offline
+```
+
+That is not hypothetical tidiness. The first run of `verify:csp` found the
+pre-paint theme script blocked on every route — a flash of the wrong palette on
+the live site, and nothing local would ever have said so.
+
+### Looking, when looking is the point
+
+Some failures are not a number. Geometry grazing a device, a backdrop edge in
+frame, a laptop deck that renders perfectly and still does not look like a
+keyboard — those need eyes. `npm run sheets -- <sweep>` composites a whole sweep
+into one labelled PNG under `scripts/out/`, so looking is cheap:
+
+```sh
+npm run sheets -- environments   # every backdrop, and its slider extremes
+npm run sheets -- cameras        # all nine angle presets over a moving field
+npm run sheets -- devices        # a watch through a monitor, an order of magnitude apart
+npm run sheets -- details        # close enough to judge a keyboard or a strap
+```
 
 ## Commits
 
