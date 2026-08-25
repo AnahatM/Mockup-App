@@ -6,13 +6,13 @@
   <a href="https://mockup-studio.anahatmudgal.com">
     <img src="https://img.shields.io/badge/Open%20the%20Studio-796eb3?style=for-the-badge&logo=vercel&logoColor=white" alt="Open the live app" />
   </a>
-  <a href="https://github.com/AnahatM/MockupStudio">
+  <a href="https://github.com/AnahatM/Mockup-App">
     <img src="https://img.shields.io/badge/View%20Source-181717?style=for-the-badge&logo=github&logoColor=white" alt="View source on GitHub" />
   </a>
-  <a href="https://github.com/AnahatM/MockupStudio/issues">
+  <a href="https://github.com/AnahatM/Mockup-App/issues">
     <img src="https://img.shields.io/badge/Report%20a%20Bug-796eb3?style=for-the-badge&logo=github&logoColor=white" alt="Report a bug" />
   </a>
-  <a href="https://github.com/AnahatM/MockupStudio/issues">
+  <a href="https://github.com/AnahatM/Mockup-App/issues">
     <img src="https://img.shields.io/badge/Request%20a%20Feature-796eb3?style=for-the-badge&logo=github&logoColor=white" alt="Request a feature" />
   </a>
   <a href="LICENSE">
@@ -27,6 +27,12 @@ motion, then exports a still or a video. No watermark, no account, no upload:
 the whole app, and every file you give it, stays on your machine.
 
 **Try it: [mockup-studio.anahatmudgal.com](https://mockup-studio.anahatmudgal.com)**
+
+> [!NOTE]
+> **Mockup Studio is in active development.** Some features are still incomplete
+> or subject to change, and you may run into rough edges. Bug reports and
+> feature requests are welcome — please
+> [open an issue](https://github.com/AnahatM/Mockup-App/issues).
 
 <p align="center">
   <img src="docs/images/studio-hero.png" alt="Mockup Studio's 3D viewport showing a phone with a brushed-titanium finish under rim lighting on a soft studio backdrop" width="820" />
@@ -126,8 +132,8 @@ Vitest.
 ### Install
 
 ```bash
-git clone https://github.com/AnahatM/MockupStudio.git
-cd MockupStudio
+git clone https://github.com/AnahatM/Mockup-App.git
+cd Mockup-App
 npm install
 ```
 
