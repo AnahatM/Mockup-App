@@ -1,4 +1,5 @@
 export { useOverlayTexture } from './useOverlayTexture'
+export { useScreenTexture } from './useScreenTexture'
 export { overlayApplies } from './overlays/compose'
 export { defaultOverlays, overlaysSchema, type OverlaysConfig } from './schema'
 export { useFramedTexture, type FramedResult } from './useFramedTexture'

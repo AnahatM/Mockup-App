@@ -60,7 +60,7 @@ Transferred JavaScript per route, gzipped, before and after:
 | --- | --- | --- |
 | `/` | ~630 kB | 213 kB |
 | `/docs` | ~630 kB | 213 kB |
-| `/window` | ~630 kB | 320 kB |
+| `/window` | ~630 kB | 320 kB (see the postscript — this number was wrong) |
 | `/studio` | ~630 kB | 638 kB |
 
 Getting there took two distinct fixes, and only the first was the one this ADR
@@ -92,6 +92,56 @@ loaded three.js). The graph walker's first version excluded newlines from its
 import pattern, so it missed every multi-line `import { … } from 'three'` and
 declared a graph clean that plainly was not. Neither error was visible from
 inside the check that made it.
+
+## Postscript, 2026-08-25 — the 2D route was still downloading three.js
+
+The 320 kB recorded for `/window` above was not the 2D tool being 2D. Of the
+`flat` chunk's 406 kB, **362 kB was three.js** — 96% of a chunk that exists
+specifically to hold a Canvas 2D compositor.
+
+The cause was the failure mode this ADR already names, in a place it had not
+been looked for. `FlatStudio.tsx` imports `Dropzone` and `RecentUploads` from
+the `@/features/media` barrel, and that barrel re-exported `useScreenTexture`,
+which imports three.js. The store had been fixed with the `state.ts` convention;
+the 2D tool's own component imports had not, and nothing was looking.
+
+`useScreenTexture` now lives in `features/screen`, beside `useFramedTexture` and
+`useOverlayTexture` — the feature that already owns the three.js texture hooks,
+and whose barrel its only consumer (`devices/components/Device.tsx`) already
+imported. `features/media` is now free of three.js entirely.
+
+Measured before and after, transferred and gzipped:
+
+| Route | Before | After |
+| --- | --- | --- |
+| `/` | 217 kB | 217 kB |
+| `/docs` | 217 kB | 217 kB |
+| `/window` | 325 kB | **228 kB** |
+| `/studio` | 650 kB | 647 kB |
+
+`/studio` is unchanged because it was downloading those bytes either way; they
+have simply moved into the chunk that honestly owns them. `StudioPage-*.js` grew
+from 1,061 kB to 1,431 kB for that reason and for no other — the studio was
+always this size, and 370 kB of it was being billed to the 2D tool.
+
+### Why it survived two guards
+
+Neither guard was wrong. Neither asserted anything.
+
+`verify-eager-graph.mjs` walks the graph *before the first lazy boundary*, and
+`flat` is behind one, so this was outside what it looks at, correctly.
+`verify-bundle.mjs` measured `/window` at 325 kB and printed it. The number was
+transcribed into the table at the top of this ADR and read by everyone who has
+read this document since. A check that reports rather than fails is a check that
+delegates the decision to whoever happens to be reading, and here nobody was.
+
+`verify-bundle.mjs` now carries per-route budgets and exits non-zero when one is
+breached. `/window`'s is 260 kB: comfortably above the 228 kB it costs today,
+comfortably below the ~325 kB it costs the moment three.js returns. Verified by
+reverting the fix and confirming the check fails with the pre-fix build.
+
+The studio's own size was reviewed at the same time and deliberately left alone;
+the reasoning is written out in `vite.config.ts` beside the warning threshold.
 
 ## Alternatives considered
 

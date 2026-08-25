@@ -9,7 +9,7 @@ import {
 } from 'three'
 import type { Texture } from 'three'
 import { useAppStore } from '@/state/store'
-import type { MediaSource } from './schema'
+import type { MediaSource } from '@/features/media/schema'
 
 /**
  * Builds the three.js texture for whatever media is loaded.

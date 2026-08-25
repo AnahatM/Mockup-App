@@ -3,7 +3,7 @@ import { FIT_MODES } from '@/lib/media/fit'
 import { hexSchema } from '@/lib/schema/primitives'
 // Deep import, not the `@/features/crop` barrel: the barrel re-exports the
 // crop UI, which reaches back into `@/features/devices` and then into this
-// very feature (`useScreenTexture`) — a cycle. `<feature>/schema` is the one
+// very file (`mediaAspect`) — a cycle. `<feature>/schema` is the one
 // deep path ESLint allows for exactly this reason (see eslint.config.js).
 import { cropSchema, defaultCrop } from '@/features/crop/schema'
 

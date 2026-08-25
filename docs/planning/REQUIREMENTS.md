@@ -26,6 +26,7 @@ Status legend: `TODO` · `WIP` · `DONE` · `BLOCKED`
 | A11 | Plan first, then implement                                | `docs/planning/PLAN.md`, approved before any code was written                                                              | pre-P0 | DONE   |
 | A12 | Download all libraries needed                             | full 3D, state, and validation stack installed locally                                                            | P0     | DONE   |
 | A13 | Use latest package versions where sensible                | all deps pinned to current latest; Node 22.14 already clears every floor                                          | P0     | DONE   |
+| A14 | **The 3D engine stays on the 3D route**                   | `verify-eager-graph.mjs` blocks three.js before a lazy boundary; `verify-bundle.mjs` holds each route to a transferred-byte budget and exits non-zero — see ADR 0006 | P0     | DONE   |
 
 ## B. Product scope
 

@@ -11,7 +11,29 @@
 import puppeteer from 'puppeteer-core'
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:4173'
-const ROUTES = ['/', '/docs', '/window', '/studio']
+/*
+ * Per-route budgets, in transferred (compressed) kilobytes.
+ *
+ * These are ceilings with room to grow, not targets — the point is to fail when
+ * something *structural* changes, like a 3D dependency arriving on a 2D page,
+ * not to litigate every kilobyte.
+ *
+ * The one that carries the argument of ADR 0006 is `/window`. Measured
+ * 2026-08-25 at 228 kB, of which 217 kB is the site shell every route loads and
+ * 11 kB is the 2D compositor itself. If three.js comes back it lands at ~325 kB,
+ * so a 260 kB ceiling catches that with headroom for the 2D tool to grow.
+ *
+ * Reporting these numbers rather than asserting them is how the regression this
+ * check exists to catch survived: `/window` was 325 kB, and its chunk was 96%
+ * three.js, reached through the media barrel. The number was even written into
+ * ADR 0006's outcome table. Nobody read it as a failure, because nothing failed.
+ */
+const ROUTES = [
+  { path: '/', budgetKB: 260 },
+  { path: '/docs', budgetKB: 260 },
+  { path: '/window', budgetKB: 260 },
+  { path: '/studio', budgetKB: 720 },
+]
 
 const browser = await puppeteer.launch({
   executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -25,7 +47,7 @@ const browser = await puppeteer.launch({
 })
 
 const results = []
-for (const route of ROUTES) {
+for (const { path: route, budgetKB } of ROUTES) {
   const page = await browser.newPage()
   await page.setCacheEnabled(false)
   const scripts = new Map()
@@ -59,9 +81,12 @@ for (const route of ROUTES) {
   const files = [...scripts.entries()].sort((a, b) => b[1] - a[1])
   const total = files.reduce((sum, [, bytes]) => sum + bytes, 0)
 
+  const totalKB = Math.round(total / 1024)
   results.push({
     route,
-    totalKB: Math.round(total / 1024),
+    totalKB,
+    budgetKB,
+    over: totalKB > budgetKB,
     files: files.map(([name, bytes]) => `${name} ${Math.round(bytes / 1024)}kB`),
   })
   await page.close()
@@ -69,3 +94,19 @@ for (const route of ROUTES) {
 
 await browser.close()
 console.log(JSON.stringify(results, null, 2))
+
+const breaches = results.filter((r) => r.over)
+for (const { route, totalKB, budgetKB } of breaches) {
+  console.error(`FAIL ${route}: ${totalKB} kB transferred, budget ${budgetKB} kB.`)
+}
+if (breaches.length) {
+  console.error(
+    [
+      'A route grew past its budget. If a 2D or site route jumped by hundreds of kB,',
+      'the likely cause is a barrel re-export dragging three.js across a boundary -',
+      'run scripts/verify-eager-graph.mjs, and check what each chunk actually holds.',
+    ].join(' '),
+  )
+  process.exit(1)
+}
+console.log('All routes within budget.')

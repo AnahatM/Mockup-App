@@ -1,5 +1,5 @@
-import { useFramedTexture } from '@/features/screen'
-import { mediaAspect, useScreenTexture } from '@/features/media'
+import { useFramedTexture, useScreenTexture } from '@/features/screen'
+import { mediaAspect } from '@/features/media/schema'
 import { useAppStore } from '@/state/store'
 import { MM_TO_UNITS } from '../spec/types'
 import { groundOffsetMm } from '../spec/framing'

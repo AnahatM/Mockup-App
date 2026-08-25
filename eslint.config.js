@@ -96,7 +96,7 @@ export default defineConfig([
       'src/features/lighting/**/*.tsx',
       'src/features/camera/**/*.tsx',
       'src/features/devices/**/*.tsx',
-      'src/features/screen/**/*.tsx',
+      'src/features/screen/**/*.ts*',
       'src/features/media/**/*.ts*',
       'src/features/capture/**/*.ts*',
       'src/features/flat/**/*.ts*',
