@@ -66,6 +66,20 @@ Status: `TODO` · `WIP` · `DONE` · `BLOCKED` (with a reason)
 | F28 | Contact-sheet harness (`scripts/shoot-matrix.mjs`) sweeping environments x cameras x device sizes into one reviewable PNG | DONE |
 | F26 | **Bug:** the whole Scene tab crashed with "Maximum update depth exceeded" in any session with no screenshot uploaded — `mediaPalette` returned a fresh `[]` into a Zustand selector | DONE |
 
+## Device realism
+
+Found by sweeping the catalogue through `scripts/shoot-matrix.mjs` and looking
+at the results, which is the only way these show up.
+
+| # | Task | Status |
+|---|---|---|
+| R1 | **Bug:** the watch strap swept out and stopped, reading as two ribbons past the case. Both halves are now arcs of one fastened loop — see `spec/bandLoop.ts` | DONE |
+| R2 | Keyboard deck was five rows of identical keycaps. Now a real layout: wide space bar, stepped left edge, short function row, inverted-T arrows | DONE |
+| R3 | **Bug:** the trackpad overhung the front edge of the laptop base, and the keyboard plane stretched its texture | DONE |
+| R4 | Monitor and iMac stood on rectangular slabs — the stand radii were fixed millimetres, invisible on a 240mm foot. Now proportional | DONE |
+| R5 | Audit every catalogue spec against published dimensions | TODO |
+| R6 | Speaker/mic cutouts, ports, MagSafe ring, laptop feet, fold and flip hinge crease | TODO |
+
 ## UX and robustness
 
 | # | Task | Status |

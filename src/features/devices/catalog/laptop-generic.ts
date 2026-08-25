@@ -34,8 +34,8 @@ export const laptopGeneric: DeviceSpec = {
       cornerSmoothing: 3,
       edgeRadius: 0.7,
     },
-    keyboard: { width: 312, height: 112, y: 40 },
-    trackpad: { width: 120, height: 74, y: -68 },
+    keyboard: { width: 312, height: 119, y: 46 },
+    trackpad: { width: 120, height: 74, y: -70 },
   },
 
   materials: { frame: 'aluminium', back: 'soft-plastic' },

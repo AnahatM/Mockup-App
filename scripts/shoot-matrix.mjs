@@ -24,7 +24,7 @@ const SWEEP = process.argv[2] ?? 'environments'
 
 /** Cell size in the contact sheet. Small enough to fit a dozen, big enough
  *  that a tile intersecting a device is visible. */
-const CELL = { width: 420, height: 300 }
+const CELL = { width: 620, height: 440 }
 
 /**
  * Restated from `structureSchema`, and applied before every cell.
@@ -76,6 +76,19 @@ const SWEEPS = {
       'macro',
       'profile',
     ].map((preset) => ({ label: preset, env: 'blocks', camera: preset })),
+  },
+  details: {
+    columns: 2,
+    // Close enough to judge the parts a wide shot only hints at: the keyboard
+    // layout, the trackpad, the strap loop, the stand, the camera bump.
+    cells: [
+      { label: 'laptop deck', env: 'none', device: 'Pro Laptop 14"', camera: 'top-down' },
+      { label: 'laptop hero', env: 'none', device: 'Pro Laptop 14"', camera: 'low-hero' },
+      { label: 'watch', env: 'none', device: 'Watch 45mm', camera: 'three-quarter' },
+      { label: 'watch profile', env: 'none', device: 'Watch 45mm', camera: 'profile' },
+      { label: 'monitor stand', env: 'none', device: 'Monitor 27"', camera: 'low-hero' },
+      { label: 'all-in-one', env: 'none', device: 'All-in-one 24"', camera: 'three-quarter' },
+    ],
   },
   devices: {
     columns: 3,

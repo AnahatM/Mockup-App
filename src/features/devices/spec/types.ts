@@ -118,9 +118,15 @@ export interface StandSpec {
 export interface BandSpec {
   width: number
   thickness: number
-  /** Length of each half, measured along the curve. */
-  length: number
-  /** How far the strap curves back behind the wrist. */
+  /**
+   * How far the fastened loop bulges behind the case — its depth semi-axis.
+   *
+   * There is deliberately no `length`. The strap used to be swept a fixed
+   * distance along an open curve, which is why it read as a ribbon floating
+   * past the case; now both halves are arcs of one ellipse solved from this
+   * and the case height, so a length would be a second, contradictory way to
+   * say where the strap ends. See `spec/bandLoop.ts`.
+   */
   curve: number
   /** Narrowing toward the free end, 0-1. */
   taper?: number

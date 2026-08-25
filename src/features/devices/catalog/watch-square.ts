@@ -30,7 +30,6 @@ export const watchSquare: DeviceSpec = {
   band: {
     width: 26,
     thickness: 3.4,
-    length: 62,
     curve: 34,
     material: 'soft-plastic',
   },

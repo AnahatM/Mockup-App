@@ -1,3 +1,4 @@
+import { bandLoop } from './bandLoop'
 import { MM_TO_UNITS, type DeviceSpec } from './types'
 
 export interface DeviceFraming {
@@ -21,11 +22,11 @@ export function groundOffsetMm(spec: DeviceSpec): number {
   if (spec.hinge) return 0
 
   const stand = spec.stand ? spec.stand.neckHeight + spec.stand.baseHeight : 0
-  // The strap curves backward as it goes, so its vertical reach is less than
-  // its length along the curve.
-  const band = spec.band ? spec.band.length * 0.82 : 0
+  // A fastened strap hangs to the bottom of its own loop, which is lower than
+  // the case and has nothing to do with the strap's length along the curve.
+  const band = spec.band ? bandLoop(spec.body, spec.band).radiusY : 0
 
-  return spec.body.height / 2 + stand + band
+  return Math.max(spec.body.height / 2 + stand, band + stand)
 }
 
 /** Total extent of the assembly in each axis, in millimetres. */
@@ -38,14 +39,15 @@ export function extentMm(spec: DeviceSpec): { x: number; y: number; z: number } 
   }
 
   const stand = spec.stand ? spec.stand.neckHeight + spec.stand.baseHeight : 0
-  const bandY = spec.band ? spec.band.length * 0.82 * 2 : 0
-  const bandZ = spec.band ? spec.band.curve : 0
+  const loop = spec.band ? bandLoop(spec.body, spec.band) : null
   const standZ = spec.stand ? spec.stand.baseDepth : 0
 
   return {
-    x: Math.max(width, spec.stand?.baseWidth ?? 0),
-    y: height + stand + bandY,
-    z: Math.max(depth, bandZ, standZ),
+    x: Math.max(width, spec.stand?.baseWidth ?? 0, spec.band?.width ?? 0),
+    // A fastened loop encloses the case rather than extending past it, so the
+    // assembly is the loop, not the case plus two straps end to end.
+    y: Math.max(height, loop ? loop.radiusY * 2 : 0) + stand,
+    z: Math.max(depth, loop ? loop.radiusZ - loop.centreZ : 0, standZ),
   }
 }
 

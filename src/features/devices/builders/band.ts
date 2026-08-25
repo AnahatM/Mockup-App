@@ -1,15 +1,24 @@
 import { CatmullRomCurve3, ExtrudeGeometry, Vector3 } from 'three'
 import { squircleShape } from './shape'
+import { bandLoop, bandPoint } from '../spec/bandLoop'
 import type { BandSpec, BodySpec } from '../spec/types'
 
 /**
- * A watch strap, swept along a curve.
+ * A watch strap, swept along its half of the fastened loop.
  *
  * Uses `extrudePath` rather than a stack of rotated boxes: a real strap bends
  * continuously, and segmented boxes show their joins exactly where the light
- * catches the edge. `up` is pinned so consecutive frames along the curve do not
- * twist the cross-section.
+ * catches the edge.
+ *
+ * Where the strap *goes* is `spec/bandLoop.ts` and not here, because the
+ * framing maths needs the same ellipse to know how far the loop hangs below
+ * the case — and it cannot import a three.js builder to find out.
  */
+
+/** Points sampled along the arc before Catmull-Rom smooths between them.
+ *  Enough that the spline tracks the ellipse rather than cutting its corners;
+ *  the strap meets the case at a shallow angle where an error shows. */
+const SAMPLES = 10
 export function buildBand(
   body: BodySpec,
   band: BandSpec,
@@ -23,13 +32,13 @@ export function buildBand(
     segments: 6,
   })
 
-  const start = (body.height / 2) * direction
-  const curve = new CatmullRomCurve3([
-    new Vector3(0, start, 0),
-    new Vector3(0, start + band.length * 0.34 * direction, -band.curve * 0.25),
-    new Vector3(0, start + band.length * 0.68 * direction, -band.curve * 0.72),
-    new Vector3(0, start + band.length * direction, -band.curve),
-  ])
+  const loop = bandLoop(body, band)
+  const curve = new CatmullRomCurve3(
+    Array.from({ length: SAMPLES }, (_, i) => {
+      const [x, y, z] = bandPoint(loop, direction, i / (SAMPLES - 1))
+      return new Vector3(x, y, z)
+    }),
+  )
 
   const geometry = new ExtrudeGeometry(shape, {
     extrudePath: curve,

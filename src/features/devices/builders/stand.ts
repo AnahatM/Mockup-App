@@ -14,10 +14,28 @@ export interface StandParts {
  *
  * Both are squircle extrusions rather than boxes for the same reason the device
  * bodies are: a sharp-edged slab catches no rim light and reads as flat.
+ *
+ * The radii are proportions of the part rather than millimetres, which is the
+ * whole difference between a stand and two boxes. They were fixed at 1.2mm and
+ * 2.4mm — on a 240mm foot that is a rounding you cannot see at any distance, so
+ * the monitor stood on a rectangular slab and read as a placeholder. A device
+ * *body* is right to use millimetres, because a phone's corner radius is a
+ * published figure; a stand's is not, and the shape it wants is "generously
+ * rounded for its size" at every size in the catalogue.
  */
+
+/** Corner radius of the foot, as a share of its shorter side. */
+const BASE_ROUNDING = 0.22
+
+/** Corner radius of the neck, as a share of its narrower dimension. */
+const NECK_ROUNDING = 0.35
+
 export function buildStand(stand: StandSpec): StandParts {
-  const neck = extrude(stand.neckWidth, stand.neckHeight, stand.neckDepth, 1.2)
-  const base = extrude(stand.baseWidth, stand.baseDepth, stand.baseHeight, 2.4)
+  const neckRadius = Math.min(stand.neckWidth, stand.neckDepth) * NECK_ROUNDING
+  const baseRadius = Math.min(stand.baseWidth, stand.baseDepth) * BASE_ROUNDING
+
+  const neck = extrude(stand.neckWidth, stand.neckHeight, stand.neckDepth, neckRadius)
+  const base = extrude(stand.baseWidth, stand.baseDepth, stand.baseHeight, baseRadius)
   // The foot lies flat, so its extrusion runs vertically.
   base.rotateX(-Math.PI / 2)
 

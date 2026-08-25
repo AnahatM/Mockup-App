@@ -32,7 +32,6 @@ export const watchRound: DeviceSpec = {
   band: {
     width: 22,
     thickness: 3.2,
-    length: 60,
     curve: 32,
     material: 'soft-plastic',
   },
