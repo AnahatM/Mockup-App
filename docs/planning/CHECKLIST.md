@@ -86,6 +86,7 @@ at the results, which is the only way these show up.
 | R7 | **Bug:** the contact shadow was drawn from below the floor, compressing into a grey streak past the product at Low hero and while orbiting under | DONE |
 | R5 | Audit every catalogue spec against published dimensions. `spec/screenAspect.test.ts` cross-checks each screen's geometry against its published display aspect and caught seven | DONE |
 | R6 | Speaker/mic cutouts, ports, MagSafe ring, laptop feet, fold and flip hinge crease | TODO |
+| R14 | **Open — needs a design call.** The plinth is invisible in the default scene, so the procedural texture on it (F16) cannot show. Its top face is coplanar with the cyclorama floor by design (a device at y=0 rests on it) and its default colour `#d7d4cd` is within 4% of the backdrop `#E3E1DC`, so it reads as floor rather than as a pedestal. `verify-textures.mjs` measures a byte-identical frame across all five patterns at full strength — evidence in `scripts/out/texture-pedestal-*.png`, which are the same file five times. Requirement C3 asks for a pedestal that highlights the product; this one cannot. Fixing it means changing the shipped default look, which is the user's call, not a silent one. Note that this harness had been unrunnable since the Scene tab broke, so this is newly *visible*, not newly broken | TODO |
 
 ## UX and robustness
 
