@@ -17,8 +17,8 @@ export const macbookAir: DeviceSpec = {
     cornerSmoothing: 3.4,
     edgeRadius: 0.8,
   },
-  screen: { inset: 5.2, insetBottom: 7.8, cornerRadius: 4.5 },
-  screenAspect: 16 / 10,
+  screen: { inset: 5.1, insetTop: 9, insetBottom: 15, cornerRadius: 4.5 },
+  screenAspect: 2560 / 1664,
   cutout: { type: 'notch', width: 62, height: 6.6 },
   buttons: [],
 

@@ -17,7 +17,7 @@ export const laptopGeneric: DeviceSpec = {
     cornerSmoothing: 3,
     edgeRadius: 0.7,
   },
-  screen: { inset: 8, insetBottom: 16, cornerRadius: 2.5 },
+  screen: { inset: 6.7, insetTop: 8, insetBottom: 33.2, cornerRadius: 2.5 },
   screenAspect: 16 / 9,
   cutout: { type: 'none' },
   buttons: [],

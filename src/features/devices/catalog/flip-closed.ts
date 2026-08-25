@@ -19,8 +19,8 @@ export const flipClosed: DeviceSpec = {
     edgeRadius: 1.2,
   },
   // The cover display occupies most of the front, beside the cameras.
-  screen: { inset: 4.5, insetBottom: 22, cornerRadius: 7 },
-  screenAspect: 1,
+  screen: { inset: 4.5, insetBottom: 15.3, cornerRadius: 7 },
+  screenAspect: 748 / 720,
   cutout: { type: 'none' },
 
   cameraBump: {

@@ -12,7 +12,7 @@ export const macbookPro: DeviceSpec = {
   // The lid.
   body: {
     width: 312.6,
-    height: 221.2,
+    height: 221.4,
     depth: 6.2,
     cornerRadius: 8,
     cornerSmoothing: 3.4,
@@ -20,11 +20,12 @@ export const macbookPro: DeviceSpec = {
   },
 
   screen: {
-    inset: 5.6,
-    insetBottom: 8.4,
+    inset: 5.3,
+    insetTop: 9.4,
+    insetBottom: 15.9,
     cornerRadius: 5,
   },
-  screenAspect: 16 / 10,
+  screenAspect: 3024 / 1964,
 
   cutout: { type: 'notch', width: 68, height: 7.2 },
 
@@ -36,7 +37,7 @@ export const macbookPro: DeviceSpec = {
     maxAngle: 130,
     base: {
       width: 312.6,
-      height: 221.2,
+      height: 221.4,
       depth: 9.3,
       cornerRadius: 8,
       cornerSmoothing: 3.4,

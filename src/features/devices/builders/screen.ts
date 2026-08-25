@@ -10,13 +10,15 @@ export interface ScreenLayout {
   cornerRadius: number
 }
 
-/** Where the screen sits inside the body, honouring an asymmetric chin. */
+/** Where the screen sits inside the body, honouring an asymmetric chin and a
+ *  taller camera bezel above. */
 export function screenLayout(body: BodySpec, screen: ScreenSpec): ScreenLayout {
+  const top = screen.insetTop ?? screen.inset
   const bottom = screen.insetBottom ?? screen.inset
   return {
     width: body.width - screen.inset * 2,
-    height: body.height - screen.inset - bottom,
-    offsetY: (bottom - screen.inset) / 2,
+    height: body.height - top - bottom,
+    offsetY: (bottom - top) / 2,
     cornerRadius: screen.cornerRadius,
   }
 }

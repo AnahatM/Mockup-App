@@ -10,7 +10,7 @@ export const foldOpen: DeviceSpec = {
   mesh: { kind: 'procedural' },
 
   body: {
-    width: 142.9,
+    width: 132.6,
     height: 153.5,
     depth: 5.6,
     cornerRadius: 8,
@@ -18,7 +18,7 @@ export const foldOpen: DeviceSpec = {
     edgeRadius: 0.9,
   },
   screen: { inset: 2.2, cornerRadius: 6.5 },
-  screenAspect: 6 / 5,
+  screenAspect: 2160 / 1856,
   cutout: { type: 'punch-hole', diameter: 4, top: 4, offsetX: 40 },
 
   buttons: [{ side: 'right', offset: 34, length: 26, protrusion: 0.45 }],

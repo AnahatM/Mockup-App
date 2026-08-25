@@ -66,8 +66,23 @@ unit = 100mm).
 
 ### `screen`
 
-`inset` is the bezel. `insetBottom` overrides it for devices with a larger chin
-(laptops). `cornerRadius` is usually a little smaller than the body's.
+`inset` is the bezel on the sides and the top. `insetTop` overrides the top for
+anything with a camera up there (laptops, all-in-ones — their top bezel is about
+twice the side), and `insetBottom` overrides the chin. `cornerRadius` is usually
+a little smaller than the body's.
+
+**Derive the bezels from the display, do not eyeball them.** The body size and
+the display's resolution are both published; the bezel is whatever is left over.
+`spec/screenAspect.test.ts` enforces it, comparing `screenAspect` against the
+rectangle the insets actually leave and failing if they drift more than three
+percent apart.
+
+That test is the catalogue's only real cross-check. Every other number in a spec
+is plausible on its own — a body 10mm too wide still renders a phone — and the
+aspect ratio is the one figure quoted separately that can therefore contradict
+the rest. It caught three genuine errors on the day it was written, including a
+folding phone eight percent too wide and an all-in-one built to Apple's
+published height, which turns out to include the stand.
 
 ### `cutout`
 

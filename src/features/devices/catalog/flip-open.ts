@@ -20,8 +20,8 @@ export const flipOpen: DeviceSpec = {
     cornerSmoothing: 3.8,
     edgeRadius: 1,
   },
-  screen: { inset: 1.8, cornerRadius: 8 },
-  screenAspect: 22 / 9,
+  screen: { inset: 3.7, cornerRadius: 8 },
+  screenAspect: 2640 / 1080,
   cutout: { type: 'punch-hole', diameter: 4.2, top: 4 },
 
   buttons: [

@@ -45,8 +45,17 @@ export interface BodySpec {
 }
 
 export interface ScreenSpec {
-  /** Bezel width. */
+  /** Bezel width, on the sides and — unless `insetTop` says otherwise — the top. */
   inset: number
+  /**
+   * Top bezel, when it differs from the sides.
+   *
+   * Laptops and all-in-ones carry a camera up there, so their top bezel is
+   * roughly twice the side. Without a third number the geometry could not be
+   * made to agree with the published display aspect at any inset: forcing the
+   * top to match the sides pushed the whole error into the chin.
+   */
+  insetTop?: number
   /** Chin, when it differs from the other three sides. */
   insetBottom?: number
   cornerRadius: number

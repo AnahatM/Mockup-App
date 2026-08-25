@@ -11,14 +11,14 @@ export const imacStyle: DeviceSpec = {
 
   body: {
     width: 547,
-    height: 461,
+    height: 342,
     depth: 11.5,
     cornerRadius: 12,
     cornerSmoothing: 4,
     edgeRadius: 1.4,
   },
   // A deep chin below the display, as this form factor has.
-  screen: { inset: 12, insetBottom: 62, cornerRadius: 6 },
+  screen: { inset: 13.4, insetBottom: 36, cornerRadius: 6 },
   screenAspect: 16 / 9,
   cutout: { type: 'none' },
   buttons: [],
